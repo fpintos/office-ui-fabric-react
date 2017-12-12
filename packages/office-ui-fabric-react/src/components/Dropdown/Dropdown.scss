@@ -83,7 +83,7 @@ $DropDown-item-height: 32px;
     cursor: default;
 
     @include high-contrast {
-      border-color: GrayText;
+      border: 1px solid GrayText;
       color: GrayText;
     }
 
@@ -98,6 +98,12 @@ $DropDown-item-height: 32px;
     @include high-contrast {
       color: GrayText;
     }
+  }
+}
+
+.listWrapper {
+  &:focus {
+    outline: 0
   }
 }
 
@@ -186,16 +192,12 @@ $DropDown-item-height: 32px;
   }
 
   &:hover {
-    background-color: $Dropdown-selectedItem-hover-bg;
-    color: $ms-color-black;
-
-    @include highContrastListItemState;
+    color: inherit;
   }
-
-  @include focus-border();
 
   &:focus {
     background-color: $ms-color-neutralLighter;
+    @include highContrastListItemState;
   }
 
   &:active {
@@ -217,12 +219,6 @@ $DropDown-item-height: 32px;
 .item.itemIsSelected {
   background-color: $Dropdown-selectedItem-bg;
   color: $ms-color-black;
-
-  &:hover {
-    background-color: $Dropdown-selectedItem-bg;
-  }
-
-  @include focus-border();
 
   @include highContrastListItemState;
 }

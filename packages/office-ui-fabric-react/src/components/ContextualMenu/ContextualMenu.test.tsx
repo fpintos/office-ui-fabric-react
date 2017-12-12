@@ -9,7 +9,7 @@ import {
 import { FocusZoneDirection } from '../../FocusZone';
 
 import { ContextualMenu, canAnyMenuItemsCheck } from './ContextualMenu';
-import { IContextualMenuItem, ContextualMenuItemType } from './ContextualMenu.Props';
+import { IContextualMenuItem, ContextualMenuItemType } from './ContextualMenu.types';
 import { Layer } from '../Layer/Layer';
 
 describe('ContextualMenu', () => {
@@ -205,6 +205,46 @@ describe('ContextualMenu', () => {
     expect(document.querySelector('.SubMenuClass')).toBeDefined();
   });
 
+  it('applies disabled property when `disabled` is true', () => {
+    const items: IContextualMenuItem[] = [
+      {
+        name: 'TestText 1',
+        key: 'TestKey1',
+        disabled: true,
+      },
+    ];
+
+    ReactTestUtils.renderIntoDocument<ContextualMenu>(
+      <ContextualMenu
+        items={ items }
+      />
+    );
+
+    let menuItem = document.querySelector('button.ms-ContextualMenu-link') as HTMLButtonElement;
+
+    expect(menuItem.disabled).toBeTruthy();
+  });
+
+  it('applies disabled property when deprecated property `isDisabled` is true', () => {
+    const items: IContextualMenuItem[] = [
+      {
+        name: 'TestText 1',
+        key: 'TestKey1',
+        isDisabled: true,
+      },
+    ];
+
+    ReactTestUtils.renderIntoDocument<ContextualMenu>(
+      <ContextualMenu
+        items={ items }
+      />
+    );
+
+    let menuItem = document.querySelector('button.ms-ContextualMenu-link') as HTMLButtonElement;
+
+    expect(menuItem.disabled).toBeTruthy();
+  });
+
   it('renders headers properly', () => {
     const items: IContextualMenuItem[] = [
       {
@@ -368,6 +408,47 @@ describe('ContextualMenu', () => {
       resolve();
     }).catch(done);
 
+  });
+
+  it('Hover correctly focuses the second element', (done) => {
+    const items: IContextualMenuItem[] = [
+      {
+        name: 'TestText 1',
+        key: 'TestKey1',
+        className: 'testkey1'
+      },
+      {
+        name: 'TestText 2',
+        key: 'TestKey2',
+        className: 'testkey2'
+      },
+    ];
+
+    ReactTestUtils.renderIntoDocument<ContextualMenu>(
+      <ContextualMenu
+        items={ items }
+      />
+    );
+
+    new Promise<any>(resolve => {
+      let focusedItem;
+      for (let i = 0; i < 20; i++) {
+        focusedItem = document.querySelector('.testkey2')!.firstChild;
+
+        if (focusedItem) {
+          let focusedItemElement = focusedItem as HTMLElement;
+          let eventObject = document.createEvent('Events');
+          eventObject.initEvent('mouseenter', true, false);
+          focusedItemElement.dispatchEvent(eventObject);
+        }
+        if (focusedItem === document.activeElement) {
+          break;
+        }
+      }
+      expect(document.activeElement).toEqual(focusedItem);
+      done();
+      resolve();
+    }).catch(done());
   });
 
   it('ContextualMenu menuOpened callback is called only when menu is available', () => {
