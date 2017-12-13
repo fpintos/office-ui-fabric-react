@@ -11,6 +11,24 @@ export const AppDefinition: IAppDefinition = {
     {
       links: [
         {
+          component: require<any>('../components/CalendarDayView/CalendarDayViewPage').CalendarDayViewPage,
+          key: 'CalendarDayView',
+          name: 'CalendarDayView',
+          url: '#/examples/CalendarDayView'
+        },
+        {
+          component: require<any>('../components/CalendarMonthView/CalendarMonthViewPage').CalendarMonthViewPage,
+          key: 'CalendarMonthView',
+          name: 'CalendarMonthView',
+          url: '#/examples/CalendarMonthView'
+        },
+        {
+          component: require<any>('../components/CalendarWeekView/CalendarWeekViewPage').CalendarWeekViewPage,
+          key: 'CalendarWeekView',
+          name: 'CalendarWeekView',
+          url: '#/examples/CalendarWeekView'
+        },
+        {
           component: require<any>('../components/PositioningContainer/PositioningContainerPage').PositioningContainerPage,
           key: 'PositioningContainer',
           name: 'PositioningContainer',
