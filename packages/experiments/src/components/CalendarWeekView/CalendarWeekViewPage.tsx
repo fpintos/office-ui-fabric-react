@@ -2,8 +2,6 @@ import * as React from 'react';
 import { ExampleCard, IComponentDemoPageProps, ComponentPage, PropertiesTableSet } from '@uifabric/example-app-base';
 
 import { CalendarWeekViewBasicExample } from './examples/CalendarWeekView.Basic.Example';
-const CalendarWeekViewBasicExampleCode =
-  require('!raw-loader!experiments/src/components/CalendarWeekView/examples/CalendarWeekView.Basic.Example.tsx') as string;
 
 export class CalendarWeekViewPage extends React.Component<IComponentDemoPageProps, {}> {
   public render(): JSX.Element {
@@ -13,14 +11,14 @@ export class CalendarWeekViewPage extends React.Component<IComponentDemoPageProp
         componentName='CalendarWeekView'
         exampleCards={
           <div>
-            <ExampleCard title='CalendarWeekView Basic' isOptIn={true} code={CalendarWeekViewBasicExampleCode}>
+            <ExampleCard title={ CalendarWeekViewBasicExample.title } code={ CalendarWeekViewBasicExample.code }>
               <CalendarWeekViewBasicExample />
             </ExampleCard>
           </div>
         }
         propertiesTables={
           <PropertiesTableSet
-            sources={[require<string>('!raw-loader!experiments/src/components/CalendarWeekView/CalendarWeekView.types.ts')]}
+            sources={ [require<string>('!raw-loader!./CalendarWeekView.types')] }
           />
         }
         overview={
@@ -28,7 +26,7 @@ export class CalendarWeekViewPage extends React.Component<IComponentDemoPageProp
             <p>CalendarWeekView is used to display a set of calendar events in a week view.</p>
           </div>
         }
-        bestPractices={<div />}
+        bestPractices={ <div /> }
         dos={
           <div>
             <ul>
@@ -43,7 +41,7 @@ export class CalendarWeekViewPage extends React.Component<IComponentDemoPageProp
             </ul>
           </div>
         }
-        isHeaderVisible={this.props.isHeaderVisible}
+        isHeaderVisible={ this.props.isHeaderVisible }
       />
     );
   }

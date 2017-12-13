@@ -2,8 +2,6 @@ import * as React from 'react';
 import { ExampleCard, IComponentDemoPageProps, ComponentPage, PropertiesTableSet } from '@uifabric/example-app-base';
 
 import { CalendarDayViewBasicExample } from './examples/CalendarDayView.Basic.Example';
-const CalendarDayViewBasicExampleCode =
-  require('!raw-loader!experiments/src/components/CalendarDayView/examples/CalendarDayView.Basic.Example.tsx') as string;
 
 export class CalendarDayViewPage extends React.Component<IComponentDemoPageProps, {}> {
   public render(): JSX.Element {
@@ -13,14 +11,14 @@ export class CalendarDayViewPage extends React.Component<IComponentDemoPageProps
         componentName='CalendarDayView'
         exampleCards={
           <div>
-            <ExampleCard title='CalendarDayView Basic' isOptIn={true} code={CalendarDayViewBasicExampleCode}>
+            <ExampleCard title={ CalendarDayViewBasicExample.title } code={ CalendarDayViewBasicExample.code }>
               <CalendarDayViewBasicExample />
             </ExampleCard>
           </div>
         }
         propertiesTables={
           <PropertiesTableSet
-            sources={[require<string>('!raw-loader!experiments/src/components/CalendarDayView/CalendarDayView.types.ts')]}
+            sources={ [require<string>('!raw-loader!./CalendarDayView.types')] }
           />
         }
         overview={
@@ -28,7 +26,7 @@ export class CalendarDayViewPage extends React.Component<IComponentDemoPageProps
             <p>CalendarDayView is used to display a set of calendar events in a day view.</p>
           </div>
         }
-        bestPractices={<div />}
+        bestPractices={ <div /> }
         dos={
           <div>
             <ul>
@@ -43,7 +41,7 @@ export class CalendarDayViewPage extends React.Component<IComponentDemoPageProps
             </ul>
           </div>
         }
-        isHeaderVisible={this.props.isHeaderVisible}
+        isHeaderVisible={ this.props.isHeaderVisible }
       />
     );
   }
