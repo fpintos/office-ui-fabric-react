@@ -4,7 +4,7 @@ import { ICalendarWeekViewStyles } from './CalendarWeekView.types';
 export function getStyles(styleProps: ICalendarWeekViewStyleProps): ICalendarWeekViewStyles {
   return {
     root: [
-      "ms-CalendarWeekView",
+      'ms-CalendarWeekView',
       {
         borderStyle: 'solid',
         backgroundColor: styleProps.theme.semanticColors.bodyBackground,
@@ -12,4 +12,4 @@ export function getStyles(styleProps: ICalendarWeekViewStyleProps): ICalendarWee
       styleProps.className
     ],
   };
-};
+}

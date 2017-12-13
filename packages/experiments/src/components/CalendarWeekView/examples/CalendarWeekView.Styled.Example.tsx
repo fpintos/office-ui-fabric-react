@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { CalendarWeekView } from '../../CalendarWeekView';
+import { ICalendarWeekViewStyleProps, ICalendarWeekViewStyles } from '../../CalendarWeekView';
 
 export class CalendarWeekViewStyledExample extends React.Component {
   public render(): JSX.Element {
@@ -10,12 +11,16 @@ export class CalendarWeekViewStyledExample extends React.Component {
         firstDay={ new Date(2018, 0, 1) }
         numberOfDays={ 5 }
         className='calendarWeekViewStyledExample'
-        getStyles={ styleProps => ({
-          root: {
-            backgroundColor: styleProps.theme.palette.themeLighter,
-          }
-        }) }
+        getStyles={ getCustomStyle }
       />
     );
   }
+}
+
+function getCustomStyle(styleProps: ICalendarWeekViewStyleProps): Partial<ICalendarWeekViewStyles> {
+  return ({
+    root: {
+      backgroundColor: styleProps.theme.palette.themeLighter,
+    }
+  });
 }

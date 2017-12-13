@@ -15,12 +15,14 @@ export class CalendarWeekViewPage extends React.Component<IComponentDemoPageProp
           <div>
             <ExampleCard
               title='1st 7-day week of 2018, starting Sunday Dec 31st 2017'
-              code={ require('!raw-loader!./examples/CalendarWeekView.Basic.Example') }>
+              code={ require('!raw-loader!./examples/CalendarWeekView.Basic.Example') }
+            >
               <CalendarWeekViewBasicExample />
             </ExampleCard>
             <ExampleCard
               title='1st work week of 2018, starting Monday Jan 1st 2018'
-              code={ require('!raw-loader!./examples/CalendarWeekView.WorkWeek.Example') }>
+              code={ require('!raw-loader!./examples/CalendarWeekView.WorkWeek.Example') }
+            >
               <CalendarWeekViewWorkWeekExample />
             </ExampleCard>
           </div>
@@ -29,7 +31,8 @@ export class CalendarWeekViewPage extends React.Component<IComponentDemoPageProp
           <div>
             <ExampleCard
               title='Using custom styles'
-              code={ require('!raw-loader!./examples/CalendarWeekView.Styled.Example') }>
+              code={ require('!raw-loader!./examples/CalendarWeekView.Styled.Example') }
+            >
               <CalendarWeekViewStyledExample />
             </ExampleCard>
           </div>
