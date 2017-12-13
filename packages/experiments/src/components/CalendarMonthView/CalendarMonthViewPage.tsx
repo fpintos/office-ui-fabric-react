@@ -11,14 +11,17 @@ export class CalendarMonthViewPage extends React.Component<IComponentDemoPagePro
         componentName='CalendarMonthView'
         exampleCards={
           <div>
-            <ExampleCard title={ CalendarMonthViewBasicExample.title } code={ CalendarMonthViewBasicExample.code }>
+            <ExampleCard
+              title='Month view of January, 2018'
+              code={ require('!raw-loader!./examples/CalendarMonthView.Basic.Example') }
+            >
               <CalendarMonthViewBasicExample />
             </ExampleCard>
           </div>
         }
         propertiesTables={
           <PropertiesTableSet
-            sources={ [require<string>('!raw-loader!./CalendarMonthView.types')] }
+            sources={ [require('!raw-loader!./CalendarMonthView.types')] }
           />
         }
         overview={
@@ -30,14 +33,14 @@ export class CalendarMonthViewPage extends React.Component<IComponentDemoPagePro
         dos={
           <div>
             <ul>
-              <li />
+              <li>TODO</li>
             </ul>
           </div>
         }
         donts={
           <div>
             <ul>
-              <li />
+              <li>TODO</li>
             </ul>
           </div>
         }

@@ -11,14 +11,17 @@ export class CalendarDayViewPage extends React.Component<IComponentDemoPageProps
         componentName='CalendarDayView'
         exampleCards={
           <div>
-            <ExampleCard title={ CalendarDayViewBasicExample.title } code={ CalendarDayViewBasicExample.code }>
+            <ExampleCard
+              title='Day view of Jan 1st, 2018'
+              code={ require('!raw-loader!./examples/CalendarDayView.Basic.Example') }
+            >
               <CalendarDayViewBasicExample />
             </ExampleCard>
           </div>
         }
         propertiesTables={
           <PropertiesTableSet
-            sources={ [require<string>('!raw-loader!./CalendarDayView.types')] }
+            sources={ [require('!raw-loader!./CalendarDayView.types')] }
           />
         }
         overview={
@@ -30,14 +33,14 @@ export class CalendarDayViewPage extends React.Component<IComponentDemoPageProps
         dos={
           <div>
             <ul>
-              <li />
+              <li>TODO</li>
             </ul>
           </div>
         }
         donts={
           <div>
             <ul>
-              <li />
+              <li>TODO</li>
             </ul>
           </div>
         }
