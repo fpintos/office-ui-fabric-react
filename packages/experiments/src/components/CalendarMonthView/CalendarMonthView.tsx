@@ -1,9 +1,7 @@
-import * as React from 'react';
-// import * as sytles from "./CalendarMonthView.scss";
+import { CalendarMonthViewBase } from './CalendarMonthView.base';
+import { getStyles } from './CalendarMonthView.styles';
 import { ICalendarMonthViewProps } from './CalendarMonthView.types';
+import { styled } from '../../Utilities';
 
-export class CalendarMonthView extends React.Component<ICalendarMonthViewProps> {
-  public render(): JSX.Element {
-    return <div />;
-  }
-}
+export { ICalendarMonthViewProps };
+export const CalendarMonthView = styled(CalendarMonthViewBase, getStyles);

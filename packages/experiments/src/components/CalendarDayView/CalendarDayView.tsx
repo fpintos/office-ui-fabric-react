@@ -1,9 +1,7 @@
-import * as React from 'react';
-// import * as styles from "./CalendarDayView.scss";
+import { CalendarDayViewBase } from './CalendarDayView.base';
+import { getStyles } from './CalendarDayView.styles';
 import { ICalendarDayViewProps } from './CalendarDayView.types';
+import { styled } from '../../Utilities';
 
-export class CalendarDayView extends React.Component<ICalendarDayViewProps> {
-  public render(): JSX.Element {
-    return <div />;
-  }
-}
+export { ICalendarDayViewProps };
+export const CalendarDayView = styled(CalendarDayViewBase, getStyles);
