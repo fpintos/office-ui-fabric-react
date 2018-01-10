@@ -312,7 +312,7 @@ export class ComboBox extends BaseComponent<IComboBoxProps, IComboBoxState> {
             onBlur={ this._onBlur }
             onKeyDown={ this._onInputKeyDown }
             onKeyUp={ this._onInputKeyUp }
-            onClick={ allowFreeform ? this.focus : this._onComboBoxClick }
+            onClick={ this._onBaseAutofillClick }
             onInputValueChange={ this._onInputChange }
             aria-expanded={ isOpen }
             aria-autocomplete={ (!disabled && autoComplete === 'on') }
@@ -370,9 +370,14 @@ export class ComboBox extends BaseComponent<IComboBoxProps, IComboBoxState> {
    * Set focus on the input
    */
   @autobind
-  public focus() {
+  public focus(shouldOpenOnFocus?: boolean) {
     if (this._comboBox) {
       this._comboBox.focus();
+      if (shouldOpenOnFocus) {
+        this.setState({
+          isOpen: true
+        });
+      }
     }
   }
 
@@ -784,7 +789,8 @@ export class ComboBox extends BaseComponent<IComboBoxProps, IComboBoxState> {
   private _submitPendingValue() {
     let {
       onChanged,
-      allowFreeform
+      allowFreeform,
+      autoComplete
     } = this.props;
     let {
       currentPendingValue,
@@ -802,12 +808,15 @@ export class ComboBox extends BaseComponent<IComboBoxProps, IComboBoxState> {
         let pendingOptionText: string = currentOptions[currentPendingValueValidIndex].text.toLocaleLowerCase();
 
         // By exact match, that means: our pending value is the same as the the pending option text OR
-        // the peding option starts with the pending value and we have an "autoComplete" selection
-        // where the total lenght is equal to pending option length; update the state
+        // the pending option starts with the pending value and we have an "autoComplete" selection
+        // where the total length is equal to pending option length OR
+        // the live value in the underlying input matches the pending option; update the state
         if (currentPendingValue.toLocaleLowerCase() === pendingOptionText ||
-          (pendingOptionText.indexOf(currentPendingValue.toLocaleLowerCase()) === 0 &&
-            this._comboBox.isValueSelected &&
-            currentPendingValue.length + (this._comboBox.selectionEnd - this._comboBox.selectionStart) === pendingOptionText.length)) {
+          (autoComplete && pendingOptionText.indexOf(currentPendingValue.toLocaleLowerCase()) === 0 &&
+            (this._comboBox.isValueSelected &&
+              currentPendingValue.length + (this._comboBox.selectionEnd - this._comboBox.selectionStart) === pendingOptionText.length) ||
+            (this._comboBox.inputElement.value.toLocaleLowerCase() === pendingOptionText)
+          )) {
           this._setSelectedIndex(currentPendingValueValidIndex);
           this._clearPendingInfo();
           return;
@@ -1364,7 +1373,6 @@ export class ComboBox extends BaseComponent<IComboBoxProps, IComboBoxState> {
         }
 
       default:
-
         // are we processing a function key? if so bail out
         if (ev.which >= 112 /* F1 */ && ev.which <= 123 /* F12 */) {
           return;
@@ -1496,6 +1504,18 @@ export class ComboBox extends BaseComponent<IComboBoxProps, IComboBoxState> {
 
     if (!disabled) {
       this._setOpenStateAndFocusOnClose(!isOpen, false /* focusInputAfterClose */);
+    }
+  }
+
+  /**
+   * Click handler for the autofill.
+   */
+  @autobind
+  private _onBaseAutofillClick() {
+    if (this.props.allowFreeform) {
+      this.focus(true);
+    } else {
+       this._onComboBoxClick();
     }
   }
 
