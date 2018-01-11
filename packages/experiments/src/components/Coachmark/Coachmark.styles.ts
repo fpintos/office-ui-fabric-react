@@ -112,9 +112,10 @@ function continuousPulseStepFour(): IRawStyle {
 }
 
 function continuousPulseStepFive(): IRawStyle {
-  return Object.assign(continuousPulseStepOne(), {
+  return {
+    ...continuousPulseStepOne(),
     opacity: '0'
-  });
+  };
 }
 
 export const ContinuousPulse: string = keyframes({
