@@ -9,15 +9,20 @@ const getClassNames = classNamesFunction<ICalendarViewRowHeaderStyleProps, ICale
 @customizable('CalendarViewRowHeader', ['theme'])
 export class CalendarViewRowHeaderBase extends BaseComponent<ICalendarViewRowHeaderProps> {
   public static defaultProps: Partial<ICalendarViewRowHeaderProps> = {
+    height: 60
   };
 
   public render(): JSX.Element {
-    const { getStyles, theme, className } = this.props;
-    const classNames = getClassNames(getStyles, { theme: theme!, className: className });
+    const { getStyles, theme, className, height } = this.props;
+    const classNames = getClassNames(getStyles, {
+      theme: theme!,
+      className,
+      height: height!
+    });
 
     return (
       <div className={ classNames.root }>
-        { this.props.content }
+        { this.props.children }
       </div>
     );
   }

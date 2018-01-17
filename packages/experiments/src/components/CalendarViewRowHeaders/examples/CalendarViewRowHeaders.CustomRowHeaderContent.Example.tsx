@@ -5,16 +5,18 @@ const hours = (Array.apply(null, Array(24)) as object[]).map(
   (_, h) => (h % 12 || 12) + (h < 12 ? "am" : "pm")
 );
 
-export class CalendarViewRowHeadersBasicExample extends React.Component {
-  public render(): React.ReactNode {
+export class CalendarViewRowHeadersCustomRowHeaderContentExample extends React.Component {
+  public render(): JSX.Element {
+    const headers = hours.map(h => <button>{ h }</button>);
+
     return (
       <>
       <p>
-        In this example, we use the default components and styles
-        with plain text as the individual header content.
+        In this example, the contents of the headers are custom nodes,
+        while using the default CalendarViewRowHeader class and styles.
       </p>
       <CalendarViewRowHeaders>
-        { hours }
+        { headers }
       </CalendarViewRowHeaders>
       </>
     );

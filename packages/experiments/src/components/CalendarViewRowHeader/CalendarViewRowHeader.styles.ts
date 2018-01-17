@@ -6,7 +6,11 @@ export function getStyles(styleProps: ICalendarViewRowHeaderStyleProps): ICalend
     root: [
       'ms-CalendarViewRowHeader',
       {
-        //borderStyle: 'solid',
+        borderTop: "1px solid",
+        borderTopColor: styleProps.theme.palette.neutralLight,
+        padding: "4px 10px",
+        width: 70,
+        height: styleProps.height,
       },
       styleProps.className
     ],

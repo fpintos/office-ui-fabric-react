@@ -1,6 +1,7 @@
+import { ReactNode, ComponentType } from 'react';
 import { IStyle, ITheme } from 'office-ui-fabric-react/lib/Styling';
 import { IStyleFunction, IBaseProps } from 'office-ui-fabric-react/lib/Utilities';
-import { CalendarViewRowHeaderContent } from '../CalendarViewRowHeader';
+import { ICalendarViewRowHeaderProps } from 'src/CalendarViewRowHeader';
 
 export interface ICalendarViewRowHeadersProps extends IBaseProps {
   // Theming
@@ -17,7 +18,14 @@ export interface ICalendarViewRowHeadersProps extends IBaseProps {
   getStyles?: IStyleFunction<ICalendarViewRowHeadersStyleProps, ICalendarViewRowHeadersStyles>;
 
   // CalendarViewRowHeaders
-  headers: CalendarViewRowHeaderContent[]
+  /** Content of the row headers */
+  children: ReactNode[];
+  /** Type of the React component that renders individual headers. Defaults to CalendarViewRowHeader. */
+  headerType?: ComponentType<ICalendarViewRowHeaderProps>;
+  /** Properties applied to all row headers elements. */
+  headerProps?: Partial<ICalendarViewRowHeaderProps>
+  /** Callback to get properties of an individual row header */
+  getHeaderProps?: (rowHeader: ReactNode, index: number) => Partial<ICalendarViewRowHeaderProps>
 }
 
 /** Properties used to define the styles of CalendarViewRowHeaders */
@@ -32,4 +40,6 @@ export interface ICalendarViewRowHeadersStyleProps {
 export interface ICalendarViewRowHeadersStyles {
   /** Style for the root element. */
   root?: IStyle;
+  /** Style for the row headers */
+  rowHeader?: IStyle;
 }

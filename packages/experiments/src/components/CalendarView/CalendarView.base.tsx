@@ -30,20 +30,17 @@ export class CalendarViewBase extends BaseComponent<ICalendarViewProps> implemen
 
     const { columnHeaders } = this.props;
 
-    const rowHeaders = ["12am"];
-    for (let i = 1; i <= 11; i++) {
-      rowHeaders.push(i.toString(10) + "am");
-    }
-    rowHeaders.push("12pm");
-    for (let i = 1; i <= 11; i++) {
-      rowHeaders.push(i.toString(10) + "pm");
-    }
+    const hours = (Array.apply(null, Array(24)) as object[]).map(
+      (_, h) => (h % 12 || 12) + (h < 12 ? "am" : "pm")
+    );
 
     return (
       <div className={ classNames.root }>
         <FocusZone componentRef={ this._setFocusZone }>
           <CalendarViewColumnHeaders className={ classNames.columnHeaders } headers={ columnHeaders } />
-          <CalendarViewRowHeaders className={ classNames.rowHeaders } headers={ rowHeaders } />
+          <CalendarViewRowHeaders className={ classNames.rowHeaders }>
+            { hours }
+          </CalendarViewRowHeaders> />
           <CalendarViewGridLines className={ classNames.gridLines } />
           <CalendarViewGrid className={ classNames.grid } />
         </FocusZone>

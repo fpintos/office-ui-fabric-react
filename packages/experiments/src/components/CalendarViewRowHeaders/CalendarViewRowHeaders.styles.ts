@@ -8,6 +8,7 @@ export function getStyles(styleProps: ICalendarViewRowHeadersStyleProps): ICalen
       {
         display: 'flex',
         flexDirection: 'column',
+        position: 'relative',
       },
       styleProps.className
     ],

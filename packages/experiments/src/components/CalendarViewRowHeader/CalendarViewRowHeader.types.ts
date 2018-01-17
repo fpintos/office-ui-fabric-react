@@ -1,7 +1,6 @@
+import { ReactNode } from 'react';
 import { IStyle, ITheme } from 'office-ui-fabric-react/lib/Styling';
 import { IStyleFunction, IBaseProps } from 'office-ui-fabric-react/lib/Utilities';
-
-export type CalendarViewRowHeaderContent = string;
 
 export interface ICalendarViewRowHeaderProps extends IBaseProps {
   // Theming
@@ -18,7 +17,11 @@ export interface ICalendarViewRowHeaderProps extends IBaseProps {
   getStyles?: IStyleFunction<ICalendarViewRowHeaderStyleProps, ICalendarViewRowHeaderStyles>;
 
   // CalendarViewRowHeader
-  content: CalendarViewRowHeaderContent
+  /** Height of the row header */
+  height?: number,
+
+  /** Contents of the row header */
+  children?: ReactNode
 }
 
 /** Properties used to define the styles of CalendarViewRowHeader */
@@ -27,6 +30,7 @@ export interface ICalendarViewRowHeaderStyleProps {
   // This ensures the compiler will detect if we forget to pass one of the parameters.
   theme: ITheme;
   className: string | undefined;
+  height: number;
 }
 
 /** Styles of CalendarViewRowHeader */
