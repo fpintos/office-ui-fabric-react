@@ -11,6 +11,54 @@ export const AppDefinition: IAppDefinition = {
     {
       links: [
         {
+          component: require<any>('../components/CalendarViewGridLines/CalendarViewGridLinesPage').CalendarViewGridLinesPage,
+          key: 'CalendarViewGridLines',
+          name: 'CalendarViewGridLines',
+          url: '#/examples/CalendarViewGridLines'
+        },
+        {
+          component: require<any>('../components/CalendarViewGridLine/CalendarViewGridLinePage').CalendarViewGridLinePage,
+          key: 'CalendarViewGridLine',
+          name: 'CalendarViewGridLine',
+          url: '#/examples/CalendarViewGridLine'
+        },
+        {
+          component: require<any>('../components/CalendarViewGrid/CalendarViewGridPage').CalendarViewGridPage,
+          key: 'CalendarViewGrid',
+          name: 'CalendarViewGrid',
+          url: '#/examples/CalendarViewGrid'
+        },
+        {
+          component: require<any>('../components/CalendarViewRowHeaders/CalendarViewRowHeadersPage').CalendarViewRowHeadersPage,
+          key: 'CalendarViewRowHeaders',
+          name: 'CalendarViewRowHeaders',
+          url: '#/examples/CalendarViewRowHeaders'
+        },
+        {
+          component: require<any>('../components/CalendarViewRowHeader/CalendarViewRowHeaderPage').CalendarViewRowHeaderPage,
+          key: 'CalendarViewRowHeader',
+          name: 'CalendarViewRowHeader',
+          url: '#/examples/CalendarViewRowHeader'
+        },
+        {
+          component: require<any>('../components/CalendarViewColumnHeaders/CalendarViewColumnHeadersPage').CalendarViewColumnHeadersPage,
+          key: 'CalendarViewColumnHeaders',
+          name: 'CalendarViewColumnHeaders',
+          url: '#/examples/CalendarViewColumnHeaders'
+        },
+        {
+          component: require<any>('../components/CalendarViewColumnHeader/CalendarViewColumnHeaderPage').CalendarViewColumnHeaderPage,
+          key: 'CalendarViewColumnHeader',
+          name: 'CalendarViewColumnHeader',
+          url: '#/examples/CalendarViewColumnHeader'
+        },
+        {
+          component: require<any>('../components/CalendarView/CalendarViewPage').CalendarViewPage,
+          key: 'CalendarView',
+          name: 'CalendarView',
+          url: '#/examples/CalendarView'
+        },
+        {
           component: require<any>('../components/CalendarDayView/CalendarDayViewPage').CalendarDayViewPage,
           key: 'CalendarDayView',
           name: 'CalendarDayView',
