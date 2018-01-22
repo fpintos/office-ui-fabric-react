@@ -34,11 +34,13 @@ export class CalendarViewBase extends BaseComponent<ICalendarViewProps> implemen
       (_, h) => (h % 12 || 12) + (h < 12 ? "am" : "pm")
     );
 
+    const { rowHeaderType, rowHeaderProps, getRowHeaderProps } = this.props;
+
     return (
       <div className={ classNames.root }>
         <FocusZone componentRef={ this._setFocusZone }>
           <CalendarViewColumnHeaders className={ classNames.columnHeaders } headers={ columnHeaders } />
-          <CalendarViewRowHeaders className={ classNames.rowHeaders }>
+          <CalendarViewRowHeaders className={ classNames.rowHeaders } rowHeaderType={ rowHeaderType } rowHeaderProps={ rowHeaderProps } getRowHeaderProps={ getRowHeaderProps }>
             { hours }
           </CalendarViewRowHeaders> />
           <CalendarViewGridLines className={ classNames.gridLines } />

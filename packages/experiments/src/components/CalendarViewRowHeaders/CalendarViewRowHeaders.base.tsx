@@ -11,23 +11,23 @@ const getClassNames = classNamesFunction<ICalendarViewRowHeadersStyleProps, ICal
 @customizable('CalendarViewRowHeaders', ['theme'])
 export class CalendarViewRowHeadersBase extends BaseComponent<ICalendarViewRowHeadersProps> {
   public static defaultProps: Partial<ICalendarViewRowHeadersProps> = {
-    headerType: CalendarViewRowHeader,
-    headerProps: {},
+    rowHeaderType: CalendarViewRowHeader,
+    rowHeaderProps: {},
   };
 
   public render(): JSX.Element {
     const { getStyles, theme, className } = this.props;
     const classNames = getClassNames(getStyles, { theme: theme!, className: className });
 
-    const { children, headerType, headerProps, getHeaderProps } = this.props;
+    const { children, rowHeaderType, rowHeaderProps, getRowHeaderProps } = this.props;
 
     return (
       <div className={ classNames.root }>
         <WrappedChildren
-          componentType={ headerType! }
+          componentType={ rowHeaderType! }
           className={ classNames.rowHeader }
-          childrenProps={ headerProps }
-          getChildProps={ getHeaderProps }>
+          childrenProps={ rowHeaderProps }
+          getChildProps={ getRowHeaderProps }>
           { children }
         </WrappedChildren>
       </div>

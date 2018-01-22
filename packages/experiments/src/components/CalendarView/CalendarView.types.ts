@@ -1,13 +1,14 @@
 import { IStyle, ITheme } from 'office-ui-fabric-react/lib/Styling';
 import { IStyleFunction } from 'office-ui-fabric-react/lib/Utilities';
 import { CalendarViewColumnHeaderContent } from '../CalendarViewColumnHeader';
+import { ICalendarViewRowHeadersWrappingProps } from '../CalendarViewRowHeaders';
 
 export interface ICalendarView {
   /** Sets focus to the control. */
   focus(): void;
 }
 
-export interface ICalendarViewProps {
+export interface ICalendarViewProps extends ICalendarViewRowHeadersWrappingProps {
   // BaseComponent
   /**
    * Optional callback to access the ICalendarView interface.

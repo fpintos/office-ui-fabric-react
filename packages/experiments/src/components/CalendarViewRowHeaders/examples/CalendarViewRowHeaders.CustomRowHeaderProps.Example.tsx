@@ -13,7 +13,7 @@ export class CalendarViewRowHeadersCustomRowHeaderPropsExample extends React.Com
         In this example, properties of all individual row headers are set
         with a template that is part of CalendarViewRowHeaders properties.
       </p>
-      <CalendarViewRowHeaders headerProps={ { height: 30 } }>
+      <CalendarViewRowHeaders rowHeaderProps={ { height: 30 } }>
         { hours }
       </CalendarViewRowHeaders>
       </>

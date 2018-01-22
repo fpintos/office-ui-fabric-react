@@ -15,7 +15,7 @@ export class CalendarViewRowHeadersCustomRowHeaderFunctionExample extends React.
         with a custom Functional Component. The custom component is responsible for
         its own style and rendering.
       </p>
-      <CalendarViewRowHeaders headerType={ CustomRowHeader }>
+      <CalendarViewRowHeaders rowHeaderType={ CustomRowHeader }>
         { hours }
       </CalendarViewRowHeaders>
       </>

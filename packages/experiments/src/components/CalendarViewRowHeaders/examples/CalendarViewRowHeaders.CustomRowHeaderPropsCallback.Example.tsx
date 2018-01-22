@@ -14,7 +14,7 @@ export class CalendarViewRowHeadersCustomRowHeaderPropsCallbackExample extends R
         In this example, properties of individual row headers are set
         with a callback that is part of CalendarViewRowHeaders properties.
       </p>
-      <CalendarViewRowHeaders getHeaderProps={ getHeaderProps }>
+      <CalendarViewRowHeaders getRowHeaderProps={ getHeaderProps }>
         { hours }
       </CalendarViewRowHeaders>
       </>

@@ -4,7 +4,32 @@ import { IStyleFunction, IBaseProps } from 'office-ui-fabric-react/lib/Utilities
 import { ICalendarViewRowHeaderProps } from '../CalendarViewRowHeader';
 import { GetChildProps } from '../WrappedChildren';
 
-export interface ICalendarViewRowHeadersProps extends IBaseProps {
+/**
+ * Row-header wrapping properties supported by CalendarViewRowHeaders.
+ *
+ * These properties allow consumers of CalendarViewRowHeaders to
+ * override the default CalendarViewRowHeader control and to modify
+ * how individual row headers are rendered.
+ */
+export interface ICalendarViewRowHeadersWrappingProps {
+  /**
+   * Type of React component that renders individual row headers.
+   * Defaults to CalendarViewRowHeader.
+   */
+  rowHeaderType?: ComponentType<ICalendarViewRowHeaderProps>;
+
+  /**
+   * Properties applied to all row headers elements.
+   */
+  rowHeaderProps?: Partial<ICalendarViewRowHeaderProps>
+
+  /**
+   * Callback to get properties of an individual row header.
+   */
+  getRowHeaderProps?: GetChildProps<ICalendarViewRowHeaderProps>
+}
+
+export interface ICalendarViewRowHeadersProps extends IBaseProps, ICalendarViewRowHeadersWrappingProps {
   // Theming
   /**
    * Additional css class to apply to the control.
@@ -21,12 +46,6 @@ export interface ICalendarViewRowHeadersProps extends IBaseProps {
   // CalendarViewRowHeaders
   /** Content of the row headers */
   children: ReactNode[];
-  /** Type of the React component that renders individual headers. Defaults to CalendarViewRowHeader. */
-  headerType?: ComponentType<ICalendarViewRowHeaderProps>;
-  /** Properties applied to all row headers elements. */
-  headerProps?: Partial<ICalendarViewRowHeaderProps>
-  /** Callback to get properties of an individual row header */
-  getHeaderProps?: GetChildProps<ICalendarViewRowHeaderProps>
 }
 
 /** Properties used to define the styles of CalendarViewRowHeaders */
