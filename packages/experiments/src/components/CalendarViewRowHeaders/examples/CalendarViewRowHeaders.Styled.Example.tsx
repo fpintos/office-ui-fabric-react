@@ -25,10 +25,13 @@ function getCustomStyle(styleProps: ICalendarViewRowHeadersStyleProps): Partial<
   return ({
     root: {
       backgroundColor: styleProps.theme.palette.themeLighter,
+      paddingTop: 5,
+      paddingLeft: 5,
+      paddingRight: 5,
     },
     rowHeader: {
       backgroundColor: styleProps.theme.palette.themeLight,
-      width: "50%",
+      marginBottom: 5,
       height: 30
     }
   });
