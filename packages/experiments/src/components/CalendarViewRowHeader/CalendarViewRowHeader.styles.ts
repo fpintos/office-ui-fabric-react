@@ -9,7 +9,6 @@ export function getStyles(styleProps: ICalendarViewRowHeaderStyleProps): ICalend
         borderTop: "1px solid",
         borderTopColor: styleProps.theme.palette.neutralLight,
         padding: "4px 10px",
-        width: 70,
         height: styleProps.height,
       },
       styleProps.className
