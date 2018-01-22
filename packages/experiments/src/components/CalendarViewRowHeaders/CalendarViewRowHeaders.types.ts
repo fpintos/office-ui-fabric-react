@@ -1,7 +1,8 @@
 import { ReactNode, ComponentType } from 'react';
 import { IStyle, ITheme } from 'office-ui-fabric-react/lib/Styling';
 import { IStyleFunction, IBaseProps } from 'office-ui-fabric-react/lib/Utilities';
-import { ICalendarViewRowHeaderProps } from 'src/CalendarViewRowHeader';
+import { ICalendarViewRowHeaderProps } from '../CalendarViewRowHeader';
+import { GetChildProps } from '../WrappedChildren';
 
 export interface ICalendarViewRowHeadersProps extends IBaseProps {
   // Theming
@@ -25,7 +26,7 @@ export interface ICalendarViewRowHeadersProps extends IBaseProps {
   /** Properties applied to all row headers elements. */
   headerProps?: Partial<ICalendarViewRowHeaderProps>
   /** Callback to get properties of an individual row header */
-  getHeaderProps?: (rowHeader: ReactNode, index: number) => Partial<ICalendarViewRowHeaderProps>
+  getHeaderProps?: GetChildProps<ICalendarViewRowHeaderProps>
 }
 
 /** Properties used to define the styles of CalendarViewRowHeaders */

@@ -165,7 +165,13 @@ export const AppDefinition: IAppDefinition = {
           key: 'StaticList',
           name: 'StaticList',
           url: '#/examples/staticlist'
-        }
+        },
+        {
+          component: require<any>('../components/WrappedChildren/WrappedChildrenPage').WrappedChildrenPage,
+          key: 'WrappedChildren',
+          name: 'WrappedChildren',
+          url: '#/examples/WrappedChildren'
+        },
       ]
     }
   ],

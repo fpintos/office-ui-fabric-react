@@ -4,6 +4,7 @@ import { ICalendarViewRowHeadersProps } from './CalendarViewRowHeaders.types';
 import { ICalendarViewRowHeadersStyleProps } from './CalendarViewRowHeaders.types';
 import { ICalendarViewRowHeadersStyles } from './CalendarViewRowHeaders.types';
 import { CalendarViewRowHeader } from '../CalendarViewRowHeader';
+import { WrappedChildren } from '../WrappedChildren';
 
 const getClassNames = classNamesFunction<ICalendarViewRowHeadersStyleProps, ICalendarViewRowHeadersStyles>();
 
@@ -18,56 +19,18 @@ export class CalendarViewRowHeadersBase extends BaseComponent<ICalendarViewRowHe
     const { getStyles, theme, className } = this.props;
     const classNames = getClassNames(getStyles, { theme: theme!, className: className });
 
-    const { children: rowHeaders, headerType, headerProps, getHeaderProps } = this.props;
+    const { children, headerType, headerProps, getHeaderProps } = this.props;
 
     return (
       <div className={ classNames.root }>
-        {
-          renderChildren(
-            rowHeaders,
-            headerType!,
-            classNames.rowHeader,
-            headerProps,
-            getHeaderProps)
-        }
+        <WrappedChildren
+          componentType={ headerType! }
+          className={ classNames.rowHeader }
+          childrenProps={ headerProps }
+          getChildProps={ getHeaderProps }>
+          { children }
+        </WrappedChildren>
       </div>
     );
   }
-}
-
-
-function renderChildren<P>(
-  children: React.ReactNode[],
-  componentType: React.ComponentType<P>,
-  className: string,
-  childrenProps?: Partial<P>,
-  getChildProps?: (child: React.ReactNode, index: number) => Partial<P>
-): React.ReactNode {
-  return children.map((child, index) => {
-    const childProps = getChildProps ? getChildProps(child, index) : undefined;
-    return renderChild(
-      index,
-      child,
-      componentType,
-      className,
-      childrenProps,
-      childProps);
-  });
-}
-
-function renderChild<P>(
-  key: React.Key,
-  child: React.ReactNode,
-  componentType: React.ComponentType<P>,
-  className: string,
-  childrenProps?: Partial<P>,
-  childProps?: Partial<P>
-): React.ReactNode {
-  const props = {
-    className,
-    ...(childrenProps as object),
-    ...(childProps as object),
-    key,
-  } as P & React.Attributes;
-  return React.createElement<P>(componentType, props, child);
 }
