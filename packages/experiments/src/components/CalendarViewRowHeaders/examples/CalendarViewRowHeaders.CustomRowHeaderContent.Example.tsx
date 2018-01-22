@@ -7,7 +7,7 @@ const hours = (Array.apply(null, Array(24)) as object[]).map(
 
 export class CalendarViewRowHeadersCustomRowHeaderContentExample extends React.Component {
   public render(): JSX.Element {
-    const headers = hours.map(h => <button>{ h }</button>);
+    const headers = hours.map((h, index) => <button key={ index }>{ h }</button>);
 
     return (
       <>
