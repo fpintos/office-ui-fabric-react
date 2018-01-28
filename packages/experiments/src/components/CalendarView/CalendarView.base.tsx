@@ -42,7 +42,7 @@ export class CalendarViewBase extends BaseComponent<ICalendarViewProps> implemen
           <CalendarViewColumnHeaders className={ classNames.columnHeaders } headers={ columnHeaders } />
           <CalendarViewRowHeaders className={ classNames.rowHeaders } rowHeaderType={ rowHeaderType } rowHeaderProps={ rowHeaderProps } getRowHeaderProps={ getRowHeaderProps }>
             { hours }
-          </CalendarViewRowHeaders> />
+          </CalendarViewRowHeaders>
           <CalendarViewGridLines className={ classNames.gridLines } />
           <CalendarViewGrid className={ classNames.grid } />
         </FocusZone>
