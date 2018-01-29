@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { IStyle, ITheme } from 'office-ui-fabric-react/lib/Styling';
 import { IStyleFunction } from 'office-ui-fabric-react/lib/Utilities';
 import { CalendarViewColumnHeaderContent } from '../CalendarViewColumnHeader';
@@ -32,6 +33,7 @@ export interface ICalendarViewProps extends ICalendarViewRowHeadersWrappingProps
 
   // CalendarView
   columnHeaders: CalendarViewColumnHeaderContent[],
+  rowHeaders?: React.ReactNode[],
 
   /**
    * Width of the row headers. Defaults to 70px

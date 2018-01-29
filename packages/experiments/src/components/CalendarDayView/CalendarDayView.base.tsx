@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { autobind, BaseComponent, classNamesFunction, customizable } from '../../Utilities';
-import { FocusZone, IFocusZone } from 'office-ui-fabric-react/lib/FocusZone';
 import { ICalendarDayView } from './CalendarDayView.types';
 import { ICalendarDayViewProps } from './CalendarDayView.types';
 import { ICalendarDayViewStyleProps } from './CalendarDayView.types';
 import { ICalendarDayViewStyles } from './CalendarDayView.types';
+import { CalendarView, ICalendarView } from '../CalendarView';
 
 const getClassNames = classNamesFunction<ICalendarDayViewStyleProps, ICalendarDayViewStyles>();
 
@@ -13,28 +13,29 @@ export class CalendarDayViewBase extends BaseComponent<ICalendarDayViewProps> im
   public static defaultProps: Partial<ICalendarDayViewProps> = {
   };
 
-  private focusZone: IFocusZone;
+  private calendarView: ICalendarView;
 
   public render(): JSX.Element {
     const { getStyles, theme, className } = this.props;
     const classNames = getClassNames(getStyles, { theme: theme!, className: className });
 
     const { day } = this.props;
+    const columnHeaders = [day.toLocaleDateString()];
+
     return (
-      <div className={ classNames.root }>
-        <FocusZone componentRef={ this._setFocusZone }>
-          <div>day={ day.toDateString() }</div>
-        </FocusZone>
-      </div>
+      <CalendarView
+        componentRef={ this._setCalendarView }
+        className={ classNames.root }
+        columnHeaders={ columnHeaders } />
     );
   }
 
   public focus(): void {
-    this.focusZone.focus();
+    this.calendarView.focus();
   }
 
   @autobind
-  private _setFocusZone(component: IFocusZone): void {
-    this.focusZone = component;
+  private _setCalendarView(component: ICalendarView): void {
+    this.calendarView = component;
   }
 }

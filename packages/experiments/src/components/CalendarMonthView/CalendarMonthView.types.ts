@@ -1,5 +1,7 @@
 import { IStyle, ITheme } from '../../Styling';
 import { IStyleFunction } from '../../Utilities';
+import { DayOfWeek, FirstWeekOfYear } from 'office-ui-fabric-react/lib/utilities/dateValues/DateValues';
+export { DayOfWeek, FirstWeekOfYear };
 
 export interface ICalendarMonthView {
   /** Sets focus to the calendar view. */
@@ -33,6 +35,8 @@ export interface ICalendarMonthViewProps {
    * The date of the month to be displayed by the calendar view.
    */
   month: Date;
+  firstDayOfWeek: DayOfWeek;
+  firstWeekOfYear: FirstWeekOfYear;
 }
 
 /** Properties used to define the styles of the CalendarMonthView */

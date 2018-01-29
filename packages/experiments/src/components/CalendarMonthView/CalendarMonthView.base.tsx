@@ -1,10 +1,20 @@
 import * as React from 'react';
 import { autobind, BaseComponent, classNamesFunction, customizable } from '../../Utilities';
-import { FocusZone, IFocusZone } from 'office-ui-fabric-react/lib/FocusZone';
 import { ICalendarMonthView } from './CalendarMonthView.types';
 import { ICalendarMonthViewProps } from './CalendarMonthView.types';
 import { ICalendarMonthViewStyleProps } from './CalendarMonthView.types';
 import { ICalendarMonthViewStyles } from './CalendarMonthView.types';
+import { CalendarView, ICalendarView } from '../CalendarView';
+
+import {
+  // addDays,
+  // addWeeks,
+  // addMonths,
+  getWeekNumber,
+  //getWeekNumbersInMonth,
+  getMonthStart,
+  getMonthEnd
+} from 'office-ui-fabric-react/lib/utilities/dateMath/DateMath';
 
 const getClassNames = classNamesFunction<ICalendarMonthViewStyleProps, ICalendarMonthViewStyles>();
 
@@ -13,28 +23,49 @@ export class CalendarMonthViewBase extends BaseComponent<ICalendarMonthViewProps
   public static defaultProps: Partial<ICalendarMonthViewProps> = {
   };
 
-  private focusZone: IFocusZone;
+  private calendarView: ICalendarView;
 
   public render(): JSX.Element {
     const { getStyles, theme, className } = this.props;
     const classNames = getClassNames(getStyles, { theme: theme!, className: className });
 
-    const { month } = this.props;
+    const { month, firstDayOfWeek, firstWeekOfYear } = this.props;
+
+    const monthStart = getMonthStart(month);
+    const monthEnd = getMonthEnd(month);
+    const startingWeek = getWeekNumber(monthStart, firstDayOfWeek, firstWeekOfYear);
+    const endingWeek = getWeekNumber(monthEnd, firstDayOfWeek, firstWeekOfYear);
+
+    const columnHeaders = [
+      'Sunday',
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+      'Saturday'
+    ];
+
+    const rowHeaders = [];
+    for (let i = startingWeek; i <= endingWeek; i++) {
+      rowHeaders.push('Week ' + i);
+    }
+
     return (
-      <div className={ classNames.root }>
-        <FocusZone componentRef={ this._setFocusZone }>
-          <div>month={ month.toDateString() }</div>
-        </FocusZone>
-      </div>
+      <CalendarView
+        componentRef={ this._setCalendarView }
+        className={ classNames.root }
+        columnHeaders={ columnHeaders }
+        rowHeaders={ rowHeaders } />
     );
   }
 
   public focus(): void {
-    this.focusZone.focus();
+    this.calendarView.focus();
   }
 
   @autobind
-  private _setFocusZone(component: IFocusZone): void {
-    this.focusZone = component;
+  private _setCalendarView(component: ICalendarView): void {
+    this.calendarView = component;
   }
 }

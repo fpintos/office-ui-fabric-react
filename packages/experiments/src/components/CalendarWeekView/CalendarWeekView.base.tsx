@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { autobind, BaseComponent, classNamesFunction, customizable } from '../../Utilities';
-import { FocusZone, IFocusZone } from 'office-ui-fabric-react/lib/FocusZone';
 import { ICalendarWeekView } from './CalendarWeekView.types';
 import { ICalendarWeekViewProps } from './CalendarWeekView.types';
 import { ICalendarWeekViewStyleProps } from './CalendarWeekView.types';
 import { ICalendarWeekViewStyles } from './CalendarWeekView.types';
 import { CalendarView } from '../CalendarView';
 import { addDays } from 'office-ui-fabric-react/lib/utilities/dateMath/DateMath';
+import { ICalendarView } from 'src/CalendarView';
 
 const getClassNames = classNamesFunction<ICalendarWeekViewStyleProps, ICalendarWeekViewStyles>();
 
@@ -16,7 +16,7 @@ export class CalendarWeekViewBase extends BaseComponent<ICalendarWeekViewProps> 
     numberOfDays: 7
   };
 
-  private focusZone: IFocusZone;
+  private calendarView: ICalendarView;
 
   public render(): JSX.Element {
     const { getStyles, theme, className } = this.props;
@@ -29,20 +29,18 @@ export class CalendarWeekViewBase extends BaseComponent<ICalendarWeekViewProps> 
     }
 
     return (
-      <div className={ classNames.root }>
-        <FocusZone componentRef={ this._setFocusZone }>
-          <CalendarView columnHeaders={ columnHeaders } />
-        </FocusZone>
-      </div>
+      <CalendarView
+        componentRef={ this._setCalendarView }
+        className={ classNames.root } columnHeaders={ columnHeaders } />
     );
   }
 
   public focus(): void {
-    this.focusZone.focus();
+    this.calendarView.focus();
   }
 
   @autobind
-  private _setFocusZone(component: IFocusZone): void {
-    this.focusZone = component;
+  private _setCalendarView(component: ICalendarView): void {
+    this.calendarView = component;
   }
 }
