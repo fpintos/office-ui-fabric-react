@@ -1,23 +1,20 @@
-import * as React from 'React'
+import * as React from 'react'
 import { IWrappedChildrenProps } from './WrappedChildren.types';
-export { IWrappedChildrenProps };
 
+/** Component that wraps each child with a given wrapping element. */
 export function WrappedChildren<P>(props: IWrappedChildrenProps<P>): JSX.Element {
-  const { children, className, componentType, childrenProps, getChildProps } = props;
+  const { children, wrapperType: Component, className, properties, getProperties } = props;
 
-  return <>
-    { children.map((child, key) => {
-      const childProps = getChildProps ? getChildProps(child, key) : undefined;
-      const props = {
-        key,
-        className,
-        ...(childrenProps as object),
-        ...(childProps as object),
-      } as P & React.Attributes;
-      return React.createElement<P>(
-        componentType!,
-        props,
-        child);
-    }) }
-    </>;
+  const wrappedChildren = children.map(
+    (child, key) =>
+      <Component
+        key={ key }
+        className={ className }
+        {...properties}
+        {...(getProperties ? getProperties(child, key) : undefined) }>
+        { child }
+      </Component>
+  );
+
+  return <>{ wrappedChildren }</>;
 }

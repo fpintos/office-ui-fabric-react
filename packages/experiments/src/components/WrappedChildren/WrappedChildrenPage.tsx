@@ -26,21 +26,32 @@ export class WrappedChildrenPage extends React.Component<IComponentDemoPageProps
         }
         overview={
           <div>
-            <p>TODO: WrappedChildren is used to display ...</p>
+            <p>
+              WrappedChildren is used to wrap each element in a list
+              with a given wrapping element.
+            </p>
+            <p>
+              This can be used by a component to render a list of elements
+              while allowing the application to customize the look-and-feel
+              of the individual elements of the list.
+            </p>
           </div>
         }
         bestPractices={ <div /> }
         dos={
           <div>
             <ul>
-              <li>TODO</li>
+              <li>
+                Bubble up the properties from WrappedChildren in the components that use it,
+                so other components can affect the output.
+             </li>
             </ul>
           </div>
         }
         donts={
           <div>
             <ul>
-              <li>TODO</li>
+              <li>Do not use WrappedChildren if the output does not need to be customized.</li>
             </ul>
           </div>
         }

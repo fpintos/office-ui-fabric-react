@@ -24,10 +24,10 @@ export class CalendarViewRowHeadersBase extends BaseComponent<ICalendarViewRowHe
     return (
       <div className={ classNames.root }>
         <WrappedChildren
-          componentType={ rowHeaderType! }
+          wrapperType={ rowHeaderType! }
           className={ classNames.rowHeader }
-          childrenProps={ rowHeaderProps }
-          getChildProps={ getRowHeaderProps }>
+          properties={ rowHeaderProps }
+          getProperties={ getRowHeaderProps }>
           { children }
         </WrappedChildren>
       </div>
