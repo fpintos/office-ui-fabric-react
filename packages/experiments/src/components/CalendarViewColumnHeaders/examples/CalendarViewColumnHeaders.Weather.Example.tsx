@@ -13,10 +13,10 @@ export class CalendarViewColumnHeadersWeatherExample extends React.Component {
   public render(): JSX.Element {
     const columnHeaders = exampleWeather.map(
       weather =>
-        <div>
-          { weather.date.toLocaleDateString() }
-          <Icon iconName={ weather.icon } />
-        </div>
+        <>
+        { weather.date.toLocaleDateString() }
+        <Icon iconName={ weather.icon } style={ { marginLeft: 4 } } />
+        </>
     );
 
     return (

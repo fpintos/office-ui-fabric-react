@@ -2,6 +2,7 @@ import * as React from 'react';
 import { ExampleCard, IComponentDemoPageProps, ComponentPage, PropertiesTableSet } from '@uifabric/example-app-base';
 
 import { CalendarViewColumnHeaderBasicExample } from './examples/CalendarViewColumnHeader.Basic.Example';
+import { CalendarViewColumnHeaderWeatherExample } from './examples/CalendarViewColumnHeader.Weather.Example';
 
 export class CalendarViewColumnHeaderPage extends React.Component<IComponentDemoPageProps, {}> {
   public render(): JSX.Element {
@@ -16,6 +17,12 @@ export class CalendarViewColumnHeaderPage extends React.Component<IComponentDemo
               code={ require('!raw-loader!./examples/CalendarViewColumnHeader.Basic.Example') }
             >
               <CalendarViewColumnHeaderBasicExample />
+            </ExampleCard>
+            <ExampleCard
+              title='CalendarViewColumnHeader with customer weather content'
+              code={ require('!raw-loader!./examples/CalendarViewColumnHeader.Weather.Example') }
+            >
+              <CalendarViewColumnHeaderWeatherExample />
             </ExampleCard>
           </div>
         }
