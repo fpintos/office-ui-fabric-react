@@ -1,6 +1,5 @@
 import { IStyle, ITheme } from 'office-ui-fabric-react/lib/Styling';
 import { IStyleFunction, IBaseProps } from 'office-ui-fabric-react/lib/Utilities';
-import { CalendarViewColumnHeaderContent } from '../CalendarViewColumnHeader';
 
 export interface ICalendarViewColumnHeadersProps extends IBaseProps {
   // Theming
@@ -17,7 +16,7 @@ export interface ICalendarViewColumnHeadersProps extends IBaseProps {
   getStyles?: IStyleFunction<ICalendarViewColumnHeadersStyleProps, ICalendarViewColumnHeadersStyles>;
 
   // CalendarViewColumnHeaders
-  headers: CalendarViewColumnHeaderContent[],
+  headers: React.ReactNode[],
 }
 
 /** Properties used to define the styles of CalendarViewColumnHeaders */

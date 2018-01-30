@@ -4,7 +4,9 @@ import { CalendarViewColumnHeader } from '../../CalendarViewColumnHeader';
 export class CalendarViewColumnHeaderBasicExample extends React.Component {
   public render(): JSX.Element {
     return (
-      <CalendarViewColumnHeader content="Jan 1st" />
+      <CalendarViewColumnHeader>
+        { ["Jan 1st", "Jan 2nd", "Jan 3rd"] }
+      </CalendarViewColumnHeader>
     );
   }
 }

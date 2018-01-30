@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { IStyle, ITheme } from 'office-ui-fabric-react/lib/Styling';
 import { IStyleFunction } from 'office-ui-fabric-react/lib/Utilities';
-import { CalendarViewColumnHeaderContent } from '../CalendarViewColumnHeader';
 import { ICalendarViewRowHeadersWrappingProps } from '../CalendarViewRowHeaders';
 
 export interface ICalendarView {
@@ -32,7 +31,7 @@ export interface ICalendarViewProps extends ICalendarViewRowHeadersWrappingProps
   getStyles?: IStyleFunction<ICalendarViewStyleProps, ICalendarViewStyles>;
 
   // CalendarView
-  columnHeaders: CalendarViewColumnHeaderContent[],
+  columnHeaders: React.ReactNode[],
   rowHeaders?: React.ReactNode[],
 
   /**

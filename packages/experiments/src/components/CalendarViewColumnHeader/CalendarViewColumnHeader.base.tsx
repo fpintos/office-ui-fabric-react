@@ -17,7 +17,7 @@ export class CalendarViewColumnHeaderBase extends BaseComponent<ICalendarViewCol
 
     return (
       <div className={ classNames.root }>
-        { this.props.content }
+        { this.props.children }
       </div>
     );
   }
