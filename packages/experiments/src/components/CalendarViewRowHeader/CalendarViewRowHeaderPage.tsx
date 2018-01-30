@@ -28,7 +28,10 @@ export class CalendarViewRowHeaderPage extends React.Component<IComponentDemoPag
         }
         propertiesTables={
           <PropertiesTableSet
-            sources={ [require('!raw-loader!./CalendarViewRowHeader.types')] }
+            sources={ [
+              require('!raw-loader!./CalendarViewRowHeader.types'),
+              require('!raw-loader!../Theming/Theming.types')
+            ] }
           />
         }
         overview={
