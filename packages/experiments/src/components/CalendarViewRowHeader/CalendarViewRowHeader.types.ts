@@ -1,22 +1,11 @@
 import { ReactNode } from 'react';
 import { IStyle, ITheme } from 'office-ui-fabric-react/lib/Styling';
-import { IStyleFunction, IBaseProps } from 'office-ui-fabric-react/lib/Utilities';
+import { IBaseProps } from 'office-ui-fabric-react/lib/Utilities';
+import { IThemingProps } from '../Theming';
 
-export interface ICalendarViewRowHeaderProps extends IBaseProps {
-  // Theming
-  /**
-   * Additional css class to apply to the control.
-   * @defaultvalue undefined
-   */
-  className?: string;
-
-  /** Base Theme */
-  theme?: ITheme;
-
-  /** Callback to get style overrides */
-  getStyles?: IStyleFunction<ICalendarViewRowHeaderStyleProps, ICalendarViewRowHeaderStyles>;
-
-  // CalendarViewRowHeader
+export interface ICalendarViewRowHeaderProps extends
+  IBaseProps,
+  IThemingProps<ICalendarViewRowHeaderStyleProps, ICalendarViewRowHeaderStyles> {
   /** Height of the row header */
   height?: number,
 

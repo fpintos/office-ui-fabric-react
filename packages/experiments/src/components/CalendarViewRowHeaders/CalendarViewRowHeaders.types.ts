@@ -3,7 +3,7 @@ import { IStyle } from 'office-ui-fabric-react/lib/Styling';
 import { IBaseProps } from 'office-ui-fabric-react/lib/Utilities';
 import { ICalendarViewRowHeaderProps } from '../CalendarViewRowHeader';
 import { GetProperties } from '../WrappedChildren';
-import { IThemingPropsProps, IThemingPropsStyleProps, IThemingPropsStyles } from '../ThemingProps';
+import { IThemingProps, IThemingStyleProps, IThemingStyles } from '../Theming';
 
 /**
  * Row-header wrapping properties supported by CalendarViewRowHeaders.
@@ -34,16 +34,16 @@ export interface ICalendarViewRowHeadersWrappingProps {
 export interface ICalendarViewRowHeadersProps extends
   IBaseProps,
   ICalendarViewRowHeadersWrappingProps,
-  IThemingPropsProps<ICalendarViewRowHeadersStyleProps, ICalendarViewRowHeadersStyles> {
+  IThemingProps<ICalendarViewRowHeadersStyleProps, ICalendarViewRowHeadersStyles> {
   /** Content of the row headers */
   children: React.ReactNode[];
 }
 
 /** Properties used to define the styles of CalendarViewRowHeaders */
-export type ICalendarViewRowHeadersStyleProps = IThemingPropsStyleProps;
+export type ICalendarViewRowHeadersStyleProps = IThemingStyleProps;
 
 /** Styles of CalendarViewRowHeaders */
-export interface ICalendarViewRowHeadersStyles extends IThemingPropsStyles {
+export interface ICalendarViewRowHeadersStyles extends IThemingStyles {
   /** Style for the row headers */
   rowHeader?: IStyle;
 }
