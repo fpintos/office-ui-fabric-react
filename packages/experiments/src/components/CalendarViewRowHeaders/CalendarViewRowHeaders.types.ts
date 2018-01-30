@@ -1,8 +1,9 @@
-import { ReactNode, ComponentType } from 'react';
-import { IStyle, ITheme } from 'office-ui-fabric-react/lib/Styling';
-import { IStyleFunction, IBaseProps } from 'office-ui-fabric-react/lib/Utilities';
+import * as React from 'react';
+import { IStyle } from 'office-ui-fabric-react/lib/Styling';
+import { IBaseProps } from 'office-ui-fabric-react/lib/Utilities';
 import { ICalendarViewRowHeaderProps } from '../CalendarViewRowHeader';
 import { GetProperties } from '../WrappedChildren';
+import { IThemingPropsProps, IThemingPropsStyleProps, IThemingPropsStyles } from '../ThemingProps';
 
 /**
  * Row-header wrapping properties supported by CalendarViewRowHeaders.
@@ -16,50 +17,33 @@ export interface ICalendarViewRowHeadersWrappingProps {
    * Type of React component that renders individual row headers.
    * Defaults to CalendarViewRowHeader.
    */
-  rowHeaderType?: ComponentType<ICalendarViewRowHeaderProps>;
+  rowHeaderType?: React.ComponentType<ICalendarViewRowHeaderProps>;
 
   /**
    * Properties applied to all row headers elements.
    */
-  rowHeaderProps?: Partial<ICalendarViewRowHeaderProps>
+  rowHeaderProps?: Partial<ICalendarViewRowHeaderProps>;
 
   /**
    * Callback to get properties of an individual row header.
    */
-  getRowHeaderProps?: GetProperties<ICalendarViewRowHeaderProps>
+  getRowHeaderProps?: GetProperties<ICalendarViewRowHeaderProps>;
 }
 
-export interface ICalendarViewRowHeadersProps extends IBaseProps, ICalendarViewRowHeadersWrappingProps {
-  // Theming
-  /**
-   * Additional css class to apply to the control.
-   * @defaultvalue undefined
-   */
-  className?: string;
-
-  /** Base Theme */
-  theme?: ITheme;
-
-  /** Callback to get style overrides */
-  getStyles?: IStyleFunction<ICalendarViewRowHeadersStyleProps, ICalendarViewRowHeadersStyles>;
-
-  // CalendarViewRowHeaders
+/** Properties of the CalendarViewRowHeaders component. */
+export interface ICalendarViewRowHeadersProps extends
+  IBaseProps,
+  ICalendarViewRowHeadersWrappingProps,
+  IThemingPropsProps<ICalendarViewRowHeadersStyleProps, ICalendarViewRowHeadersStyles> {
   /** Content of the row headers */
-  children: ReactNode[];
+  children: React.ReactNode[];
 }
 
 /** Properties used to define the styles of CalendarViewRowHeaders */
-export interface ICalendarViewRowHeadersStyleProps {
-  // Do not use nullables here; if needed, use 'type | undefined'.
-  // This ensures the compiler will detect if we forget to pass one of the parameters.
-  theme: ITheme;
-  className: string | undefined;
-}
+export type ICalendarViewRowHeadersStyleProps = IThemingPropsStyleProps;
 
 /** Styles of CalendarViewRowHeaders */
-export interface ICalendarViewRowHeadersStyles {
-  /** Style for the root element. */
-  root?: IStyle;
+export interface ICalendarViewRowHeadersStyles extends IThemingPropsStyles {
   /** Style for the row headers */
   rowHeader?: IStyle;
 }
