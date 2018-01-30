@@ -1,12 +1,16 @@
 import { IStyle, ITheme } from '../../Styling';
 import { IStyleFunction } from '../../Utilities';
+import { ICalendarViewColumnHeadersWrappingProps } from '../CalendarViewColumnHeaders';
+import { ICalendarViewRowHeadersWrappingProps } from '../CalendarViewRowHeaders';
 
 export interface ICalendarWeekView {
   /** Sets focus to the calendar view. */
   focus(): void;
 }
 
-export interface ICalendarWeekViewProps {
+export interface ICalendarWeekViewProps extends
+  ICalendarViewColumnHeadersWrappingProps,
+  ICalendarViewRowHeadersWrappingProps {
   // BaseComponent
   /**
    * Optional callback to access the ICalendarWeekView interface.

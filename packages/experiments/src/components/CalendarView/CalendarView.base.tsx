@@ -33,21 +33,33 @@ export class CalendarViewBase extends BaseComponent<ICalendarViewProps> implemen
       rowHeaderWidth: rowHeaderWidth!,
     });
 
-    const { columnHeaders } = this.props;
-
+    const { columnHeaders, columnHeaderType, columnHeaderProps, getColumnHeaderProps } = this.props;
     const { rowHeaders, rowHeaderType, rowHeaderProps, getRowHeaderProps } = this.props;
 
     return (
-      <div className={ classNames.root }>
-        <FocusZone componentRef={ this._setFocusZone }>
-          <CalendarViewColumnHeaders className={ classNames.columnHeaders } headers={ columnHeaders } />
-          <CalendarViewRowHeaders className={ classNames.rowHeaders } rowHeaderType={ rowHeaderType } rowHeaderProps={ rowHeaderProps } getRowHeaderProps={ getRowHeaderProps }>
-            { rowHeaders! }
-          </CalendarViewRowHeaders>
-          <CalendarViewGridLines className={ classNames.gridLines } />
-          <CalendarViewGrid className={ classNames.grid } />
-        </FocusZone>
-      </div>
+      <FocusZone
+        className={ classNames.root }
+        componentRef={ this._setFocusZone }
+      >
+        <CalendarViewColumnHeaders
+          className={ classNames.columnHeaders }
+          columnHeaderType={ columnHeaderType }
+          columnHeaderProps={ columnHeaderProps }
+          getColumnHeaderProps={ getColumnHeaderProps }
+        >
+          { columnHeaders! }
+        </CalendarViewColumnHeaders>
+        <CalendarViewRowHeaders
+          className={ classNames.rowHeaders }
+          rowHeaderType={ rowHeaderType }
+          rowHeaderProps={ rowHeaderProps }
+          getRowHeaderProps={ getRowHeaderProps }
+        >
+          { rowHeaders! }
+        </CalendarViewRowHeaders>
+        <CalendarViewGridLines className={ classNames.gridLines } />
+        <CalendarViewGrid className={ classNames.grid } />
+      </FocusZone>
     );
   }
 

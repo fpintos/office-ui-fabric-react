@@ -1,12 +1,16 @@
 import { IStyle, ITheme } from '../../Styling';
 import { IStyleFunction } from '../../Utilities';
+import { ICalendarViewRowHeadersWrappingProps } from '../CalendarViewRowHeaders';
+import { ICalendarViewColumnHeadersWrappingProps } from '../CalendarViewColumnHeaders';
 
 export interface ICalendarDayView {
   /** Sets focus to the calendar view. */
   focus(): void;
 }
 
-export interface ICalendarDayViewProps {
+export interface ICalendarDayViewProps extends
+  ICalendarViewColumnHeadersWrappingProps,
+  ICalendarViewRowHeadersWrappingProps {
   // BaseComponent
   /**
    * Optional callback to access the ICalendarDayView interface.
@@ -33,6 +37,11 @@ export interface ICalendarDayViewProps {
    * The date to be displayed by the calendar view.
    */
   day: Date;
+  /**
+   * The set of column headers to show in this view.
+   * Defaults to a single column, showing the selected day.
+   */
+  columnHeaders?: React.ReactNode[],
 }
 
 /** Properties used to define the styles of the CalendarDayView */

@@ -22,6 +22,9 @@ export class CalendarWeekViewBase extends BaseComponent<ICalendarWeekViewProps> 
     const { getStyles, theme, className } = this.props;
     const classNames = getClassNames(getStyles, { theme: theme!, className: className });
 
+    const { columnHeaderType, columnHeaderProps, getColumnHeaderProps } = this.props;
+    const { rowHeaderType, rowHeaderProps, getRowHeaderProps } = this.props;
+
     const { firstDay, numberOfDays } = this.props;
     const columnHeaders = [];
     for (let i = 0, day = firstDay; i < numberOfDays!; i++ , day = addDays(firstDay, 1)) {
@@ -31,7 +34,14 @@ export class CalendarWeekViewBase extends BaseComponent<ICalendarWeekViewProps> 
     return (
       <CalendarView
         componentRef={ this._setCalendarView }
-        className={ classNames.root } columnHeaders={ columnHeaders } />
+        className={ classNames.root }
+        columnHeaders={ columnHeaders }
+        columnHeaderType={ columnHeaderType }
+        columnHeaderProps={ columnHeaderProps }
+        getColumnHeaderProps={ getColumnHeaderProps }
+        rowHeaderType={ rowHeaderType }
+        rowHeaderProps={ rowHeaderProps }
+        getRowHeaderProps={ getRowHeaderProps } />
     );
   }
 

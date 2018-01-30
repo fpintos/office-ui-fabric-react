@@ -2,6 +2,8 @@ import * as React from 'react';
 import { ExampleCard, IComponentDemoPageProps, ComponentPage, PropertiesTableSet } from '@uifabric/example-app-base';
 
 import { CalendarViewColumnHeadersBasicExample } from './examples/CalendarViewColumnHeaders.Basic.Example';
+import { CalendarViewColumnHeadersPeopleExample } from './examples/CalendarViewColumnHeaders.People.Example';
+import { CalendarViewColumnHeadersWeatherExample } from './examples/CalendarViewColumnHeaders.Weather.Example';
 
 export class CalendarViewColumnHeadersPage extends React.Component<IComponentDemoPageProps, {}> {
   public render(): JSX.Element {
@@ -17,11 +19,28 @@ export class CalendarViewColumnHeadersPage extends React.Component<IComponentDem
             >
               <CalendarViewColumnHeadersBasicExample />
             </ExampleCard>
+
+            <ExampleCard
+              title='Column Headers with People'
+              code={ require('!raw-loader!./examples/CalendarViewColumnHeaders.People.Example') }
+            >
+              <CalendarViewColumnHeadersPeopleExample />
+            </ExampleCard>
+
+            <ExampleCard
+              title='Column Headers with Weather'
+              code={ require('!raw-loader!./examples/CalendarViewColumnHeaders.Weather.Example') }
+            >
+              <CalendarViewColumnHeadersWeatherExample />
+            </ExampleCard>
           </div>
         }
         propertiesTables={
           <PropertiesTableSet
-            sources={ [require('!raw-loader!./CalendarViewColumnHeaders.types')] }
+            sources={ [
+              require('!raw-loader!./CalendarViewColumnHeaders.types'),
+              require('!raw-loader!../Theming/Theming.types')
+            ] }
           />
         }
         overview={

@@ -19,14 +19,23 @@ export class CalendarDayViewBase extends BaseComponent<ICalendarDayViewProps> im
     const { getStyles, theme, className } = this.props;
     const classNames = getClassNames(getStyles, { theme: theme!, className: className });
 
+    const { columnHeaderType, columnHeaderProps, getColumnHeaderProps } = this.props;
+    const { rowHeaderType, rowHeaderProps, getRowHeaderProps } = this.props;
+
     const { day } = this.props;
-    const columnHeaders = [day.toLocaleDateString()];
+    const { columnHeaders = [day.toLocaleDateString()] } = this.props;
 
     return (
       <CalendarView
         componentRef={ this._setCalendarView }
         className={ classNames.root }
-        columnHeaders={ columnHeaders } />
+        columnHeaders={ columnHeaders }
+        columnHeaderType={ columnHeaderType }
+        columnHeaderProps={ columnHeaderProps }
+        getColumnHeaderProps={ getColumnHeaderProps }
+        rowHeaderType={ rowHeaderType }
+        rowHeaderProps={ rowHeaderProps }
+        getRowHeaderProps={ getRowHeaderProps } />
     );
   }
 

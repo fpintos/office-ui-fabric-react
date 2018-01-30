@@ -1,34 +1,49 @@
-import { IStyle, ITheme } from 'office-ui-fabric-react/lib/Styling';
-import { IStyleFunction, IBaseProps } from 'office-ui-fabric-react/lib/Utilities';
+import * as React from 'react';
+import { IStyle } from 'office-ui-fabric-react/lib/Styling';
+import { IBaseProps } from 'office-ui-fabric-react/lib/Utilities';
+import { ICalendarViewColumnHeaderProps } from '../CalendarViewColumnHeader';
+import { GetProperties } from '../WrappedChildren';
+import { IThemingProps, IThemingStyleProps, IThemingStyles } from '../Theming';
 
-export interface ICalendarViewColumnHeadersProps extends IBaseProps {
-  // Theming
+/**
+ * Column-header wrapping properties supported by CalendarViewColumnHeaders.
+ *
+ * These properties allow consumers of CalendarViewColumnHeaders to
+ * override the default CalendarViewColumnHeader control and to modify
+ * how individual column headers are rendered.
+ */
+export interface ICalendarViewColumnHeadersWrappingProps {
   /**
-   * Additional css class to apply to the control.
-   * @defaultvalue undefined
+   * Type of React component that renders individual column headers.
+   * Defaults to CalendarViewColumnHeader.
    */
-  className?: string;
+  columnHeaderType?: React.ComponentType<ICalendarViewColumnHeaderProps>;
 
-  /** Base Theme */
-  theme?: ITheme;
+  /**
+   * Properties applied to all column headers elements.
+   */
+  columnHeaderProps?: Partial<ICalendarViewColumnHeaderProps>;
 
-  /** Callback to get style overrides */
-  getStyles?: IStyleFunction<ICalendarViewColumnHeadersStyleProps, ICalendarViewColumnHeadersStyles>;
+  /**
+   * Callback to get properties of an individual column header.
+   */
+  getColumnHeaderProps?: GetProperties<ICalendarViewColumnHeaderProps>;
+}
 
-  // CalendarViewColumnHeaders
-  headers: React.ReactNode[],
+/** Properties of the CalendarViewColumnHeaders component. */
+export interface ICalendarViewColumnHeadersProps extends
+  IBaseProps,
+  ICalendarViewColumnHeadersWrappingProps,
+  IThemingProps<ICalendarViewColumnHeadersStyleProps, ICalendarViewColumnHeadersStyles> {
+  /** Content of the column headers */
+  children: React.ReactNode[];
 }
 
 /** Properties used to define the styles of CalendarViewColumnHeaders */
-export interface ICalendarViewColumnHeadersStyleProps {
-  // Do not use nullables here; if needed, use 'type | undefined'.
-  // This ensures the compiler will detect if we forget to pass one of the parameters.
-  theme: ITheme;
-  className: string | undefined;
-}
+export type ICalendarViewColumnHeadersStyleProps = IThemingStyleProps;
 
 /** Styles of CalendarViewColumnHeaders */
-export interface ICalendarViewColumnHeadersStyles {
-  /** Style for the root element. */
-  root?: IStyle;
+export interface ICalendarViewColumnHeadersStyles extends IThemingStyles {
+  /** Style for the column headers */
+  columnHeader?: IStyle;
 }
