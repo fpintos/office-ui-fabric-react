@@ -1,4 +1,5 @@
 @import '../../common/common';
+@import '../../common/semanticSlots';
 
 // Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See LICENSE in the project root for license information.
 
@@ -9,7 +10,7 @@
 @import '../Label/LabelMixins.scss';
 
 // component slots
-$field-background-color: $bodyBackgroundColor;
+$field-background-color: $inputBackgroundColor;
 $field-background-disabled-color: $disabledBackgroundColor;
 
 $field-border-color: $inputBorderColor;
@@ -26,6 +27,17 @@ $field-placeholder-disabled-color: $disabledTextColor;
 
 $field-description-color: $bodySubtextColor;
 $field-error-color: $errorTextColor;
+
+// Mixin for focus border, including high contrast
+@mixin fieldFocusBorder {
+  border-color: $field-border-focus-color;
+  @include high-contrast {
+    border-width: 2px;
+    .field {
+      @include ms-padding(0, 11px, 0, 11px);
+    }
+  }
+}
 
 // the box containing the label and input field
 .root {
@@ -53,14 +65,18 @@ $field-error-color: $errorTextColor;
   }
 
   &.fieldGroupIsFocused {
-    border-color: $field-border-focus-color;
+    @include fieldFocusBorder();
+  }
+
+  &.fieldGroupIsFocused {
+    &.invalid {
+      border-color: $field-border-error-color;
+    }
   }
 
   .rootIsDisabled & {
     background-color: $field-background-disabled-color;
     border-color: $field-border-disabled-color;
-    pointer-events: none;
-    cursor: default;
   }
 
   &:hover,
@@ -73,6 +89,12 @@ $field-error-color: $errorTextColor;
   &::-ms-clear {
     display: none;
   }
+
+  ::placeholder,
+  :-ms-input-placeholder {
+    color: $inputPlaceholderTextColor;
+    opacity: 1;
+  }
 }
 
 //= State: A disabled textfield
@@ -80,18 +102,17 @@ $field-error-color: $errorTextColor;
   :global(.field) {
     background-color: $field-background-disabled-color;
     border-color: $field-border-disabled-color;
-    pointer-events: none;
-    cursor: default;
   }
 }
 
 .fieldPrefixSuffix {
+  align-items: center;
   background: $ms-color-neutralLighter;
   color: $ms-color-neutralSecondary;
   display: flex;
-  align-items: center;
-  padding: 0 10px;
   line-height: 1;
+  padding: 0 10px;
+  white-space: nowrap;
 }
 
 .field {
@@ -100,16 +121,23 @@ $field-error-color: $errorTextColor;
   border-radius: 0;
   border: none;
   background: none;
+  background-color: transparent;
   color: $field-text-color;
   @include ms-padding(0, 12px, 0, 12px);
   width: 100%;
+  /**
+   * min-width is set to 1 in order to tell the browser to ignore the
+   * default value calculated from the size attribute and respect the
+   * width set on parent elements.
+   */
+  min-width: 0;
   text-overflow: ellipsis;
   outline: 0;
   &:active,
   &:focus,
   &:hover {
-      outline: 0;
-    }
+    outline: 0;
+  }
   &.hasIcon {
     @include ms-padding-right(24px);
   }
@@ -117,15 +145,11 @@ $field-error-color: $errorTextColor;
   &[disabled] {
     background-color: transparent;
     border-color: transparent;
-    pointer-events: none;
-    cursor: default;
   }
+}
 
-  .field {
-    &::placeholder {
-      color: $field-placeholder-disabled-color;
-    }
-  }
+.field::placeholder {
+  color: $field-placeholder-color;
 }
 
 //= State: A required textfield
@@ -149,7 +173,7 @@ $field-error-color: $errorTextColor;
 
 //= State: An active textfield
 .root.rootIsActive {
-  border-color: $field-border-focus-color;
+  @include fieldFocusBorder();
 }
 
 .icon {
@@ -174,19 +198,13 @@ $field-error-color: $errorTextColor;
 
 //== Modifier: Single line (default), underlined
 .root.rootIsUnderlined {
-  border-width: 0px;
-
-  &:hover:not(.rootIsDisabled) {
-    border-color: $field-border-hover-color;
-
-    @include high-contrast {
-      border-color: Highlight;
-    }
-  }
+  border: 0px solid $field-border-color;
 
   .wrapper {
     display: flex;
-    border-bottom: 1px solid $field-border-color;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: inherit;
     width: 100%;
 
     &.invalid,
@@ -212,7 +230,7 @@ $field-error-color: $errorTextColor;
   }
 
   &.rootIsDisabled {
-    border-bottom-color: $field-border-disabled-color;
+    border-color: $field-border-disabled-color;
 
     :global(.ms-Label) {
       @include ms-Label-is-disabled;
@@ -228,15 +246,23 @@ $field-error-color: $errorTextColor;
     }
   }
 
-  &.rootIsActive {
-    border-color: $field-border-focus-color;
+  &:hover:not(.rootIsActive):not(.rootIsDisabled) {
+    border-color: $field-border-hover-color;
+  }
 
-    @include high-contrast {
-      border-color: Highlight;
+  &.rootIsActive {
+    @include fieldFocusBorder();
+  }
+
+  &:hover:not(.rootIsDisabled),
+  &.rootIsActive {
+    .wrapper {
+      @include high-contrast {
+        border-color: Highlight;
+      }
     }
   }
 }
-
 
 //== Modifier: Multiline textfield
 //
@@ -277,7 +303,6 @@ $field-error-color: $errorTextColor;
 }
 
 .root.rootIsUnderlined {
-
   :global(.ms-Label) {
     @include ms-padding-left(12px);
     @include ms-padding-right(0);
@@ -289,7 +314,6 @@ $field-error-color: $errorTextColor;
 }
 
 .root.rootIsMultiline {
-
   .icon {
     @include ms-padding-right(24px);
     padding-bottom: 8px;

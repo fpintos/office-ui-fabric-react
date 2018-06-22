@@ -1,23 +1,15 @@
-import { Customizations } from '@uifabric/utilities/lib/Customizations';
-import {
-  IPalette,
-  ISemanticColors,
-  ITheme,
-  IPartialTheme
-} from '../interfaces/index';
-import {
-  DefaultFontStyles
-} from './DefaultFontStyles';
-import {
-  DefaultPalette
-} from './DefaultPalette';
+import { Customizations } from '@uifabric/utilities';
+import { IPalette, ISemanticColors, ITheme, IPartialTheme } from '../interfaces/index';
+import { DefaultFontStyles } from './DefaultFontStyles';
+import { DefaultPalette } from './DefaultPalette';
 import { loadTheme as legacyLoadTheme } from '@microsoft/load-themed-styles';
 
 let _theme: ITheme = {
   palette: DefaultPalette,
-  semanticColors: _makeSemanticColorsFromPalette(DefaultPalette, false),
+  semanticColors: _makeSemanticColorsFromPalette(DefaultPalette, false, false),
   fonts: DefaultFontStyles,
-  isInverted: false
+  isInverted: false,
+  disableGlobalClassNames: false
 };
 let _onThemeChangeCallbacks: Array<(theme: ITheme) => void> = [];
 
@@ -37,9 +29,13 @@ if (!Customizations.getSettings([ThemeSettingName]).theme) {
 }
 
 /**
- * Gets the theme object.
+ * Gets the theme object
+ * @param {boolean} depComments - Whether to include deprecated tags as comments for deprecated slots.
  */
-export function getTheme(): ITheme {
+export function getTheme(depComments: boolean = false): ITheme {
+  if (depComments === true) {
+    _theme = createTheme({}, depComments);
+  }
   return _theme;
 }
 
@@ -69,9 +65,11 @@ export function removeOnThemeChangeCallback(callback: (theme: ITheme) => void): 
 
 /**
  * Applies the theme, while filling in missing slots.
+ * @param {object} theme - Partial theme object.
+ * @param {boolean} depComments - Whether to include deprecated tags as comments for deprecated slots.
  */
-export function loadTheme(theme: IPartialTheme): ITheme {
-  _theme = createTheme(theme);
+export function loadTheme(theme: IPartialTheme, depComments: boolean = false): ITheme {
+  _theme = createTheme(theme, depComments);
 
   // Invoke the legacy method of theming the page as well.
   legacyLoadTheme({ ..._theme.palette, ..._theme.semanticColors });
@@ -91,13 +89,21 @@ export function loadTheme(theme: IPartialTheme): ITheme {
 
 /**
  * Creates a custom theme definition which can be used with the Customizer.
+ * @param {object} theme - Partial theme object.
+ * @param {boolean} depComments - Whether to include deprecated tags as comments for deprecated slots.
  */
-export function createTheme(theme: IPartialTheme): ITheme {
+export function createTheme(theme: IPartialTheme, depComments: boolean = false): ITheme {
   let newPalette = { ...DefaultPalette, ...theme.palette };
 
   if (!theme.palette || !theme.palette.accent) {
     newPalette.accent = newPalette.themePrimary;
   }
+
+  // mix in custom overrides with good slots first, since custom overrides might be used in fixing deprecated slots
+  let newSemanticColors = {
+    ..._makeSemanticColorsFromPalette(newPalette, !!theme.isInverted, depComments),
+    ...theme.semanticColors
+  };
 
   return {
     palette: newPalette,
@@ -105,20 +111,22 @@ export function createTheme(theme: IPartialTheme): ITheme {
       ...DefaultFontStyles,
       ...theme.fonts
     },
-    semanticColors: { ..._makeSemanticColorsFromPalette(newPalette, !!theme.isInverted), ...theme.semanticColors },
-    isInverted: !!theme.isInverted
-  } as ITheme;
+    semanticColors: newSemanticColors,
+    isInverted: !!theme.isInverted,
+    disableGlobalClassNames: !!theme.disableGlobalClassNames
+  };
 }
 
 // Generates all the semantic slot colors based on the Fabric palette.
 // We'll use these as fallbacks for semantic slots that the passed in theme did not define.
-function _makeSemanticColorsFromPalette(p: IPalette, isInverted: boolean): ISemanticColors {
-  return {
+function _makeSemanticColorsFromPalette(p: IPalette, isInverted: boolean, depComments: boolean): ISemanticColors {
+  let toReturn: ISemanticColors = {
     bodyBackground: p.white,
+    bodyFrameBackground: p.white,
     bodyText: p.neutralPrimary,
     bodyTextChecked: p.black,
     bodySubtext: p.neutralSecondary,
-    bodyDivider: p.neutralLight,
+    bodyDivider: p.neutralTertiaryAlt,
 
     disabledBackground: p.neutralLighter,
     disabledText: p.neutralTertiary,
@@ -137,10 +145,13 @@ function _makeSemanticColorsFromPalette(p: IPalette, isInverted: boolean): ISema
 
     inputBorder: p.neutralTertiary,
     inputBorderHovered: p.neutralDark,
+    inputBackground: p.white,
     inputBackgroundChecked: p.themePrimary,
     inputBackgroundCheckedHovered: p.themeDarkAlt,
     inputForegroundChecked: p.white,
     inputFocusBorderAlt: p.themePrimary,
+    smallInputBorder: p.neutralSecondary,
+    inputPlaceholderText: p.neutralSecondary,
 
     buttonBackground: p.neutralLighter,
     buttonBackgroundChecked: p.neutralTertiaryAlt,
@@ -153,14 +164,37 @@ function _makeSemanticColorsFromPalette(p: IPalette, isInverted: boolean): ISema
     buttonTextCheckedHovered: p.black,
 
     menuItemBackgroundHovered: p.neutralLighter,
-    menuItemBackgroundChecked: p.neutralLight,
     menuIcon: p.themePrimary,
     menuHeader: p.themePrimary,
 
     listBackground: p.white,
-    listTextColor: p.neutralPrimary,
+    listText: p.neutralPrimary,
     listItemBackgroundHovered: p.neutralLighter,
     listItemBackgroundChecked: p.neutralLight,
-    listItemBackgroundCheckedHovered: p.neutralQuaternaryAlt
+    listItemBackgroundCheckedHovered: p.neutralQuaternaryAlt,
+
+    listHeaderBackgroundHovered: p.neutralLighter,
+    listHeaderBackgroundPressed: p.neutralLight,
+
+    link: p.themePrimary,
+    linkHovered: p.themeDarker,
+
+    // Deprecated slots, second pass by _fixDeprecatedSlots() later for self-referential slots
+    listTextColor: '',
+    menuItemBackgroundChecked: p.neutralLight
   };
+
+  return _fixDeprecatedSlots(toReturn, depComments!);
+}
+
+function _fixDeprecatedSlots(s: ISemanticColors, depComments: boolean): ISemanticColors {
+  // Add @deprecated tag as comment if enabled
+  let dep = '';
+  if (depComments === true) {
+    dep = ' /* @deprecated */';
+  }
+
+  s.listTextColor = s.listText + dep;
+  s.menuItemBackgroundChecked += dep;
+  return s;
 }

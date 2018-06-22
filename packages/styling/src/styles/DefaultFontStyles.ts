@@ -1,12 +1,7 @@
-import {
-  fontFace,
-  IFontWeight
-} from '@uifabric/merge-styles/lib/index';
-import {
-  IFontStyles
-} from '../interfaces/index';
+import { fontFace, IFontWeight } from '@uifabric/merge-styles';
+import { IFontStyles } from '../interfaces/index';
 import { createFontStyles, FontWeights, LocalizedFontFamilies, LocalizedFontNames } from './fonts';
-import { getLanguage } from '@uifabric/utilities/lib/language';
+import { getLanguage } from '@uifabric/utilities';
 import { IFabricConfig } from '../interfaces/IFabricConfig';
 
 // Default urls.
@@ -15,18 +10,14 @@ const DefaultBaseUrl = 'https://static2.sharepointonline.com/files/fabric/assets
 // Standard font styling.
 export const DefaultFontStyles: IFontStyles = createFontStyles(getLanguage());
 
-function _registerFontFace(
-  fontFamily: string,
-  url: string,
-  fontWeight?: IFontWeight
-): void {
+function _registerFontFace(fontFamily: string, url: string, fontWeight?: IFontWeight, localFontName?: string): void {
   fontFamily = `'${fontFamily}'`;
+
+  const localFontSrc = localFontName !== undefined ? `local('${localFontName}'),` : '';
 
   fontFace({
     fontFamily,
-    src:
-      `url('${url}.woff2') format('woff2'),` +
-      `url('${url}.woff') format('woff')`,
+    src: localFontSrc + `url('${url}.woff2') format('woff2'),` + `url('${url}.woff') format('woff')`,
     fontWeight,
     fontStyle: 'normal'
   });
@@ -36,14 +27,25 @@ function _registerFontFaceSet(
   baseUrl: string,
   fontFamily: string,
   cdnFolder: string,
-  cdnFontName: string = 'segoeui'
+  cdnFontName: string = 'segoeui',
+  localFontName?: string
 ): void {
   const urlBase = `${baseUrl}/${cdnFolder}/${cdnFontName}`;
 
-  _registerFontFace(fontFamily, urlBase + '-light', FontWeights.light);
-  _registerFontFace(fontFamily, urlBase + '-semilight', FontWeights.semilight);
-  _registerFontFace(fontFamily, urlBase + '-regular', FontWeights.regular);
-  _registerFontFace(fontFamily, urlBase + '-semibold', FontWeights.semibold);
+  _registerFontFace(fontFamily, urlBase + '-light', FontWeights.light, localFontName && localFontName + ' Light');
+  _registerFontFace(
+    fontFamily,
+    urlBase + '-semilight',
+    FontWeights.semilight,
+    localFontName && localFontName + ' SemiLight'
+  );
+  _registerFontFace(fontFamily, urlBase + '-regular', FontWeights.regular, localFontName);
+  _registerFontFace(
+    fontFamily,
+    urlBase + '-semibold',
+    FontWeights.semibold,
+    localFontName && localFontName + ' SemiBold'
+  );
 }
 
 export function registerDefaultFontFaces(baseUrl: string): void {
@@ -58,7 +60,7 @@ export function registerDefaultFontFaces(baseUrl: string): void {
     _registerFontFaceSet(fontUrl, LocalizedFontNames.Greek, 'segoeui-greek');
     _registerFontFaceSet(fontUrl, LocalizedFontNames.Hebrew, 'segoeui-hebrew');
     _registerFontFaceSet(fontUrl, LocalizedFontNames.Vietnamese, 'segoeui-vietnamese');
-    _registerFontFaceSet(fontUrl, LocalizedFontNames.WestEuropean, 'segoeui-westeuropean');
+    _registerFontFaceSet(fontUrl, LocalizedFontNames.WestEuropean, 'segoeui-westeuropean', 'segoeui', 'Segoe UI');
     _registerFontFaceSet(fontUrl, LocalizedFontFamilies.Selawik, 'selawik', 'selawik');
 
     // Leelawadee UI (Thai) does not have a 'light' weight, so we override
@@ -80,7 +82,7 @@ function _getFontBaseUrl(): string {
   // tslint:disable-next-line:no-string-literal no-any
   let fabricConfig: IFabricConfig = win ? win['FabricConfig'] : undefined;
 
-  return (fabricConfig && fabricConfig.fontBaseUrl !== undefined) ? fabricConfig.fontBaseUrl : DefaultBaseUrl;
+  return fabricConfig && fabricConfig.fontBaseUrl !== undefined ? fabricConfig.fontBaseUrl : DefaultBaseUrl;
 }
 
 /**

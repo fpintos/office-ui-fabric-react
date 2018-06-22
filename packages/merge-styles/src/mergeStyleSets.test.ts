@@ -1,8 +1,5 @@
 import { mergeStyleSets } from './mergeStyleSets';
-import {
-  Stylesheet,
-  InjectionMode
-} from './Stylesheet';
+import { Stylesheet, InjectionMode } from './Stylesheet';
 
 const _stylesheet: Stylesheet = Stylesheet.getInstance();
 
@@ -18,8 +15,9 @@ describe('mergeStyleSets', () => {
   });
 
   it('can merge style sets', () => {
-    const result: { root: string, a: string, b: string } = mergeStyleSets(
-      {},
+    const empty: { c?: string } = {};
+    const result: { root: string; a: string; b: string } = mergeStyleSets(
+      empty,
       {
         root: { background: 'red' },
         a: { background: 'green' }
@@ -44,33 +42,30 @@ describe('mergeStyleSets', () => {
     });
 
     expect(_stylesheet.getRules()).toEqual(
-      '.root-0{background:red;}.root-0:hover{background:yellow;}' +
-      '.a-1{background:white;}' +
-      '.b-2{background:blue;}'
+      '.root-0{background:red;}.root-0:hover{background:yellow;}' + '.a-1{background:white;}' + '.b-2{background:blue;}'
     );
   });
 
   it('can expand child selectors', () => {
-    const result = mergeStyleSets(
-      {
-        a: {
-          selectors: {
-            ':hover $b': {
-              background: 'green'
-            },
-            ':focus $c-foo': {
-              background: 'red'
-            },
-            ':active .d': {
-              background: 'pink'
-            }
+    const result = mergeStyleSets({
+      a: {
+        selectors: {
+          ':hover $b': {
+            background: 'green'
+          },
+          ':focus $c-foo': {
+            background: 'red'
+          },
+          ':active .d': {
+            background: 'pink'
           }
-        },
-        b: {
-          background: 'blue'
-        },
-        'c-foo': {}
-      });
+        }
+      },
+      b: {
+        background: 'blue'
+      },
+      'c-foo': {}
+    });
 
     expect(result).toEqual({
       a: 'a-0',
@@ -80,9 +75,9 @@ describe('mergeStyleSets', () => {
 
     expect(_stylesheet.getRules()).toEqual(
       '.a-0:hover .b-1{background:green;}' +
-      '.a-0:focus .c-foo-2{background:red;}' +
-      '.a-0:active .d{background:pink;}' +
-      '.b-1{background:blue;}'
+        '.a-0:focus .c-foo-2{background:red;}' +
+        '.a-0:active .d{background:pink;}' +
+        '.b-1{background:blue;}'
     );
   });
 
@@ -108,10 +103,7 @@ describe('mergeStyleSets', () => {
       root: 'a root-0',
       child: 'd child-1'
     });
-    expect(_stylesheet.getRules()).toEqual(
-      '.root-0:hover .child-1{background:red;}' +
-      '.child-1{background:green;}'
-    );
+    expect(_stylesheet.getRules()).toEqual('.root-0:hover .child-1{background:red;}' + '.child-1{background:green;}');
   });
 
   it('can merge class names', () => {
@@ -126,9 +118,7 @@ describe('mergeStyleSets', () => {
 
     expect(styles.root).toEqual(styles2.root);
 
-    expect(_stylesheet.getRules()).toEqual(
-      '.root-0{background:red;}'
-    );
+    expect(_stylesheet.getRules()).toEqual('.root-0{background:red;}');
   });
 
   it('can normalize duplicate static class names', () => {
@@ -152,26 +142,13 @@ describe('mergeStyleSets', () => {
 
   it('can merge two sets with class names', () => {
     const styleSet1: ITestClasses = mergeStyleSets({
-      root: [
-        'ms-Foo',
-        { background: 'red' }
-      ]
+      root: ['ms-Foo', { background: 'red' }]
     });
-    const styleSet2: ITestClasses = mergeStyleSets(
-      styleSet1,
-      {
-        root: [
-          'ms-Bar',
-          { background: 'green' }
-        ]
-      }
-    );
+    const styleSet2: ITestClasses = mergeStyleSets(styleSet1, {
+      root: ['ms-Bar', { background: 'green' }]
+    });
 
     expect(styleSet2).toEqual({ root: 'ms-Foo ms-Bar root-1' });
-    expect(_stylesheet.getRules()).toEqual(
-      '.root-0{background:red;}' +
-      '.root-1{background:green;}'
-    );
+    expect(_stylesheet.getRules()).toEqual('.root-0{background:red;}' + '.root-1{background:green;}');
   });
-
 });

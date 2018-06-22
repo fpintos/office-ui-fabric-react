@@ -1,30 +1,23 @@
-import * as React from 'react';
-import { Callout } from './Callout';
-import { CalloutContent } from './CalloutContent';
+import { IStyle, ITheme } from '../../Styling';
 import { DirectionalHint } from '../../common/DirectionalHint';
-import {
-  IPoint,
-  IRectangle
-} from '../../Utilities';
+import { IPoint, IRectangle, IStyleFunctionOrObject } from '../../Utilities';
 import { ICalloutPositionedInfo } from '../../utilities/positioning';
 
-export interface ICallout {
+export interface ICallout {}
 
-}
-
-export interface ICalloutProps extends React.Props<Callout | CalloutContent> {
+export interface ICalloutProps {
   /**
    * Optional callback to access the ICallout interface. Use this instead of ref for accessing
    * the public methods and properties of the component.
    */
-  componentRef?: (component: ICallout) => void;
+  componentRef?: (component: ICallout | null) => void;
 
   /**
    * The target that the Callout should try to position itself based on.
-   * It can be either an HTMLElement a querySelector string of a valid HTMLElement
+   * It can be either an Element a querySelector string of a valid Element
    * or a MouseEvent. If MouseEvent is given then the origin point of the event will be used.
    */
-  target?: HTMLElement | string | MouseEvent | IPoint | null;
+  target?: Element | string | MouseEvent | IPoint | null;
 
   /**
    * How the element should be positioned
@@ -57,6 +50,12 @@ export interface ICalloutProps extends React.Props<Callout | CalloutContent> {
   calloutWidth?: number;
 
   /**
+   * Custom width for callout including borders. If value is 0, no width is applied.
+   * @default 0
+   */
+  calloutMaxWidth?: number;
+
+  /**
    * The background color of the Callout in hex format ie. #ffffff.
    * @default $ms-color-white
    */
@@ -74,29 +73,22 @@ export interface ICalloutProps extends React.Props<Callout | CalloutContent> {
   minPagePadding?: number;
 
   /**
-   * If true use a point rather than rectangle to position the Callout.
-   * For example it can be used to position based on a click.
-   * @deprecated Use 'target' instead
-   */
-  useTargetPoint?: boolean;
-
-  /**
-   * Point used to position the Callout
-   * @deprecated Use 'target' instead
-   */
-  targetPoint?: IPoint;
-
-  /**
    * If true then the beak is visible. If false it will not be shown.
    * @default true
    */
   isBeakVisible?: boolean;
 
   /**
-   * If true then the onClose will not not dismiss on scroll
+   * If true then the callout will not dismiss on scroll
    * @default false
    */
   preventDismissOnScroll?: boolean;
+
+  /**
+   * If true then the callout will not dismiss when it loses focus
+   * @default false
+   */
+  preventDismissOnLostFocus?: boolean;
 
   /**
    * If true the position returned will have the menu element cover the target.
@@ -177,12 +169,6 @@ export interface ICalloutProps extends React.Props<Callout | CalloutContent> {
   setInitialFocus?: boolean;
 
   /**
-    * Deprecated at v0.59.1, to be removed at >= v1.0.0. Pass in a beakWidth to dictate size.
-    * @deprecated
-    */
-  beakStyle?: string;
-
-  /**
    * Set max height of callout
    * When not set the callout will expand with contents up to the bottom of the screen
    */
@@ -192,4 +178,93 @@ export interface ICalloutProps extends React.Props<Callout | CalloutContent> {
    * Callback when the Callout body is scrolled.
    */
   onScroll?: () => void;
+
+  /**
+   * Optional theme for component
+   */
+  theme?: ITheme;
+
+  /**
+   * Optional styles for the component.
+   */
+  styles?: IStyleFunctionOrObject<ICalloutContentStyleProps, ICalloutContentStyles>;
+
+  /**
+   * If specified, renders the Callout in a hidden state.
+   * Use this flag, rather than rendering a callout conditionally based on visibility,
+   * to improve rendering performance when it becomes visible.
+   * Note: When callout is hidden its content will not be rendered. It will only render
+   * once the callout is visible.
+   */
+  hidden?: boolean;
+}
+
+export interface ICalloutContentStyleProps {
+  /**
+   * Theme to apply to the calloutContent.
+   */
+  theme: ITheme;
+
+  /**
+   * Width for callout including borders.
+   */
+  calloutWidth?: number;
+
+  /**
+   * CSS class to apply to the callout.
+   */
+  className?: string;
+
+  /**
+   * Callout positioning data
+   */
+  positions?: ICalloutPositionedInfo;
+
+  /**
+   * Whether or not to clip content of the callout,
+   * if it overflows vertically.
+   */
+  overflowYHidden?: boolean;
+
+  /**
+   * Background color for the beak and callout.
+   */
+  backgroundColor?: string;
+
+  /**
+   * Width of Callout beak
+   */
+  beakWidth?: number;
+
+  /**
+   * Max width for callout including borders.
+   */
+  calloutMaxWidth?: number;
+}
+
+export interface ICalloutContentStyles {
+  /**
+   * Style for wrapper of Callout component.
+   */
+  container: IStyle;
+
+  /**
+   * Style for callout container root element.
+   */
+  root: IStyle;
+
+  /**
+   * Style for callout beak.
+   */
+  beak: IStyle;
+
+  /**
+   * Style for callout beak curtain.
+   */
+  beakCurtain: IStyle;
+
+  /**
+   * Style for content component of the callout.
+   */
+  calloutMain: IStyle;
 }

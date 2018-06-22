@@ -57,6 +57,13 @@ export interface ISemanticColors {
   bodyBackground: string;
 
   /**
+   * A special semantic slot that will always be the same or darker (not necessarily stronger) than the bodyBackground slot, even in
+   * an inverted theme. This is used for zones near the edge of the page, to provide a vignetting effect. This is especially effective
+   * with zones near the edge of the page in stronger themes or if it uses a variant theme.
+   */
+  bodyFrameBackground: string;
+
+  /**
    * The default color for text.
    */
   bodyText: string;
@@ -75,6 +82,16 @@ export interface ISemanticColors {
    * Divider lines; e.g. lines that separate sections in a menu, an <HR> element.
    */
   bodyDivider: string;
+
+  /**
+   * The color of a link.
+   */
+  link: string;
+
+  /**
+   * The color of a hovered link. Also used when the link is active.
+   */
+  linkHovered: string;
 
   /**
    * The default color for backgrounds of disabled controls; e.g. disabled text field.
@@ -135,13 +152,24 @@ export interface ISemanticColors {
   //// Input controls slots (text fields, checkboxes, radios...)
 
   /**
-   * The border of an input control in its resting, unchecked state; e.g. the box of an unchecked checkbox.
+   * The border of a large input control in its resting, state; e.g. the box of dropdown.
    */
   inputBorder: string;
+
+  /** The border of a small input control in its resting unchecked state; e.g. the box of an unchecked checkbox.
+   *
+   */
+  smallInputBorder: string;
+
   /**
-   * The border color of a hovered input control.
+   * The border color of a large hovered input control, such as textbox.
    */
   inputBorderHovered: string;
+
+  /**
+   * The background color of an input, e.g. textbox background.
+   */
+  inputBackground: string;
 
   /**
    * The background of a checked control; e.g. checked radio button's dot, checked toggle's background.
@@ -163,6 +191,11 @@ export interface ISemanticColors {
    * The alternate focus border color for elements that already have a border; e.g. text field borders on focus.
    */
   inputFocusBorderAlt: string;
+
+  /**
+   * The color of placeholder text.
+   */
+  inputPlaceholderText: string;
 
   //// Buttons
 
@@ -213,12 +246,6 @@ export interface ISemanticColors {
   menuItemBackgroundHovered: string;
 
   /**
-   * @deprecated
-   * The background of checked menu item; e.g. a menu item whose submenu is open, a selected dropdown item.
-   */
-  menuItemBackgroundChecked: string;
-
-  /**
    * The default colors of icons in menus.
    */
   menuIcon: string;
@@ -238,7 +265,7 @@ export interface ISemanticColors {
   /**
    * The default text color for list item titles and text in column fields.
    */
-  listTextColor: string;
+  listText: string;
 
   /**
    * The background color of a hovered list item.
@@ -254,4 +281,28 @@ export interface ISemanticColors {
    * The background color of a checked and hovered list item.
    */
   listItemBackgroundCheckedHovered: string;
+
+  /**
+   * The background color for a hovered list header.
+   */
+  listHeaderBackgroundHovered: string;
+
+  /**
+   * The background color for a pressed list header.
+   */
+  listHeaderBackgroundPressed: string;
+
+  //// DEPRECATED SLOTS
+  // Do not use these slots, they are only maintained for backwards compatibility.
+
+  /** @deprecated
+   * This slot was incorrectly named. Use listText instead. */
+  listTextColor: string;
+
+  /**
+   * @deprecated
+   * (Checked menu items no longer get a background color.)
+   * The background of checked menu item; e.g. a menu item whose submenu is open, a selected dropdown item.
+   */
+  menuItemBackgroundChecked: string;
 }

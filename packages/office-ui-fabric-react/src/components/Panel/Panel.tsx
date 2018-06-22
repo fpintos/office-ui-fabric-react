@@ -1,21 +1,13 @@
-/* tslint:disable:no-unused-variable */
 import * as React from 'react';
-/* tslint:enable:no-unused-variable */
 
-import {
-  BaseComponent,
-  autobind,
-  css,
-  getId,
-  getRTL
-} from '../../Utilities';
+import { BaseComponent, css, divProperties, getId, getNativeProps, getRTL, createRef } from '../../Utilities';
 import { FocusTrapZone } from '../FocusTrapZone/index';
 import { IPanel, IPanelProps, PanelType } from './Panel.types';
 import { Layer } from '../Layer/Layer';
 import { Overlay } from '../../Overlay';
 import { Popup } from '../../Popup';
 import { IconButton } from '../../Button';
-import { AnimationClassNames, getTheme, FontSizes, IconFontSizes } from '../../Styling';
+import { AnimationClassNames, getTheme, IconFontSizes } from '../../Styling';
 import * as stylesImport from './Panel.scss';
 const styles: any = stylesImport;
 const theme = getTheme();
@@ -28,19 +20,24 @@ export interface IPanelState {
 }
 
 export class Panel extends BaseComponent<IPanelProps, IPanelState> implements IPanel {
-
   public static defaultProps: IPanelProps = {
     isHiddenOnDismiss: false,
     isOpen: false,
     isBlocking: true,
     hasCloseButton: true,
-    type: PanelType.smallFixedFar,
+    type: PanelType.smallFixedFar
   };
 
-  private _content: HTMLElement;
+  private _content = createRef<HTMLDivElement>();
 
   constructor(props: IPanelProps) {
     super(props);
+
+    this._warnDeprecations({
+      ignoreExternalFocusing: 'focusTrapZoneProps',
+      forceFocusInsideTrap: 'focusTrapZoneProps',
+      firstFocusableSelector: 'focusTrapZoneProps'
+    });
 
     this.state = {
       isFooterSticky: false,
@@ -50,7 +47,7 @@ export class Panel extends BaseComponent<IPanelProps, IPanelState> implements IP
     };
   }
 
-  public componentDidMount() {
+  public componentDidMount(): void {
     this._events.on(window, 'resize', this._updateFooterPosition);
 
     if (this.props.isOpen) {
@@ -58,7 +55,7 @@ export class Panel extends BaseComponent<IPanelProps, IPanelState> implements IP
     }
   }
 
-  public componentWillReceiveProps(newProps: IPanelProps) {
+  public componentWillReceiveProps(newProps: IPanelProps): void {
     if (newProps.isOpen !== this.state.isOpen) {
       if (newProps.isOpen) {
         this.open();
@@ -68,11 +65,12 @@ export class Panel extends BaseComponent<IPanelProps, IPanelState> implements IP
     }
   }
 
-  public render() {
-    let {
+  public render(): JSX.Element | null {
+    const {
       className = '',
       elementToFocusOnDismiss,
       firstFocusableSelector,
+      focusTrapZoneProps,
       forceFocusInsideTrap,
       hasCloseButton,
       headerText,
@@ -89,13 +87,13 @@ export class Panel extends BaseComponent<IPanelProps, IPanelState> implements IP
       onRenderBody = this._onRenderBody,
       onRenderFooter = this._onRenderFooter
     } = this.props;
-    let { isOpen, isAnimating, id } = this.state;
-    let isLeft = type === PanelType.smallFixedNear ? true : false;
-    let isRTL = getRTL();
-    let isOnRightSide = isRTL ? isLeft : !isLeft;
-    const headerTextId = id + '-headerText';
-    const customWidthStyles = (type === PanelType.custom) ? { width: customWidth } : {};
-    const renderProps: IPanelProps = { ...this.props, componentId: id };
+    const { isOpen, isAnimating, id } = this.state;
+    const isLeft = type === PanelType.smallFixedNear ? true : false;
+    const isRTL = getRTL();
+    const isOnRightSide = isRTL ? isLeft : !isLeft;
+    const headerTextId = headerText && id + '-headerText';
+    const customWidthStyles = type === PanelType.custom ? { width: customWidth } : {};
+    const nativeProps = getNativeProps(this.props, divProperties);
 
     if (!isOpen && !isAnimating && !isHiddenOnDismiss) {
       return null;
@@ -105,75 +103,75 @@ export class Panel extends BaseComponent<IPanelProps, IPanelState> implements IP
     if (isBlocking && isOpen) {
       overlay = (
         <Overlay
-          className={ css(
+          className={css(
             styles.overlay,
             isOpen && isAnimating && AnimationClassNames.fadeIn200,
             !isOpen && isAnimating && AnimationClassNames.fadeOut200
-          ) }
-          isDarkThemed={ false }
-          onClick={ isLightDismiss ? onLightDismissClick : undefined }
+          )}
+          isDarkThemed={false}
+          onClick={isLightDismiss ? onLightDismissClick : undefined}
         />
       );
     }
 
+    const header = onRenderHeader(this.props, this._onRenderHeader, headerTextId);
+
     return (
-      <Layer { ...layerProps }>
+      <Layer {...layerProps}>
         <Popup
-          role='dialog'
-          ariaLabelledBy={ headerText && headerTextId }
-          onDismiss={ this.dismiss }
-          className={
-            css(
-              !isOpen && !isAnimating && isHiddenOnDismiss && styles.hiddenPanel
-            )
-          }
+          role="dialog"
+          ariaLabelledBy={header ? headerTextId : undefined}
+          onDismiss={this.dismiss}
+          className={css(!isOpen && !isAnimating && isHiddenOnDismiss && styles.hiddenPanel)}
         >
           <div
-            className={
-              css(
-                'ms-Panel',
-                styles.root,
-                className,
-                // because the RTL animations are not being used, we need to set a class
-                isOpen && ('is-open ' + styles.rootIsOpen),
-                type === PanelType.smallFluid && ('ms-Panel--smFluid ' + styles.rootIsSmallFluid),
-                type === PanelType.smallFixedNear && ('ms-Panel--smLeft ' + styles.rootIsSmallLeft),
-                type === PanelType.smallFixedFar && ('ms-Panel--sm ' + styles.rootIsSmall),
-                type === PanelType.medium && ('ms-Panel--md ' + styles.rootIsMedium),
-                (type === PanelType.large || type === PanelType.largeFixed) && ('ms-Panel--lg ' + styles.rootIsLarge),
-                type === PanelType.largeFixed && ('ms-Panel--fixed ' + styles.rootIsFixed),
-                type === PanelType.extraLarge && ('ms-Panel--xl ' + styles.rootIsXLarge),
-                type === PanelType.custom && ('ms-Panel--custom ' + styles.rootIsCustom),
-                hasCloseButton && ('ms-Panel--hasCloseButton ' + styles.rootHasCloseButton),
-                !isOpen && !isAnimating && isHiddenOnDismiss && styles.hiddenPanel
-              )
-            }
+            {...nativeProps}
+            className={css(
+              'ms-Panel',
+              styles.root,
+              className,
+              // because the RTL animations are not being used, we need to set a class
+              isOpen && 'is-open ' + styles.rootIsOpen,
+              type === PanelType.smallFluid && 'ms-Panel--smFluid ' + styles.rootIsSmallFluid,
+              type === PanelType.smallFixedNear && 'ms-Panel--smLeft ' + styles.rootIsSmallLeft,
+              type === PanelType.smallFixedFar && 'ms-Panel--sm ' + styles.rootIsSmall,
+              type === PanelType.medium && 'ms-Panel--md ' + styles.rootIsMedium,
+              (type === PanelType.large || type === PanelType.largeFixed) && 'ms-Panel--lg ' + styles.rootIsLarge,
+              type === PanelType.largeFixed && 'ms-Panel--fixed ' + styles.rootIsFixed,
+              type === PanelType.extraLarge && 'ms-Panel--xl ' + styles.rootIsXLarge,
+              type === PanelType.custom && 'ms-Panel--custom ' + styles.rootIsCustom,
+              hasCloseButton && 'ms-Panel--hasCloseButton ' + styles.rootHasCloseButton,
+              !isOpen && !isAnimating && isHiddenOnDismiss && styles.hiddenPanel
+            )}
           >
-            { overlay }
+            {overlay}
             <FocusTrapZone
-              className={
-                css(
-                  'ms-Panel-main',
-                  styles.main,
-                  isOpen && isAnimating && !isOnRightSide && AnimationClassNames.slideRightIn40,
-                  isOpen && isAnimating && isOnRightSide && AnimationClassNames.slideLeftIn40,
-                  !isOpen && isAnimating && !isOnRightSide && AnimationClassNames.slideLeftOut40,
-                  !isOpen && isAnimating && isOnRightSide && AnimationClassNames.slideRightOut40,
-                ) }
-              style={ customWidthStyles }
-              elementToFocusOnDismiss={ elementToFocusOnDismiss }
-              isClickableOutsideFocusTrap={ isLightDismiss || isHiddenOnDismiss }
-              ignoreExternalFocusing={ ignoreExternalFocusing }
-              forceFocusInsideTrap={ forceFocusInsideTrap }
-              firstFocusableSelector={ firstFocusableSelector }
+              ignoreExternalFocusing={ignoreExternalFocusing}
+              forceFocusInsideTrap={forceFocusInsideTrap}
+              firstFocusableSelector={firstFocusableSelector}
+              {...focusTrapZoneProps}
+              className={css(
+                'ms-Panel-main',
+                styles.main,
+                isOpen && isAnimating && !isOnRightSide && AnimationClassNames.slideRightIn40,
+                isOpen && isAnimating && isOnRightSide && AnimationClassNames.slideLeftIn40,
+                !isOpen && isAnimating && !isOnRightSide && AnimationClassNames.slideLeftOut40,
+                !isOpen && isAnimating && isOnRightSide && AnimationClassNames.slideRightOut40,
+                focusTrapZoneProps ? focusTrapZoneProps.className : undefined
+              )}
+              style={customWidthStyles}
+              elementToFocusOnDismiss={elementToFocusOnDismiss}
+              isClickableOutsideFocusTrap={
+                focusTrapZoneProps && !focusTrapZoneProps.isClickableOutsideFocusTrap ? false : true
+              }
             >
-              <div className={ css('ms-Panel-commands') } data-is-visible={ true } >
-                { onRenderNavigation(renderProps, this._onRenderNavigation) }
+              <div className={css('ms-Panel-commands')} data-is-visible={true}>
+                {onRenderNavigation(this.props, this._onRenderNavigation)}
               </div>
-              <div className={ css('ms-Panel-contentInner', styles.contentInner) } >
-                { onRenderHeader(renderProps, this._onRenderHeader) }
-                { onRenderBody(renderProps, this._onRenderBody) }
-                { onRenderFooter(renderProps, this._onRenderFooter) }
+              <div className={css('ms-Panel-contentInner', styles.contentInner)}>
+                {header}
+                {onRenderBody(this.props, this._onRenderBody)}
+                {onRenderFooter(this.props, this._onRenderFooter)}
               </div>
             </FocusTrapZone>
           </div>
@@ -184,122 +182,116 @@ export class Panel extends BaseComponent<IPanelProps, IPanelState> implements IP
 
   public open() {
     if (!this.state.isOpen) {
-      this.setState({
-        isOpen: true,
-        isAnimating: true
-      }, () => {
-        this._async.setTimeout(this._onTransitionComplete, 200);
-      });
+      this.setState(
+        {
+          isOpen: true,
+          isAnimating: true
+        },
+        () => {
+          this._async.setTimeout(this._onTransitionComplete, 200);
+        }
+      );
     }
   }
 
-  @autobind
-  public dismiss() {
+  public dismiss = (): void => {
     if (this.state.isOpen) {
-      this.setState({
-        isOpen: false,
-        isAnimating: true
-      }, () => {
-        this._async.setTimeout(this._onTransitionComplete, 200);
-      });
+      this.setState(
+        {
+          isOpen: false,
+          isAnimating: true
+        },
+        () => {
+          this._async.setTimeout(this._onTransitionComplete, 200);
+        }
+      );
 
       if (this.props.onDismiss) {
         this.props.onDismiss();
       }
     }
-  }
+  };
 
-  @autobind
-  private _onRenderNavigation(props: IPanelProps): JSX.Element | null {
-    const {
-      closeButtonAriaLabel,
-      hasCloseButton
-    } = props;
+  private _onRenderNavigation = (props: IPanelProps): JSX.Element | null => {
+    const { closeButtonAriaLabel, hasCloseButton } = props;
     if (hasCloseButton) {
       return (
-        <div className={ css('ms-Panel-navigation', styles.navigation) } >
+        <div className={css('ms-Panel-navigation', styles.navigation)}>
           <IconButton
-            styles={
-              {
-                root: {
-                  height: 'auto',
-                  width: '44px',
-                  color: theme.palette.neutralSecondary,
-                  fontSize: IconFontSizes.large,
-                },
-                rootHovered: {
-                  color: theme.palette.neutralPrimary
-                }
+            styles={{
+              root: {
+                height: 'auto',
+                width: '44px',
+                color: theme.palette.neutralSecondary,
+                fontSize: IconFontSizes.large
+              },
+              rootHovered: {
+                color: theme.palette.neutralPrimary
               }
-            }
-            className={ css('ms-Panel-closeButton ms-PanelAction-close') }
-            onClick={ this._onPanelClick }
-            ariaLabel={ closeButtonAriaLabel }
-            data-is-visible={ true }
-            iconProps={ { iconName: 'Cancel' } }
+            }}
+            className={css('ms-Panel-closeButton ms-PanelAction-close')}
+            onClick={this._onPanelClick}
+            ariaLabel={closeButtonAriaLabel}
+            data-is-visible={true}
+            iconProps={{ iconName: 'Cancel' }}
           />
         </div>
       );
     }
     return null;
-  }
+  };
 
-  @autobind
-  private _onRenderHeader(props: IPanelProps): JSX.Element | null {
-    const {
-      headerText,
-      componentId,
-      headerClassName = '',
-    } = props;
+  private _onRenderHeader = (
+    props: IPanelProps,
+    defaultRender?: (props?: IPanelProps) => JSX.Element | null,
+    headerTextId?: string | undefined
+  ): JSX.Element | null => {
+    const { headerText, headerClassName = '' } = props;
 
     if (headerText) {
       return (
-        <div className={ css('ms-Panel-header', styles.header) }>
-          <p className={ css('ms-Panel-headerText', styles.headerText, headerClassName) } id={ componentId + '-headerText' } role='heading'>
-            { headerText }
+        <div className={css('ms-Panel-header', styles.header)}>
+          <p
+            className={css('ms-Panel-headerText', styles.headerText, headerClassName)}
+            id={headerTextId}
+            role="heading"
+          >
+            {headerText}
           </p>
         </div>
       );
     }
     return null;
-  }
+  };
 
-  @autobind
-  private _onRenderBody(props: IPanelProps): JSX.Element {
-    const contentClass = css(
-      'ms-Panel-content',
-      styles.content,
-      props.isFooterAtBottom && styles.contentGrow
-    );
+  private _onRenderBody = (props: IPanelProps): JSX.Element => {
+    const contentClass = css('ms-Panel-content', styles.content, props.isFooterAtBottom && styles.contentGrow);
 
     return (
-      <div ref={ this._resolveRef('_content') } className={ contentClass } >
-        { props.children }
+      <div ref={this._content} className={contentClass} data-is-scrollable={true}>
+        {props.children}
       </div>
     );
-  }
+  };
 
-  @autobind
-  private _onRenderFooter(props: IPanelProps): JSX.Element | null {
-    let { isFooterSticky } = this.state;
-    let { onRenderFooterContent = null } = this.props;
+  private _onRenderFooter = (props: IPanelProps): JSX.Element | null => {
+    const { isFooterSticky } = this.state;
+    const { onRenderFooterContent = null } = this.props;
     if (onRenderFooterContent) {
       return (
-        <div className={ css('ms-Panel-footer', styles.footer, isFooterSticky && styles.footerIsSticky) } >
-          <div className={ css('ms-Panel-footerInner', styles.footerInner) }>
-            { onRenderFooterContent() }
-          </div>
+        <div className={css('ms-Panel-footer', styles.footer, isFooterSticky && styles.footerIsSticky)}>
+          <div className={css('ms-Panel-footerInner', styles.footerInner)}>{onRenderFooterContent()}</div>
         </div>
       );
     }
     return null;
-  }
+  };
 
-  private _updateFooterPosition() {
-    let _content = this._content;
+  private _updateFooterPosition(): void {
+    const _content = this._content.current;
     if (_content) {
-      let height = _content.clientHeight;
-      let innerHeight = _content.scrollHeight;
+      const height = _content.clientHeight;
+      const innerHeight = _content.scrollHeight;
 
       this.setState({
         isFooterSticky: height < innerHeight ? true : false
@@ -307,13 +299,11 @@ export class Panel extends BaseComponent<IPanelProps, IPanelState> implements IP
     }
   }
 
-  @autobind
-  private _onPanelClick() {
+  private _onPanelClick = (): void => {
     this.dismiss();
-  }
+  };
 
-  @autobind
-  private _onTransitionComplete() {
+  private _onTransitionComplete = (): void => {
     this.setState({
       isAnimating: false
     });
@@ -321,5 +311,5 @@ export class Panel extends BaseComponent<IPanelProps, IPanelState> implements IP
     if (!this.state.isOpen && this.props.onDismissed) {
       this.props.onDismissed();
     }
-  }
+  };
 }

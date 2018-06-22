@@ -1,5 +1,5 @@
 import { IStyle, ITheme } from '../../Styling';
-import { IStyleFunction } from '../../Utilities';
+import { IStyleFunctionOrObject } from '../../Utilities';
 
 export interface IColorPickerGridCellProps {
   /**
@@ -8,8 +8,8 @@ export interface IColorPickerGridCellProps {
   item: IColorCellProps;
 
   /**
- * Arbitrary unique string associated with this option
- */
+   * Arbitrary unique string associated with this option
+   */
   id: string;
 
   /**
@@ -55,8 +55,8 @@ export interface IColorPickerGridCellProps {
   onClick?: (item: IColorCellProps) => void;
 
   /**
- * Optional, the onHover handler
- */
+   * Optional, the onHover handler
+   */
   onHover?: (item?: IColorCellProps) => void;
 
   /**
@@ -65,16 +65,42 @@ export interface IColorPickerGridCellProps {
   onFocus?: (item: IColorCellProps) => void;
 
   /**
-  * Optional styles for the component.
-  */
-  getStyles?: IStyleFunction<IColorPickerGridCellStyleProps, IColorPickerGridCellStyles>;
+   * Optional styles for the component.
+   */
+  styles?: IStyleFunctionOrObject<IColorPickerGridCellStyleProps, IColorPickerGridCellStyles>;
+
+  /**
+   * Optional, mouseEnter handler.
+   * @returns true if the event should be processed, false otherwise
+   */
+  onMouseEnter?: (ev: React.MouseEvent<HTMLButtonElement>) => boolean;
+
+  /**
+   * Optional, mouseMove handler
+   * @returns true if the event should be processed, false otherwise
+   */
+  onMouseMove?: (ev: React.MouseEvent<HTMLButtonElement>) => boolean;
+
+  /**
+   * Optional, mouseLeave handler
+   */
+  onMouseLeave?: (ev: React.MouseEvent<HTMLButtonElement>) => void;
+
+  /**
+   * Optional, onWheel handler
+   */
+  onWheel?: (ev: React.MouseEvent<HTMLButtonElement>) => void;
+
+  /**
+   * Optional, onkeydown handler
+   */
+  onKeyDown?: (ev: React.KeyboardEvent<HTMLButtonElement>) => void;
 }
 
 export interface IColorCellProps {
-
   /**
-  * Arbitrary unique string associated with this option
-  */
+   * Arbitrary unique string associated with this option
+   */
   id: string;
 
   /**

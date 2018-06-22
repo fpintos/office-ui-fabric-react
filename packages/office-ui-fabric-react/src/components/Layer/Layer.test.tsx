@@ -11,12 +11,11 @@ import { LayerHost } from './LayerHost';
 describe('Layer', () => {
   it('renders Layer correctly', () => {
     const component = renderer.create(<Layer>Content</Layer>);
-    let tree = component.toJSON();
+    const tree = component.toJSON();
     expect(tree).toMatchSnapshot();
   });
 
   it('can render in a targeted LayerHost and pass context through', () => {
-
     class Child extends React.Component<{}, {}> {
       public static contextTypes = {
         foo: PropTypes.string.isRequired
@@ -24,10 +23,8 @@ describe('Layer', () => {
 
       public context: any;
 
-      public render() {
-        return (
-          <div id='child'>{ this.context.foo }</div>
-        );
+      public render(): JSX.Element {
+        return <div id="child">{this.context.foo}</div>;
       }
     }
 
@@ -42,10 +39,10 @@ describe('Layer', () => {
         };
       }
 
-      public render() {
+      public render(): JSX.Element {
         return (
-          <div id='parent'>
-            <Layer hostId='foo'>
+          <div id="parent">
+            <Layer hostId="foo">
               <Child />
             </Layer>
           </div>
@@ -54,29 +51,28 @@ describe('Layer', () => {
     }
 
     class App extends React.Component<{}, {}> {
-
-      public render() {
+      public render(): JSX.Element {
         return (
-          <div id='app'>
+          <div id="app">
             <Parent />
-            <LayerHost id='foo' />
+            <LayerHost id="foo" />
           </div>
         );
       }
     }
 
-    let appElement = document.createElement('div');
+    const appElement = document.createElement('div');
 
     try {
       document.body.appendChild(appElement);
       ReactDOM.render(<App />, appElement);
 
-      let parentElement = appElement.querySelector('#parent');
+      const parentElement = appElement.querySelector('#parent');
 
       expect(parentElement).toBeDefined();
       expect(parentElement!.ownerDocument).toBeDefined();
 
-      let childElement = appElement.querySelector('#child') as Element;
+      const childElement = appElement.querySelector('#child') as Element;
 
       expect(childElement.textContent).toEqual('foo');
     } finally {
@@ -84,5 +80,4 @@ describe('Layer', () => {
       appElement.remove();
     }
   });
-
 });

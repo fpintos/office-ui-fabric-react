@@ -4,9 +4,7 @@ import { IRenderFunction } from '../../Utilities';
 import { IStyle, ITheme } from '../../Styling';
 import { DirectionalHint } from '../../common/DirectionalHint';
 
-export interface IExpandingCard {
-
-}
+export interface IExpandingCard {}
 
 /**
  * ExpandingCard component props.
@@ -16,7 +14,7 @@ export interface IExpandingCardProps extends React.HTMLAttributes<HTMLDivElement
    * Optional callback to access the IExpandingCard interface. Use this instead of ref for accessing
    * the public methods and properties of the component.
    */
-  componentRef?: (component: IExpandingCard) => void;
+  componentRef?: (component: IExpandingCard | null) => void;
 
   /**
    *  Item to be returned with onRender functions

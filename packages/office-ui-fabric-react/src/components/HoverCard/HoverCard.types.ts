@@ -3,9 +3,7 @@ import { HoverCard } from './HoverCard';
 import { IExpandingCardProps } from './ExpandingCard.types';
 import { IStyle } from '../../Styling';
 
-export interface IHoverCard {
-
-}
+export interface IHoverCard {}
 
 /**
  * HoverCard component props.
@@ -15,7 +13,7 @@ export interface IHoverCardProps extends React.HTMLAttributes<HTMLDivElement | H
    * Optional callback to access the IHoverCardHost interface. Use this instead of ref for accessing
    * the public methods and properties of the component.
    */
-  componentRef?: (component: IHoverCard) => void;
+  componentRef?: (component: IHoverCard | null) => void;
 
   /**
    * Additional properties to pass through for HoverCard, reference detail properties in IHoverCardProps
@@ -82,6 +80,16 @@ export interface IHoverCardProps extends React.HTMLAttributes<HTMLDivElement | H
    * Trap focus or not
    */
   trapFocus?: boolean;
+
+  /**
+   * Should block hover card or not
+   */
+  shouldBlockHoverCard?: () => void;
+
+  /**
+   * Set first focus into hover card, default should be true
+   */
+  setInitialFocus?: boolean;
 }
 
 export interface IHoverCardStyles {

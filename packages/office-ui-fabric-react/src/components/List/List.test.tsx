@@ -9,8 +9,9 @@ describe('List', () => {
 
     const component = renderer.create(
       // tslint:disable-next-line:jsx-no-lambda
-      <List items={ [] } onRenderCell={ () => null } />);
-    let tree = component.toJSON();
+      <List items={[]} onRenderCell={() => null} />
+    );
+    const tree = component.toJSON();
     expect(tree).toMatchSnapshot();
   });
 });

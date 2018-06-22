@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Panel } from './Panel';
 import { IRenderFunction } from '../../Utilities';
 import { ILayerProps } from '../../Layer';
+import { IFocusTrapZoneProps } from '../../FocusTrapZone';
 
 export interface IPanel {
   /**
@@ -19,36 +20,36 @@ export interface IPanelProps extends React.Props<Panel> {
    * Optional callback to access the IPanel interface. Use this instead of ref for accessing
    * the public methods and properties of the component.
    */
-  componentRef?: (component: IPanel) => void;
+  componentRef?: (component: IPanel | null) => void;
 
   /**
-  * Whether the panel is displayed.
-  * @default false
-  */
+   * Whether the panel is displayed.
+   * @default false
+   */
   isOpen?: boolean;
 
   /**
-  * Has the close button visible.
-  * @default true
-  */
+   * Has the close button visible.
+   * @default true
+   */
   hasCloseButton?: boolean;
 
   /**
-  * Whether the panel can be light dismissed.
-  * @default false
-  */
+   * Whether the panel can be light dismissed.
+   * @default false
+   */
   isLightDismiss?: boolean;
 
   /**
-  * Whether the panel is hidden on dismiss, instead of destroyed in the DOM.
-  * @default false
-  */
+   * Whether the panel is hidden on dismiss, instead of destroyed in the DOM.
+   * @default false
+   */
   isHiddenOnDismiss?: boolean;
 
   /**
-  * Whether the panel uses a modal overlay or not
-  * @default true
-  */
+   * Whether the panel uses a modal overlay or not
+   * @default true
+   */
   isBlocking?: boolean;
 
   /**
@@ -58,14 +59,14 @@ export interface IPanelProps extends React.Props<Panel> {
   isFooterAtBottom?: boolean;
 
   /**
-  * Header text for the Panel.
-  * @default ""
-  */
+   * Header text for the Panel.
+   * @default ""
+   */
   headerText?: string;
 
   /**
-  * A callback function for when the panel is closed, before the animation completes.
-  */
+   * A callback function for when the panel is closed, before the animation completes.
+   */
   onDismiss?: () => void;
 
   /**
@@ -74,19 +75,19 @@ export interface IPanelProps extends React.Props<Panel> {
   onDismissed?: () => void;
 
   /**
-  * Additional styling options.
-  */
+   * Additional styling options.
+   */
   className?: string;
 
   /**
-  * Type of the panel.
-  * @default PanelType.smallFixedRight
-  */
+   * Type of the panel.
+   * @default PanelType.smallFixedRight
+   */
   type?: PanelType;
 
   /**
-  * Custom panel width, used only when type is set to PanelType.custom.
-  */
+   * Custom panel width, used only when type is set to PanelType.custom.
+   */
   customWidth?: string;
 
   /**
@@ -107,20 +108,31 @@ export interface IPanelProps extends React.Props<Panel> {
 
   /**
    * Indicates if this Panel will ignore keeping track of HTMLElement that activated the Zone.
+   * Deprecated, use focusTrapZoneProps.
    * @default false
+   * @deprecated
    */
   ignoreExternalFocusing?: boolean;
 
   /**
-  * Indicates whether Panel should force focus inside the focus trap zone
-  * @default true
-  */
+   * Indicates whether Panel should force focus inside the focus trap zone
+   * Deprecated, use focusTrapZoneProps.
+   * @default true
+   * @deprecated
+   */
   forceFocusInsideTrap?: boolean;
 
   /**
-  * Indicates the selector for first focusable item
-  */
+   * Indicates the selector for first focusable item.
+   * Deprecated, use focusTrapZoneProps.
+   * @deprecated
+   */
   firstFocusableSelector?: string;
+
+  /**
+   * Optional props to pass to the FocusTrapZone component to manage focus in the panel.
+   */
+  focusTrapZoneProps?: IFocusTrapZoneProps;
 
   /**
    * Optional props to pass to the Layer component hosting the panel.
@@ -140,7 +152,7 @@ export interface IPanelProps extends React.Props<Panel> {
   /**
    * Optional custom renderer for header region. Replaces current title
    */
-  onRenderHeader?: IRenderFunction<IPanelProps>;
+  onRenderHeader?: IPanelHeaderRenderer;
 
   /**
    * Optional custom renderer for body region. Replaces any children passed into the component.
@@ -158,9 +170,27 @@ export interface IPanelProps extends React.Props<Panel> {
   onRenderFooterContent?: IRenderFunction<IPanelProps>;
 
   /**
-   * Internal ID passed to render functions.
+   * Deprecated property. Serves no function.
+   * @deprecated
    */
   componentId?: string;
+}
+
+/**
+ * Renderer function which takes an additional parameter, the ID to use for the element containing
+ * the panel's title. This allows the `aria-labelledby` for the panel popup to work correctly.
+ * Note that if `headerTextId` is provided, it **must** be used on an element, or screen readers
+ * will be confused by the reference to a nonexistent ID.
+ */
+export interface IPanelHeaderRenderer extends IRenderFunction<IPanelProps> {
+  /**
+   * @param props Props given to the panel
+   * @param defaultRender Default header renderer. If using this renderer in code that does not
+   * assign `headerTextId` to an element elsewhere, it **must** be passed to this function.
+   * @param headerTextId If provided, this **must** be used as the ID of an element containing the
+   * panel's title, because the panel popup uses this ID as its aria-labelledby.
+   */
+  (props?: IPanelProps, defaultRender?: IPanelHeaderRenderer, headerTextId?: string | undefined): JSX.Element | null;
 }
 
 export enum PanelType {

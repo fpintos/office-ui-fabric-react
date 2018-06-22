@@ -20,7 +20,7 @@ export interface IBasePicker<T> {
 // and searched for by the people picker. For example, if the picker is
 // displaying persona's than type T could either be of Persona or Ipersona props
 export interface IBasePickerProps<T> extends React.Props<any> {
-  componentRef?: (component?: IBasePicker<T>) => void;
+  componentRef?: (component?: IBasePicker<T> | null) => void;
 
   /**
    * Function that specifies how the selected item will appear.
@@ -33,8 +33,15 @@ export interface IBasePickerProps<T> extends React.Props<any> {
   /**
    * A callback for what should happen when a person types text into the input.
    * Returns the already selected items so the resolver can filter them out.
+   * If used in conjunction with resolveDelay this will ony kick off after the delay throttle.
    */
   onResolveSuggestions: (filter: string, selectedItems?: T[]) => T[] | PromiseLike<T[]>;
+  /**
+   * The delay time in ms before resolving suggestions, which is kicked off when input has been cahnged.
+   * e.g. If a second input change happens within the resolveDelay time, the timer will start over.
+   * Only until after the timer completes will onResolveSuggestions be called.
+   */
+  resolveDelay?: number;
   /**
    * A callback for what should happen when a user clicks the input.
    */
@@ -105,16 +112,17 @@ export interface IBasePickerProps<T> extends React.Props<any> {
   /**
    * Function that specifies how arbitrary text entered into the well is handled.
    */
-  createGenericItem?: (input: string, ValidationState: ValidationState) => ISuggestionModel<T>;
+  createGenericItem?: (input: string, ValidationState: ValidationState) => ISuggestionModel<T> | T;
   /**
    * Aria label for the "X" button in the selected item component.
    * @default ''
    */
   removeButtonAriaLabel?: string;
   /**
-   * A callback to process a selection after the user selects something from the picker.
+   * A callback to process a selection after the user selects something from the picker. If the callback returns null,
+   * the item will not be added to the picker.
    */
-  onItemSelected?: (selectedItem?: T) => T | PromiseLike<T>;
+  onItemSelected?: (selectedItem?: T) => T | PromiseLike<T> | null;
   /**
    * The items that the base picker should currently display as selected. If this is provided then the picker will act as a controlled component.
    */
@@ -127,12 +135,19 @@ export interface IBasePickerProps<T> extends React.Props<any> {
    * A callback to override the default behavior of adding the selected suggestion on dismiss.
    */
   onDismiss?: (ev?: any, selectedItem?: T) => void;
+  /**
+   * Adds an additional alert for the currently selected suggestion. This prop should be set to true for IE11 and below, as it
+   * enables proper screen reader behavior for each suggestion (since aria-activedescendant does not work with IE11).
+   * It should not be set for modern browsers (Edge, Chrome).
+   * @default false
+   */
+  enableSelectedSuggestionAlert?: boolean;
 }
 
 export interface IBasePickerSuggestionsProps {
   /**
-  * Function that specifies what to render when no results are found.
-  */
+   * Function that specifies what to render when no results are found.
+   */
   onRenderNoResultFound?: IRenderFunction<void>;
   /**
    * The text that should appear at the top of the suggestion box.
@@ -162,6 +177,10 @@ export interface IBasePickerSuggestionsProps {
    * The text that should appear on the button to search for more.
    */
   searchForMoreText?: string;
+  /**
+   * The text that appears indicating to the use to force resolve the input
+   */
+  forceResolveText?: string;
   /**
    * The text to display while the results are loading.
    */
@@ -207,4 +226,10 @@ export interface IInputProps extends React.InputHTMLAttributes<HTMLInputElement>
    * Screen reader label to apply to an input element.
    */
   'aria-label'?: string;
+  /**
+   * The default value to be visible when the autofill first created.
+   * This is different than placeholder text because the placeholder text will disappear and re-appear. This
+   * text persists until deleted or changed.
+   */
+  defaultVisibleValue?: string;
 }

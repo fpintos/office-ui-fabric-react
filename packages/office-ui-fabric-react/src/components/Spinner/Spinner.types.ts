@@ -1,16 +1,15 @@
 import * as React from 'react';
-import { Spinner } from './Spinner';
+import { ITheme, IStyle } from '../../Styling';
+import { IStyleFunctionOrObject } from '../../Utilities';
 
-export interface ISpinner {
+export interface ISpinner {}
 
-}
-
-export interface ISpinnerProps extends React.Props<Spinner> {
+export interface ISpinnerProps extends React.HTMLAttributes<HTMLElement> {
   /**
    * Optional callback to access the ISpinner interface. Use this instead of ref for accessing
    * the public methods and properties of the component.
    */
-  componentRef?: (component: ISpinner) => void;
+  componentRef?: (component: ISpinner | null) => void;
 
   /**
    * Deprecated and will be removed at >= 2.0.0. Use SpinnerSize instead.
@@ -19,9 +18,9 @@ export interface ISpinnerProps extends React.Props<Spinner> {
   type?: SpinnerType;
 
   /**
-  * The size of Spinner to render. { extraSmall, small, medium, large }
-  * @default SpinnerType.medium
-  */
+   * The size of Spinner to render. { extraSmall, small, medium, large }
+   * @default SpinnerType.medium
+   */
   size?: SpinnerSize;
 
   /**
@@ -45,6 +44,16 @@ export interface ISpinnerProps extends React.Props<Spinner> {
    * Alternative status label for screen reader
    */
   ariaLabel?: string;
+
+  /**
+   * Theme (provided through customization.)
+   */
+  theme?: ITheme;
+
+  /**
+   * Call to provide customized styling that will layer on top of the variant rules.
+   */
+  styles?: IStyleFunctionOrObject<ISpinnerStyleProps, ISpinnerStyles>;
 }
 
 export enum SpinnerSize {
@@ -83,4 +92,17 @@ export enum SpinnerType {
    * Deprecated and will be removed at >= 2.0.0. Use SpinnerSize.large instead.
    */
   large = 1
+}
+
+export interface ISpinnerStyleProps {
+  theme: ITheme;
+  size?: SpinnerSize;
+  className?: string;
+}
+
+export interface ISpinnerStyles {
+  root?: IStyle;
+  circle?: IStyle;
+  label?: IStyle;
+  screenReaderText?: IStyle;
 }

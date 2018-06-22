@@ -1,46 +1,41 @@
-/* tslint:disable:no-unused-variable */
 import * as React from 'react';
-/* tslint:enable:no-unused-variable */
 
 import * as ReactDOM from 'react-dom';
 import * as ReactTestUtils from 'react-dom/test-utils';
 import * as renderer from 'react-test-renderer';
 
 import { Slider } from './Slider';
+import { SliderBase } from './Slider.base';
+import { getStyles } from './Slider.styles';
 import { ISlider } from './Slider.types';
 
 describe('Slider', () => {
-
   it('renders Slider correctly', () => {
     const component = renderer.create(<Slider />);
-    let tree = component.toJSON();
+    const tree = component.toJSON();
     expect(tree).toMatchSnapshot();
   });
 
   it('renders a slider', () => {
-    let component = ReactTestUtils.renderIntoDocument(
-      <Slider label='slider' />
-    );
-    let renderedDOM = ReactDOM.findDOMNode(component as React.ReactInstance);
-    let labelElement = renderedDOM.querySelector('.ms-Label') as HTMLElement;
+    const component = ReactTestUtils.renderIntoDocument<SliderBase>(<SliderBase styles={getStyles} label="slider" />);
+    const renderedDOM = ReactDOM.findDOMNode(component as React.ReactInstance) as Element;
+    const labelElement = renderedDOM.querySelector('.ms-Label') as HTMLElement;
 
     expect(labelElement.textContent).toEqual('slider');
   });
 
   it('can slide to default min/max and execute onChange', () => {
     let changedValue;
-    let onChange = (val: any) => {
+    const onChange = (val: any) => {
       changedValue = val;
     };
-    let component = ReactTestUtils.renderIntoDocument<React.ReactInstance>(
-      <Slider
-        onChange={ onChange }
-      />
+    const component = ReactTestUtils.renderIntoDocument<SliderBase>(
+      <SliderBase styles={getStyles} onChange={onChange} />
     );
 
-    let renderedDOM = ReactDOM.findDOMNode(component as React.ReactInstance);
-    let sliderLine = renderedDOM.querySelector('.ms-Slider-line') as HTMLElement;
-    let sliderThumb = renderedDOM.querySelector('.ms-Slider-slideBox') as HTMLElement;
+    const renderedDOM = ReactDOM.findDOMNode(component as React.ReactInstance) as Element;
+    const sliderLine = renderedDOM.querySelector('.ms-Slider-line') as HTMLElement;
+    const sliderThumb = renderedDOM.querySelector('.ms-Slider-slideBox') as HTMLElement;
 
     sliderLine.getBoundingClientRect = () => ({
       left: 0,
@@ -71,35 +66,38 @@ describe('Slider', () => {
   });
 
   it('has type=button on all buttons', () => {
-    let component = ReactTestUtils.renderIntoDocument<React.ReactInstance>(
-      <Slider />
-    );
+    const component = ReactTestUtils.renderIntoDocument<SliderBase>(<SliderBase styles={getStyles} />);
 
-    let renderedDOM = ReactDOM.findDOMNode(component as React.ReactInstance);
-    let allButtons = renderedDOM.querySelectorAll('button');
+    const renderedDOM = ReactDOM.findDOMNode(component as React.ReactInstance) as Element;
+    const allButtons = renderedDOM.querySelectorAll('button');
 
     for (let i = 0; i < allButtons.length; i++) {
-      let button = allButtons[i];
+      const button = allButtons[i];
 
       expect(button.getAttribute('type')).toEqual('button');
     }
   });
 
   it('can read the current value', () => {
-    let slider: ISlider | undefined;
+    let slider: ISlider | null;
 
-    ReactTestUtils.renderIntoDocument(
-      // tslint:disable-next-line:jsx-no-lambda
-      <Slider label='slider' defaultValue={ 12 } min={ 0 } max={ 100 } componentRef={ s => slider = s } />
+    ReactTestUtils.renderIntoDocument<SliderBase>(
+      <SliderBase
+        styles={getStyles}
+        label="slider"
+        defaultValue={12}
+        min={0}
+        max={100}
+        // tslint:disable-next-line:jsx-no-lambda
+        componentRef={s => (slider = s)}
+      />
     );
     expect(slider!.value).toEqual(12);
   });
 
   it('renders correct aria-valuetext', () => {
-    let component = ReactTestUtils.renderIntoDocument(
-      <Slider />
-    );
-    let renderedDOM = ReactDOM.findDOMNode(component as React.ReactInstance);
+    let component = ReactTestUtils.renderIntoDocument<SliderBase>(<SliderBase styles={getStyles} />);
+    let renderedDOM = ReactDOM.findDOMNode(component as React.ReactInstance) as Element;
     let button = renderedDOM.querySelector('.ms-Slider-slideBox') as HTMLElement;
     let ariaValueText = button.getAttribute('aria-valuetext');
 
@@ -109,13 +107,10 @@ describe('Slider', () => {
     const selected = 1;
     const getTextValue = (value: number) => values[value];
 
-    component = ReactTestUtils.renderIntoDocument(
-      <Slider
-        value={ selected }
-        ariaValueText={ getTextValue }
-      />
+    component = ReactTestUtils.renderIntoDocument<SliderBase>(
+      <SliderBase styles={getStyles} value={selected} ariaValueText={getTextValue} />
     );
-    renderedDOM = ReactDOM.findDOMNode(component as React.ReactInstance);
+    renderedDOM = ReactDOM.findDOMNode(component as React.ReactInstance) as Element;
     button = renderedDOM.querySelector('.ms-Slider-slideBox') as HTMLElement;
     ariaValueText = button.getAttribute('aria-valuetext');
 

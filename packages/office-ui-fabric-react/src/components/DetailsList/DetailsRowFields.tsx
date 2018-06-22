@@ -15,6 +15,7 @@ export interface IDetailsRowFieldsProps {
   columns: IColumn[];
   compact?: boolean;
   onRenderItemColumn?: (item?: any, index?: number, column?: IColumn) => any;
+  shimmer?: boolean;
 }
 
 export interface IDetailsRowFieldsState {
@@ -28,62 +29,69 @@ export class DetailsRowFields extends BaseComponent<IDetailsRowFieldsProps, IDet
     this.state = this._getState(props);
   }
 
-  public componentWillReceiveProps(newProps: IDetailsRowFieldsProps) {
+  public componentWillReceiveProps(newProps: IDetailsRowFieldsProps): void {
     this.setState(this._getState(newProps));
   }
 
-  public render() {
-    let { columns, columnStartIndex } = this.props;
-    let { cellContent } = this.state;
+  public render(): JSX.Element {
+    const { columns, columnStartIndex, shimmer } = this.props;
+    const { cellContent } = this.state;
 
     return (
       <div
-        className={ css('ms-DetailsRow-fields', styles.fields) }
-        data-automationid='DetailsRowFields'
-        role='presentation'
+        className={css('ms-DetailsRow-fields', styles.fields)}
+        data-automationid="DetailsRowFields"
+        role="presentation"
       >
-        { columns.map((column, columnIndex) => (
+        {columns.map((column, columnIndex) => (
           <div
-            key={ columnIndex }
-            role={ column.isRowHeader ? 'rowheader' : 'gridcell' }
-            aria-colindex={ columnIndex + columnStartIndex }
-            className={ css('ms-DetailsRow-cell', styles.cell, column.className,
+            key={columnIndex}
+            role={column.isRowHeader ? 'rowheader' : 'gridcell'}
+            aria-colindex={columnIndex + columnStartIndex + 1}
+            className={css(
+              'ms-DetailsRow-cell',
+              styles.cell,
+              column.className,
               column.isMultiline && 'is-multiline',
               column.isRowHeader && styles.isRowHeader,
               column.isPadded && styles.isPadded,
               column.isMultiline && styles.isMultiline,
-            ) }
-            style={ { width: column.calculatedWidth! + INNER_PADDING + (column.isPadded ? ISPADDED_WIDTH : 0) } }
-            data-automationid='DetailsRowCell'
-            data-automation-key={ column.key }
+              column.isIconOnly && shimmer && styles.shimmerIconPlaceholder,
+              shimmer && styles.shimmer
+            )}
+            style={{ width: column.calculatedWidth! + INNER_PADDING + (column.isPadded ? ISPADDED_WIDTH : 0) }}
+            data-automationid="DetailsRowCell"
+            data-automation-key={column.key}
           >
-            { cellContent[columnIndex] }
+            {cellContent[columnIndex]}
           </div>
-        )) }
+        ))}
       </div>
     );
   }
 
-  private _getState(props: IDetailsRowFieldsProps) {
-    let { item, itemIndex, onRenderItemColumn } = props;
+  private _getState(props: IDetailsRowFieldsProps): IDetailsRowFieldsState {
+    const { item, itemIndex, onRenderItemColumn, shimmer } = props;
 
     return {
-      cellContent: props.columns.map((column) => {
+      cellContent: props.columns.map(column => {
         let cellContent;
 
         try {
-          let render = column.onRender || onRenderItemColumn;
+          const render = column.onRender || onRenderItemColumn;
 
-          cellContent = render ? render(item, itemIndex, column) : this._getCellText(item, column);
-        } catch (e) { /* no-op */ }
+          cellContent = render && !shimmer ? render(item, itemIndex, column) : this._getCellText(item, column);
+        } catch (e) {
+          /* no-op */
+        }
 
         return cellContent;
       })
     };
   }
 
-  private _getCellText(item: any, column: IColumn) {
-    let value = (item && column && column.fieldName) ? item[column.fieldName] : '';
+  private _getCellText(item: any, column: IColumn): void {
+    let value = item && column && column.fieldName ? item[column.fieldName] : '';
 
     if (value === null || value === undefined) {
       value = '';
@@ -91,5 +99,4 @@ export class DetailsRowFields extends BaseComponent<IDetailsRowFieldsProps, IDet
 
     return value;
   }
-
 }

@@ -1,28 +1,45 @@
 import * as React from 'react';
-import { Facepile } from './Facepile';
+import { FacepileBase } from './Facepile.base';
+import { IStyle, ITheme } from '../../Styling';
+import { IStyleFunctionOrObject } from '../../Utilities';
+
 import { IButtonProps } from '../Button/index';
-import {
-  IPersonaProps,
-  PersonaInitialsColor,
-  PersonaSize
-} from '../Persona/index';
+import { IPersonaSharedProps, PersonaInitialsColor, PersonaSize } from '../Persona/index';
 
-export interface IFacepile {
+export interface IFacepile {}
 
-}
-
-export interface IFacepileProps extends React.Props<Facepile> {
+export interface IFacepileProps extends React.Props<FacepileBase> {
   /**
    * Optional callback to access the IFacepile interface. Use this instead of ref for accessing
    * the public methods and properties of the component.
    */
-  componentRef?: (component: IFacepile) => void;
+  componentRef?: (component: IFacepile | null) => void;
 
   /**
-   * Array of IPersonaProps that define each Persona. Note that the size
-   * is fixed at PersonaSize.size32 regardless of what is specified.
+   * Call to provide customized styling that will layer on top of the variant rules.
+   */
+  styles?: IStyleFunctionOrObject<IFacepileStyleProps, IFacepileStyles>;
+
+  /**
+   * Theme provided by High-Order Component.
+   */
+  theme?: ITheme;
+
+  /**
+   * Additional css class to apply to the Facepile
+   * @defaultvalue undefined
+   */
+  className?: string;
+
+  /**
+   * Array of IPersonaProps that define each Persona.
    */
   personas: IFacepilePersona[];
+
+  /**
+   * Personas to place in the overflow
+   */
+  overflowPersonas?: IFacepilePersona[];
 
   /** Maximum number of personas to show */
   maxDisplayablePersonas?: number;
@@ -52,12 +69,7 @@ export interface IFacepileProps extends React.Props<Facepile> {
   overflowButtonType?: OverflowButtonType;
 
   /** Method to access properties on the underlying Persona control */
-  getPersonaProps?: (persona: IFacepilePersona) => IPersonaProps;
-
-  /**
-   * Optional class for Facepile root element.
-   */
-  className?: string;
+  getPersonaProps?: (persona: IFacepilePersona) => IPersonaSharedProps;
 }
 
 export interface IFacepilePersona extends React.ButtonHTMLAttributes<HTMLButtonElement | HTMLDivElement> {
@@ -76,6 +88,13 @@ export interface IFacepilePersona extends React.ButtonHTMLAttributes<HTMLButtonE
    * @defaultvalue [Derived from personaName]
    */
   imageInitials?: string;
+
+  /**
+   * Whether initials are calculated for phone numbers and number sequences.
+   * Example: Set property to true to get initials for project names consisting of numbers only.
+   * @defaultvalue false
+   */
+  allowPhoneInitials?: boolean;
 
   /**
    * The background color when the user's initials are displayed.
@@ -115,4 +134,27 @@ export enum OverflowButtonType {
   more = 2,
   /** Chevron overflow icon */
   downArrow = 3
+}
+
+export interface IFacepileStyleProps {
+  /**
+   * Theme provided by High-Order Component.
+   */
+  theme: ITheme;
+
+  /**
+   * Accept custom classNames
+   */
+  className?: string;
+
+  // Insert Facepile style props below
+}
+
+export interface IFacepileStyles {
+  /**
+   * Style for the root element.
+   */
+  root: IStyle;
+
+  // Insert Facepile classNames below
 }

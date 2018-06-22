@@ -27,7 +27,7 @@ export interface ISelection {
   // Read selection methods.
 
   getSelection(): IObjectWithKey[];
-  getSelectedIndices?(): number[]; // TODO make non-optional on next breaking change
+  getSelectedIndices(): number[];
   getSelectedCount(): number;
   isRangeSelected(fromIndex: number, count: number): boolean;
 
@@ -56,13 +56,6 @@ export interface ISelection {
   toggleKeySelected(key: string): void;
   toggleIndexSelected(index: number): void;
   toggleRangeSelected(fromIndex: number, count: number): void;
-}
-
-export interface ISelectionLayout {
-  getItemIndexAbove(index: number, items: any[]): number;
-  getItemIndexBelow(index: number, items: any[]): number;
-  getItemIndexLeft(index: number, items: any[]): number;
-  getItemIndexRight(index: number, items: any[]): number;
 }
 
 export enum SelectionDirection {

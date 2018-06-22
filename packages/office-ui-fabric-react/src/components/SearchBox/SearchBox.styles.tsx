@@ -1,17 +1,9 @@
-import {
-  FontSizes,
-  HighContrastSelector,
-  ScreenWidthMaxMedium,
-  ScreenWidthMaxSmall,
-  AnimationVariables,
-  normalize
-} from '../../Styling';
-import { SearchBoxBase } from './SearchBox.base';
-import { ISearchBoxProps, ISearchBoxStyleProps, ISearchBoxStyles } from './SearchBox.types';
+import { HighContrastSelector, AnimationVariables, normalize } from '../../Styling';
+import { ISearchBoxStyleProps, ISearchBoxStyles } from './SearchBox.types';
 
 export function getStyles(props: ISearchBoxStyleProps): ISearchBoxStyles {
-  const { theme, underlined, disabled, hasFocus, className, hasInput } = props;
-  const { palette, fonts } = theme;
+  const { theme, underlined, disabled, hasFocus, className, hasInput, disableAnimation } = props;
+  const { palette, fonts, semanticColors } = theme;
 
   return {
     root: [
@@ -24,7 +16,8 @@ export function getStyles(props: ISearchBoxStyleProps): ISearchBoxStyles {
         flexDirection: 'row',
         flexWrap: 'nowrap',
         alignItems: 'stretch',
-        padding: '0 0 0 8px',
+        // The 1px top and bottom padding ensure the input field does not overlap the border
+        padding: '1px 0 1px 4px',
         border: `1px solid ${palette.neutralTertiary}`,
         height: 32,
         selectors: {
@@ -33,12 +26,14 @@ export function getStyles(props: ISearchBoxStyleProps): ISearchBoxStyles {
           },
           ':hover': {
             borderColor: palette.neutralDark,
-            $label: {
-              color: palette.black,
-              $iconContainer: {
-                color: palette.themeDark
+            selectors: {
+              [HighContrastSelector]: {
+                borderColor: 'Highlight'
               }
             }
+          },
+          ':hover $iconContainer': {
+            color: palette.themeDark
           }
         }
       },
@@ -48,7 +43,7 @@ export function getStyles(props: ISearchBoxStyleProps): ISearchBoxStyles {
           borderColor: palette.themePrimary,
           selectors: {
             ':hover': {
-              borderColor: palette.themePrimary,
+              borderColor: palette.themePrimary
             },
             [HighContrastSelector]: {
               borderColor: 'Highlight'
@@ -62,18 +57,21 @@ export function getStyles(props: ISearchBoxStyleProps): ISearchBoxStyles {
           borderColor: palette.neutralLighter,
           backgroundColor: palette.neutralLighter,
           pointerEvents: 'none',
-          cursor: 'default',
+          cursor: 'default'
         }
       ],
       underlined && [
         'is-underlined',
         {
-          borderWidth: '0 0 1px 0'
+          borderWidth: '0 0 1px 0',
+          // Underlined SearchBox has a larger padding left to vertically align with the waffle in product
+          padding: '1px 0 1px 8px'
         }
       ],
-      underlined && disabled && {
-        backgroundColor: 'transparent'
-      },
+      underlined &&
+        disabled && {
+          backgroundColor: 'transparent'
+        },
       hasInput && 'can-clear',
       className
     ],
@@ -87,26 +85,29 @@ export function getStyles(props: ISearchBoxStyleProps): ISearchBoxStyles {
         fontSize: 16,
         width: 32,
         textAlign: 'center',
-        transition: `width ${AnimationVariables.durationValue1}`,
-        color: palette.themePrimary
+        color: palette.themePrimary,
+        cursor: 'text'
       },
       hasFocus && {
-        width: 4,
-        transition: `width  ${AnimationVariables.durationValue1}`
+        width: 4
       },
       disabled && {
         color: palette.neutralTertiary
+      },
+      !disableAnimation && {
+        transition: `width ${AnimationVariables.durationValue1}`
       }
     ],
     icon: [
       'ms-SearchBox-icon',
       {
-        opacity: 1,
-        transition: `opacity ${AnimationVariables.durationValue1} 0s`
+        opacity: 1
       },
       hasFocus && {
-        opacity: 0,
-        transition: `opacity 0 ${AnimationVariables.durationValue1}`
+        opacity: 0
+      },
+      !disableAnimation && {
+        transition: `opacity ${AnimationVariables.durationValue1} 0s`
       }
     ],
     clearButton: [
@@ -119,7 +120,7 @@ export function getStyles(props: ISearchBoxStyleProps): ISearchBoxStyles {
         flexBasis: '32px',
         flexShrink: 0,
         padding: 1,
-        color: palette.themePrimary,
+        color: palette.themePrimary
       }
     ],
     field: [
@@ -132,8 +133,8 @@ export function getStyles(props: ISearchBoxStyleProps): ISearchBoxStyles {
         fontFamily: 'inherit',
         fontSize: 'inherit',
         color: palette.neutralPrimary,
-        backgroundColor: 'transparent',
-        flex: '1 1 0',
+        backgroundColor: semanticColors.inputBackground,
+        flex: '1 1 0px',
         overflow: 'hidden',
         textOverflow: 'ellipsis',
         // This padding forces the text placement to round up.
@@ -142,6 +143,13 @@ export function getStyles(props: ISearchBoxStyleProps): ISearchBoxStyles {
         selectors: {
           '::-ms-clear': {
             display: 'none'
+          },
+          '::placeholder': {
+            color: semanticColors.inputPlaceholderText,
+            opacity: 1
+          },
+          ':-ms-input-placeholder': {
+            color: semanticColors.inputPlaceholderText
           }
         }
       },

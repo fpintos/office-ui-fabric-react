@@ -5,28 +5,27 @@ import { App as AppBase, IAppDefinition, IAppProps } from '@uifabric/example-app
 export const AppDefinition: IAppDefinition = {
   appTitle: 'Fabric - React',
 
-  testPages: [
-  ],
+  testPages: [],
   examplePages: [
     {
       links: [
         {
-          component: require<any>('../components/PositioningContainer/PositioningContainerPage').PositioningContainerPage,
-          key: 'PositioningContainer',
-          name: 'PositioningContainer',
-          url: '#/examples/PositioningContainer'
+          component: require<any>('../components/CollapsibleSection/CollapsibleSectionPage').CollapsibleSectionPage,
+          key: 'CollapsibleSection',
+          name: 'CollapsibleSection',
+          url: '#/examples/collapsiblesection'
         },
         {
-          component: require<any>('../components/Coachmark/CoachmarkPage').CoachmarkPage,
-          key: 'Coachmark',
-          name: 'Coachmark',
-          url: '#/examples/coachmark'
+          component: require<any>('../components/Chiclet/ChicletPage').ChicletPage,
+          key: 'Chiclet',
+          name: 'Chiclet',
+          url: '#/examples/chiclet'
         },
         {
-          component: require<any>('../components/CommandBar/CommandBarPage').CommandBarPage,
-          key: 'CommandBar',
-          name: 'CommandBar',
-          url: '#/examples/commandbar'
+          component: require<any>('../components/Card/CardPage').CardPage,
+          key: 'DashboardCard',
+          name: 'DashboardCard',
+          url: '#/examples/Card'
         },
         {
           component: require<any>('../components/FolderCover/FolderCoverPage').FolderCoverPage,
@@ -71,22 +70,10 @@ export const AppDefinition: IAppDefinition = {
           url: '#/examples/tileslist'
         },
         {
-          component: require<any>('../components/FloatingPicker/PeoplePicker/FloatingPeoplePickerPage').FloatingPeoplePickerPage,
-          key: 'FloatingPeoplePicker',
-          name: 'FloatingPeoplePicker',
-          url: '#/examples/floatingpeoplepicker'
-        },
-        {
-          component: require<any>('../components/SelectedItemsList/SelectedPeopleList/SelectedPeopleListPage').SelectedPeopleListPage,
-          key: 'PeopleItemList',
-          name: 'PeopleItemList',
-          url: '#/examples/peopleitemlist'
-        },
-        {
-          component: require<any>('../components/ExtendedPicker/PeoplePicker/ExtendedPeoplePickerPage').ExtendedPeoplePickerPage,
-          key: 'ExtendedPeoplePicker',
-          name: 'ExtendedPeoplePicker',
-          url: '#/examples/extendedpeoplepicker'
+          component: require<any>('../components/Shimmer/ShimmerPage').ShimmerPage,
+          key: 'Shimmer',
+          name: 'Shimmer',
+          url: '#/examples/shimmer'
         },
         {
           component: require<any>('../components/VirtualizedList/VirtualizedListPage').VirtualizedListPage,
@@ -99,6 +86,24 @@ export const AppDefinition: IAppDefinition = {
           key: 'StaticList',
           name: 'StaticList',
           url: '#/examples/staticlist'
+        },
+        {
+          component: require<any>('../components/Nav/NavPage').NavPage,
+          key: 'Nav',
+          name: 'Nav',
+          url: '#/examples/nav'
+        },
+        {
+          component: require<any>('../components/fluent/theme/FluentThemePage').FluentThemePage,
+          key: 'FluentColorTheme',
+          name: 'Fluent Color Theme',
+          url: '#/examples/fluent-color-theme'
+        },
+        {
+          component: require<any>('../components/fluent/styles/FluentStylesPage').FluentStylesPage,
+          key: 'FluentStyles',
+          name: 'Fluent Component Styles',
+          url: '#/examples/fluent-styles'
         }
       ]
     }
@@ -117,7 +122,6 @@ export const AppDefinition: IAppDefinition = {
       url: 'http://www.github.com/officedev'
     }
   ]
-
 };
 
-export const App = (props: IAppProps) => <AppBase appDefinition={ AppDefinition } { ...props } />;
+export const App = (props: IAppProps) => <AppBase appDefinition={AppDefinition} {...props} />;

@@ -10,7 +10,7 @@ const DOCSET_FOLDER = 'docset';
 const LIST_ITEM = 'listitem';
 const DEFAULT_ICON_SIZE: FileTypeIconSize = 16;
 
-export type FileTypeIconSize = 16 | 20 | 32 | 40 | 48 | 96;
+export type FileTypeIconSize = 16 | 20 | 32 | 40 | 48 | 64 | 96;
 export type ImageFileType = 'svg' | 'png';
 
 export interface IFileTypeIconOptions {
@@ -46,7 +46,6 @@ export interface IFileTypeIconOptions {
  * @param options
  */
 export function getFileTypeIconProps(options: IFileTypeIconOptions): { iconName: string } {
-
   // First, obtain the base name of the icon using the extension or type.
   let iconBaseName: string = GENERIC_FILE;
 
@@ -74,7 +73,6 @@ export function getFileTypeIconProps(options: IFileTypeIconOptions): { iconName:
   let suffix: string = _getFileTypeIconSuffix(size, options.imageFileType);
 
   return { iconName: iconBaseName + suffix };
-
 }
 
 function _getFileTypeIconNameFromExtension(extension: string): string {
@@ -101,22 +99,21 @@ function _getFileTypeIconNameFromExtension(extension: string): string {
 }
 
 function _getFileTypeIconSuffix(size: FileTypeIconSize, imageFileType: ImageFileType = 'svg'): string {
-
   let devicePixelRatio: number = window.devicePixelRatio;
   let devicePixelRatioSuffix = ''; // Default is 1x
 
   // SVGs scale well, so you can generally use the default image.
   // 1.5x is a special case where SVGs need a different image.
   if (imageFileType === 'svg' && 1 < devicePixelRatio && devicePixelRatio <= 1.5) {
-    // Currently missing 1.5x SVGs at sizes 20 and 40, snap to 1x for now
-    if (size !== 20 && size !== 40) {
+    // Currently missing 1.5x SVGs at size 20, snap to 1x for now
+    if (size !== 20) {
       devicePixelRatioSuffix = '_1.5x';
     }
   } else if (imageFileType === 'png') {
     // To look good, PNGs should use a different image for higher device pixel ratios
     if (1 < devicePixelRatio && devicePixelRatio <= 1.5) {
       // Currently missing 1.5x icons for size 20, snap to 2x for now
-      devicePixelRatioSuffix = (size === 20) ? '_2x' : '_1.5x';
+      devicePixelRatioSuffix = size === 20 ? '_2x' : '_1.5x';
     } else if (1.5 < devicePixelRatio && devicePixelRatio <= 2) {
       devicePixelRatioSuffix = '_2x';
     } else if (2 < devicePixelRatio && devicePixelRatio <= 3) {

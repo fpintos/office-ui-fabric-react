@@ -26,10 +26,10 @@ export interface ITextField {
   setSelectionRange: (start: number, end: number) => void;
 
   /** Gets the selection start of the text field. Returns -1 if there is no selection. */
-  selectionStart: number;
+  selectionStart: number | null;
 
   /** Gets the selection end of the text field. Returns -1 if there is no selection. */
-  selectionEnd: number;
+  selectionEnd: number | null;
 }
 
 /**
@@ -40,7 +40,7 @@ export interface ITextFieldProps extends React.AllHTMLAttributes<HTMLInputElemen
    * Optional callback to access the ITextField interface. Use this instead of ref for accessing
    * the public methods and properties of the component.
    */
-  componentRef?: (component: ITextField) => void;
+  componentRef?: (component: ITextField | null) => void;
 
   /**
    * Whether or not the textfield is a multiline textfield.
@@ -78,7 +78,7 @@ export interface ITextFieldProps extends React.AllHTMLAttributes<HTMLInputElemen
   label?: string;
 
   /**
-   * Optional custom renderer for the label
+   * Optional custom renderer for the label.
    */
   onRenderLabel?: IRenderFunction<ITextFieldProps>;
 
@@ -88,19 +88,24 @@ export interface ITextFieldProps extends React.AllHTMLAttributes<HTMLInputElemen
   description?: string;
 
   /**
+   * Optional custom renderer for the description.
+   */
+  onRenderDescription?: IRenderFunction<ITextFieldProps>;
+
+  /**
    * @deprecated
    * Deprecated; use prefix instead.
    */
   addonString?: string;
 
   /**
-  * String for prefix
-  */
+   * String for prefix
+   */
   prefix?: string;
 
   /**
-  * String for suffix
-  */
+   * String for suffix
+   */
   suffix?: string;
 
   /**
@@ -110,13 +115,13 @@ export interface ITextFieldProps extends React.AllHTMLAttributes<HTMLInputElemen
   onRenderAddon?: IRenderFunction<ITextFieldProps>;
 
   /**
-  * Custom render function for prefix
-  */
+   * Custom render function for prefix.
+   */
   onRenderPrefix?: IRenderFunction<ITextFieldProps>;
 
   /**
-  * Custom render function for suffix
-  */
+   * Custom render function for suffix.
+   */
   onRenderSuffix?: IRenderFunction<ITextFieldProps>;
 
   /**
@@ -141,6 +146,12 @@ export interface ITextFieldProps extends React.AllHTMLAttributes<HTMLInputElemen
    * @default false
    */
   disabled?: boolean;
+
+  /**
+   * If true, the textfield is readonly.
+   * @default false
+   */
+  readOnly?: boolean;
 
   /**
    * If set, this will display an error message for the text field.
@@ -223,13 +234,40 @@ export interface ITextFieldProps extends React.AllHTMLAttributes<HTMLInputElemen
   iconClass?: string;
 
   /**
-   * Internal ID passed to render functions.
-   */
-  componentId?: string;
-
-  /**
    * Whether the input field should have autocomplete enabled.
    * This tells the browser to display options based on earlier typed values.
    */
   autoComplete?: 'on' | 'off';
+
+  /**
+   * The masking string that defines the mask's behavior.
+   * A backslash will escape any character.
+   * Special format characters are:
+   * '9': [0-9]
+   * 'a': [a-zA-Z]
+   * '*': [a-zA-Z0-9]
+   */
+  mask?: string;
+
+  /**
+   * The character to show in place of unfilled characters of the mask.
+   * @default '_'
+   */
+  maskChar?: string;
+
+  /**
+   * An object defining the format characters and corresponding regexp values.
+   * Default format characters: {
+   *  '9': /[0-9]/,
+   *  'a': /[a-zA-Z]/,
+   *  '*': /[a-zA-Z0-9]/
+   * }
+   */
+  maskFormat?: { [key: string]: RegExp };
+
+  /**
+   * Deprecated property. Serves no function.
+   * @deprecated
+   */
+  componentId?: string;
 }

@@ -1,8 +1,5 @@
 import * as React from 'react';
-import {
-  autobind,
-  customizable
-} from '../../Utilities';
+import { customizable } from '../../Utilities';
 import {
   IColorCellProps,
   IColorPickerGridCellProps,
@@ -19,84 +16,93 @@ import { classNamesFunction } from '../../Utilities';
 
 const getClassNames = classNamesFunction<IColorPickerGridCellStyleProps, IColorPickerGridCellStyles>();
 
-class ColorCell extends GridCell<IColorCellProps, IGridCellProps<IColorCellProps>> {
-}
+class ColorCell extends GridCell<IColorCellProps, IGridCellProps<IColorCellProps>> {}
 
-@customizable('ColorPickerGridCell', ['theme'])
+@customizable('ColorPickerGridCell', ['theme', 'styles'])
 export class ColorPickerGridCellBase extends React.Component<IColorPickerGridCellProps, {}> {
-
   public static defaultProps = {
     circle: true,
     disabled: false,
-    selected: false,
+    selected: false
   } as IColorPickerGridCellProps;
 
-  private _classNames: {[key in keyof IColorPickerGridCellStyles]: string };
+  private _classNames: { [key in keyof IColorPickerGridCellStyles]: string };
 
-  public render() {
-    let {
+  public render(): JSX.Element {
+    const {
       item,
       id,
       selected,
       disabled,
-      getStyles,
+      styles,
       theme,
-      circle
+      circle,
+      color,
+      onClick,
+      onHover,
+      onFocus,
+      onMouseEnter,
+      onMouseMove,
+      onMouseLeave,
+      onWheel,
+      onKeyDown
     } = this.props;
 
-    this._classNames = getClassNames(
-      getStyles!,
-      {
-        theme: theme!,
-        disabled,
-        selected,
-        circle,
-        isWhite: this._isWhiteCell(this.props.color)
-      }
-    );
+    this._classNames = getClassNames(styles!, {
+      theme: theme!,
+      disabled,
+      selected,
+      circle,
+      isWhite: this._isWhiteCell(color)
+    });
 
     return (
       <ColorCell
-        item={ item }
-        id={ id }
-        key={ item.id }
-        disabled={ disabled }
-        role={ 'gridcell' }
-        onRenderItem={ this._onRenderColorOption }
-        selected={ selected }
-        onClick={ this.props.onClick }
-        onHover={ this.props.onHover }
-        onFocus={ this.props.onFocus }
-        label={ item.label }
-        className={ this._classNames.colorCell }
-        getClassNames={ this._getClassNames }
+        item={item}
+        id={`${id}-${item.id}-${item.index}`}
+        key={item.id}
+        disabled={disabled}
+        role={'gridcell'}
+        onRenderItem={this._onRenderColorOption}
+        selected={selected}
+        onClick={onClick}
+        onHover={onHover}
+        onFocus={onFocus}
+        label={item.label}
+        className={this._classNames.colorCell}
+        getClassNames={this._getClassNames}
+        index={item.index}
+        onMouseEnter={onMouseEnter}
+        onMouseMove={onMouseMove}
+        onMouseLeave={onMouseLeave}
+        onWheel={onWheel}
+        onKeyDown={onKeyDown}
       />
     );
   }
 
   /**
- * Render the core of a color cell
- * @returns {JSX.Element} - Element representing the core of the item
- */
-  @autobind
-  private _onRenderColorOption(colorOption: IColorCellProps): JSX.Element {
+   * Render the core of a color cell
+   * @returns {JSX.Element} - Element representing the core of the item
+   */
+  private _onRenderColorOption = (colorOption: IColorCellProps): JSX.Element => {
     // Build an SVG for the cell with the given shape and color properties
     return (
-      <svg className={ this._classNames.svg } viewBox='0 0 20 20' fill={ getColorFromString(colorOption.color as string)!.str } >
-        {
-          this.props.circle ?
-            <circle cx='50%' cy='50%' r='50%' /> :
-            <rect width='100%' height='100%' />
-        }
+      <svg
+        className={this._classNames.svg}
+        viewBox="0 0 20 20"
+        fill={getColorFromString(colorOption.color as string)!.str}
+      >
+        {this.props.circle ? <circle cx="50%" cy="50%" r="50%" /> : <rect width="100%" height="100%" />}
       </svg>
     );
-  }
+  };
 
   /**
-* Validate if the cell's color is white or not to apply whiteCell style
-* @param inputColor - The color of the current cell
-* @returns - Whether the cell's color is white or not.
-*/
+   * Validate if the cell's color is white or not to apply whiteCell style
+   * @param inputColor - The color of the current cell
+   * @returns - Whether the cell's color is white or not.
+   */
   private _isWhiteCell(inputColor: string | undefined): boolean {
     return inputColor!.toLocaleLowerCase() === '#ffffff';
   }
@@ -104,8 +110,7 @@ export class ColorPickerGridCellBase extends React.Component<IColorPickerGridCel
   /**
    * Method to override the getClassNames func in a button.
    */
-  @autobind
-  private _getClassNames(
+  private _getClassNames = (
     theme: ITheme,
     className: string,
     variantClassName: string,
@@ -114,44 +119,35 @@ export class ColorPickerGridCellBase extends React.Component<IColorPickerGridCel
     disabled: boolean,
     checked: boolean,
     expanded: boolean,
-    isSplit: boolean | undefined): IButtonClassNames {
-    let styles = getActionButtonStyles(theme);
+    isSplit: boolean | undefined
+  ): IButtonClassNames => {
+    const styles = getActionButtonStyles(theme);
     return mergeStyleSets(this._classNames as {}, {
       root: [
         'ms-Button',
         styles.root,
         variantClassName,
         className,
-        checked && [
-          'is-checked',
-          styles.rootChecked
-        ],
-        disabled && [
-          'is-disabled',
-          styles.rootDisabled
-        ],
-        !disabled && !checked && {
-          selectors: {
-            ':hover': styles.rootHovered,
-            ':focus': styles.rootFocused,
-            ':active': styles.rootPressed,
+        checked && ['is-checked', styles.rootChecked],
+        disabled && ['is-disabled', styles.rootDisabled],
+        !disabled &&
+          !checked && {
+            selectors: {
+              ':hover': styles.rootHovered,
+              ':focus': styles.rootFocused,
+              ':active': styles.rootPressed
+            }
+          },
+        disabled && checked && [styles.rootCheckedDisabled],
+        !disabled &&
+          checked && {
+            selectors: {
+              ':hover': styles.rootCheckedHovered,
+              ':active': styles.rootCheckedPressed
+            }
           }
-        },
-        disabled && checked && [
-          styles.rootCheckedDisabled
-        ],
-        !disabled && checked && {
-          selectors: {
-            ':hover': styles.rootCheckedHovered,
-            ':active': styles.rootCheckedPressed
-          }
-        }
       ],
-      flexContainer: [
-        'ms-Button-flexContainer',
-        styles.flexContainer
-      ]
+      flexContainer: ['ms-Button-flexContainer', styles.flexContainer]
     });
-  }
-
+  };
 }

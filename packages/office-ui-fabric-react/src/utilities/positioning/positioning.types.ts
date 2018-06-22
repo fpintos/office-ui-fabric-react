@@ -1,4 +1,3 @@
-
 import { DirectionalHint } from '../../common/DirectionalHint';
 import { IPoint } from './positioning.types';
 import { IRectangle } from '../../Utilities';
@@ -17,7 +16,7 @@ export enum Position {
   end = 3
 }
 export interface IPositionProps {
-  target?: HTMLElement | MouseEvent | IPoint;
+  target?: Element | MouseEvent | IPoint;
   /** how the element should be positioned */
   directionalHint?: DirectionalHint;
   /**
@@ -28,19 +27,9 @@ export interface IPositionProps {
   /** The gap between the callout and the target */
   gapSpace?: number;
   /**
-  * @deprecated this will be removed in 6.0 and will only be available in ICalloutPositionProps.
-  * The width of the beak.
-  */
-  beakWidth?: number;
-  /**
    * The bounding rectangle for which  the contextual menu can appear in.
    */
   bounds?: IRectangle;
-  /**
-   * @deprecated this will be removed in 6.0 and will only be available in ICalloutPositionProps.
-   * If true then the beak is visible. If false it will not be shown.
-   */
-  isBeakVisible?: boolean;
   /**
    * If true the position returned will have the menu element cover the target.
    * If false then it will position next to the target;
@@ -56,12 +45,12 @@ export interface IPositionProps {
 
 export interface ICalloutPositionProps extends IPositionProps {
   /**
-  * The width of the beak.
-  */
+   * The width of the beak.
+   */
   beakWidth?: number;
+
   /**
-   * @deprecated this will be removed in 6.0 and will only be available in ICalloutPositionProps.
-   * If true then the beak is visible. If false it will not be shown.
+   * Whether or not the beak is visible
    */
   isBeakVisible?: boolean;
 }
@@ -72,10 +61,16 @@ export interface IPositionedData {
    */
   elementPosition: IPosition;
   /**
-   * The finalized target edge that element is aligning to. For isntance RectangleEdge.bottom would mean
-   * that the bottom edge of the target is being aligned to.
+   * The finalized target edge that element is aligning to. For instance RectangleEdge.bottom would mean
+   * that the bottom edge of the target is being aligned to by the RectangleEdge.top of the element
+   * that is being positioned.
    */
   targetEdge: RectangleEdge;
+  /**
+   * The finalized alignment edge that the element is aligning too. For instance, RectangleEdge.left means
+   * that the left edge of the target should be in line with the left edge of the element being positioned.
+   */
+  alignmentEdge?: RectangleEdge;
 }
 
 export interface ICalloutPositionedInfo extends IPositionedData {
@@ -100,13 +95,6 @@ export interface IPosition {
   [key: string]: number | undefined;
 }
 
-/**
- * @deprecated use IPosition instead.
- * This will be removed in 6.0
- */
-export interface ICalloutPositon extends IPosition {
-}
-
 export interface IPoint {
   x: number;
   y: number;
@@ -118,10 +106,9 @@ export interface IPositionDirectionalHintData {
   isAuto?: boolean;
 }
 
-/**
- * @deprecated Do not use this will be removed in 6.0.
- * Use IPositionDirectionalHintData instead
- */
-export interface IPositionedData extends IPositionDirectionalHintData {
-
+export interface IRelativePositions {
+  calloutPosition: IPosition;
+  beakPosition: { position: IPosition | undefined; display: 'block' };
+  directionalClassName: string;
+  submenuDirection: DirectionalHint;
 }
