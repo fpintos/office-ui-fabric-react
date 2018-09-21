@@ -65,11 +65,15 @@ export class DropdownBase extends BaseComponent<IDropdownInternalProps, IDropdow
   private _sizePosCache: DropdownSizePosCache = new DropdownSizePosCache();
   private _classNames: IProcessedStyleSet<IDropdownStyles>;
 
+  // Flag for when we get the first mouseMove
+  private _gotMouseMove: boolean;
+
   constructor(props: IDropdownProps) {
     super(props);
 
     this._warnDeprecations({
-      isDisabled: 'disabled'
+      isDisabled: 'disabled',
+      onChanged: 'onChange'
     });
 
     this._warnMutuallyExclusive({
@@ -125,6 +129,8 @@ export class DropdownBase extends BaseComponent<IDropdownInternalProps, IDropdow
 
   public componentDidUpdate(prevProps: IDropdownProps, prevState: IDropdownState) {
     if (prevState.isOpen === true && this.state.isOpen === false) {
+      this._gotMouseMove = false;
+
       if (this._dropDown.current) {
         this._dropDown.current.focus();
       }
@@ -138,12 +144,11 @@ export class DropdownBase extends BaseComponent<IDropdownInternalProps, IDropdow
   // Primary Render
   public render(): JSX.Element {
     const id = this._id;
-    let { disabled } = this.props;
+
     const {
       className,
       label,
       options,
-      isDisabled,
       ariaLabel,
       required,
       errorMessage,
@@ -162,10 +167,7 @@ export class DropdownBase extends BaseComponent<IDropdownInternalProps, IDropdow
     const selectedOptions = this._getAllSelectedOptions(options, selectedIndices);
     const divProps = getNativeProps(this.props, divProperties);
 
-    // Remove this deprecation workaround at 1.0.0
-    if (isDisabled !== undefined) {
-      disabled = isDisabled;
-    }
+    const disabled = this._isDisabled();
 
     const optionId = id + '-option';
     const ariaAttrs = multiSelect
@@ -283,8 +285,8 @@ export class DropdownBase extends BaseComponent<IDropdownInternalProps, IDropdow
     }
   }
 
-  public setSelectedIndex(index: number): void {
-    const { onChanged, options, selectedKey, selectedKeys, multiSelect } = this.props;
+  public setSelectedIndex(event: React.FormEvent<HTMLDivElement>, index: number): void {
+    const { onChange, onChanged, options, selectedKey, selectedKeys, multiSelect } = this.props;
     const { selectedIndices = [] } = this.state;
     const checked: boolean = selectedIndices ? selectedIndices.indexOf(index) > -1 : false;
 
@@ -314,6 +316,13 @@ export class DropdownBase extends BaseComponent<IDropdownInternalProps, IDropdow
       });
     }
 
+    if (onChange) {
+      // for single-select, option passed in will always be selected.
+      // for multi-select, flip the checked value
+      const changedOpt = multiSelect ? { ...options[index], selected: !checked } : options[index];
+      onChange(event, changedOpt, index);
+    }
+
     if (onChanged) {
       // for single-select, option passed in will always be selected.
       // for multi-select, flip the checked value
@@ -337,7 +346,12 @@ export class DropdownBase extends BaseComponent<IDropdownInternalProps, IDropdow
    * @param selectedIndex The selectedIndex Dropdown's state
    * @returns The next valid dropdown option's index
    */
-  private _moveIndex(stepValue: number, index: number, selectedIndex: number): number {
+  private _moveIndex(
+    event: React.FormEvent<HTMLDivElement>,
+    stepValue: number,
+    index: number,
+    selectedIndex: number
+  ): number {
     const { options } = this.props;
     // Return selectedIndex if nothing has changed or options is empty
     if (selectedIndex === index || options.length === 0) {
@@ -374,7 +388,7 @@ export class DropdownBase extends BaseComponent<IDropdownInternalProps, IDropdow
       stepCounter++;
     }
 
-    this.setSelectedIndex(index);
+    this.setSelectedIndex(event, index);
     return index;
   }
 
@@ -416,7 +430,7 @@ export class DropdownBase extends BaseComponent<IDropdownInternalProps, IDropdow
         isBeakVisible={false}
         gapSpace={0}
         doNotLayer={false}
-        directionalHintFixed={true}
+        directionalHintFixed={false}
         directionalHint={DirectionalHint.bottomLeftEdge}
         {...calloutProps}
         className={this._classNames.callout}
@@ -530,7 +544,7 @@ export class DropdownBase extends BaseComponent<IDropdownInternalProps, IDropdow
         role="option"
         aria-selected={isItemSelected ? 'true' : 'false'}
         ariaLabel={item.ariaLabel || item.text}
-        title={item.title}
+        title={item.title ? item.title : item.text}
       >
         {onRenderOption(item, this._onRenderOption)}
       </CommandButton>
@@ -548,7 +562,7 @@ export class DropdownBase extends BaseComponent<IDropdownInternalProps, IDropdow
           onMouseMove: this._onItemMouseMove.bind(this, item)
         }}
         label={item.text}
-        title={item.title}
+        title={item.title ? item.title : item.text}
         onRenderLabel={this._onRenderLabel.bind(this, item)}
         className={itemClassName}
         role="option"
@@ -577,10 +591,10 @@ export class DropdownBase extends BaseComponent<IDropdownInternalProps, IDropdow
     }
   };
 
-  private _onItemClick = (item: IDropdownOption): (() => void) => {
-    return (): void => {
+  private _onItemClick = (item: IDropdownOption): ((event: React.MouseEvent<HTMLDivElement>) => void) => {
+    return (event: React.MouseEvent<HTMLDivElement>): void => {
       if (!item.disabled) {
-        this.setSelectedIndex(item.index!);
+        this.setSelectedIndex(event, item.index!);
         if (!this.props.multiSelect) {
           // only close the callout when it's in single-select mode
           this.setState({
@@ -609,7 +623,7 @@ export class DropdownBase extends BaseComponent<IDropdownInternalProps, IDropdow
   };
 
   private _onItemMouseEnter(item: any, ev: React.MouseEvent<HTMLElement>): void {
-    if (!this._isScrollIdle) {
+    if (this._shouldIgnoreMouseEvent()) {
       return;
     }
 
@@ -619,6 +633,7 @@ export class DropdownBase extends BaseComponent<IDropdownInternalProps, IDropdow
 
   private _onItemMouseMove(item: any, ev: React.MouseEvent<HTMLElement>): void {
     const targetElement = ev.currentTarget as HTMLElement;
+    this._gotMouseMove = true;
 
     if (!this._isScrollIdle || document.activeElement === targetElement) {
       return;
@@ -628,7 +643,7 @@ export class DropdownBase extends BaseComponent<IDropdownInternalProps, IDropdow
   }
 
   private _onMouseItemLeave = (item: any, ev: React.MouseEvent<HTMLElement>): void => {
-    if (!this._isScrollIdle) {
+    if (this._shouldIgnoreMouseEvent()) {
       return;
     }
 
@@ -649,6 +664,10 @@ export class DropdownBase extends BaseComponent<IDropdownInternalProps, IDropdow
       }
     }
   };
+
+  private _shouldIgnoreMouseEvent(): boolean {
+    return !this._isScrollIdle || !this._gotMouseMove;
+  }
 
   private _onDismiss = (): void => {
     this.setState({ isOpen: false });
@@ -769,8 +788,8 @@ export class DropdownBase extends BaseComponent<IDropdownInternalProps, IDropdow
         }
         if (this.props.multiSelect) {
           this.setState({ isOpen: true });
-        } else {
-          newIndex = this._moveIndex(-1, selectedIndex - 1, selectedIndex);
+        } else if (!this._isDisabled()) {
+          newIndex = this._moveIndex(ev, -1, selectedIndex - 1, selectedIndex);
         }
         break;
 
@@ -781,20 +800,20 @@ export class DropdownBase extends BaseComponent<IDropdownInternalProps, IDropdow
         }
         if ((containsExpandCollapseModifier && !isOpen) || this.props.multiSelect) {
           this.setState({ isOpen: true });
-        } else {
-          newIndex = this._moveIndex(1, selectedIndex + 1, selectedIndex);
+        } else if (!this._isDisabled()) {
+          newIndex = this._moveIndex(ev, 1, selectedIndex + 1, selectedIndex);
         }
         break;
 
       case KeyCodes.home:
         if (!this.props.multiSelect) {
-          newIndex = this._moveIndex(1, 0, selectedIndex);
+          newIndex = this._moveIndex(ev, 1, 0, selectedIndex);
         }
         break;
 
       case KeyCodes.end:
         if (!this.props.multiSelect) {
-          newIndex = this._moveIndex(-1, this.props.options.length - 1, selectedIndex);
+          newIndex = this._moveIndex(ev, -1, this.props.options.length - 1, selectedIndex);
         }
         break;
 
@@ -915,14 +934,9 @@ export class DropdownBase extends BaseComponent<IDropdownInternalProps, IDropdow
         return;
       }
     }
-    let { disabled } = this.props;
-    const { isDisabled } = this.props;
-    const { isOpen } = this.state;
 
-    // Remove this deprecation workaround at 1.0.0
-    if (isDisabled !== undefined) {
-      disabled = isDisabled;
-    }
+    const { isOpen } = this.state;
+    const disabled = this._isDisabled();
 
     if (!disabled) {
       this.setState({
@@ -935,17 +949,30 @@ export class DropdownBase extends BaseComponent<IDropdownInternalProps, IDropdow
     const { isOpen, selectedIndices } = this.state;
     const { multiSelect } = this.props;
 
-    let { disabled } = this.props;
-    if (this.props.isDisabled !== undefined) {
-      disabled = this.props.isDisabled;
-    }
+    const disabled = this._isDisabled();
 
     if (!isOpen && selectedIndices.length === 0 && !multiSelect && !disabled) {
       // Per aria
-      this._moveIndex(1, 0, -1);
+      this._moveIndex(ev, 1, 0, -1);
     }
 
     this.setState({ hasFocus: true });
     return;
+  };
+
+  /**
+   * Because the isDisabled prop is deprecated, we have had to repeat this logic all over the place.
+   * This helper method avoids all the repetition.
+   */
+  private _isDisabled: () => boolean | undefined = () => {
+    let { disabled } = this.props;
+    const { isDisabled } = this.props;
+
+    // Remove this deprecation workaround at 1.0.0
+    if (isDisabled !== undefined) {
+      disabled = isDisabled;
+    }
+
+    return disabled;
   };
 }

@@ -6,7 +6,7 @@ import { SlimNav } from './SlimNav';
 import { getStyles } from './Nav.styles';
 import { styled, classNamesFunction } from 'office-ui-fabric-react/lib/Utilities';
 import { NavLink } from './NavLink';
-import { FocusZone, FocusZoneDirection } from 'office-ui-fabric-react/lib/components/FocusZone';
+import { FocusZone, FocusZoneDirection } from 'office-ui-fabric-react/lib/FocusZone';
 
 const getClassNames = classNamesFunction<INavStyleProps, INavStyles>();
 
@@ -53,6 +53,7 @@ class NavTogglerComponent extends React.Component<INavProps, INavState> {
               enableCustomization={this.props.enableCustomization}
               showMore={showMore}
               onShowMoreLinkClicked={this._onShowMoreLinkClicked}
+              onEditLeftNavClickedCallback={this.props.onEditLeftNavClickedCallback}
             />
           ) : (
             <Nav
@@ -62,6 +63,8 @@ class NavTogglerComponent extends React.Component<INavProps, INavState> {
               enableCustomization={this.props.enableCustomization}
               showMore={showMore}
               onShowMoreLinkClicked={this._onShowMoreLinkClicked}
+              onNavNodeExpandedCallback={this.props.onNavNodeExpandedCallback}
+              onEditLeftNavClickedCallback={this.props.onEditLeftNavClickedCallback}
             />
           )}
         </FocusZone>
@@ -115,6 +118,7 @@ class NavTogglerComponent extends React.Component<INavProps, INavState> {
         rootClassName={classNames.navToggler}
         leftIconName={link.icon}
         iconClassName={classNames.navItemIconColumn}
+        barClassName={classNames.navItemBarMarker}
         role="menu"
       />
     );

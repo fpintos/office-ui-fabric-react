@@ -8,7 +8,6 @@ exports[`Component Examples renders Link.Basic.Example.tsx correctly 1`] = `
     When a link has an href, 
   </span>
   <a
-    aria-disabled={undefined}
     className=
         ms-Link
         {
@@ -22,13 +21,13 @@ exports[`Component Examples renders Link.Basic.Example.tsx correctly 1`] = `
         }
         .ms-Fabric--isFocusVisible &:focus:after {
           border: 1px solid #ffffff;
-          bottom: 1px;
+          bottom: -1px;
           content: "";
-          left: 1px;
+          left: -1px;
           outline: 1px solid #666666;
           position: absolute;
-          right: 1px;
-          top: 1px;
+          right: -1px;
+          top: -1px;
           z-index: 1;
         }
         &:active, &:hover, &:active:hover {
@@ -42,7 +41,6 @@ exports[`Component Examples renders Link.Basic.Example.tsx correctly 1`] = `
         }
     href="http://dev.office.com/fabric/components/link"
     onClick={[Function]}
-    target={undefined}
   >
     it renders as an anchor tag.
   </a>
@@ -50,7 +48,6 @@ exports[`Component Examples renders Link.Basic.Example.tsx correctly 1`] = `
      Without an href, 
   </span>
   <button
-    aria-disabled={undefined}
     className=
         ms-Link
         {
@@ -82,13 +79,13 @@ exports[`Component Examples renders Link.Basic.Example.tsx correctly 1`] = `
         }
         .ms-Fabric--isFocusVisible &:focus:after {
           border: 1px solid #ffffff;
-          bottom: 1px;
+          bottom: -1px;
           content: "";
-          left: 1px;
+          left: -1px;
           outline: 1px solid #666666;
           position: absolute;
-          right: 1px;
-          top: 1px;
+          right: -1px;
+          top: -1px;
           z-index: 1;
         }
         @media screen and (-ms-high-contrast: white-on-black){& {
@@ -109,7 +106,6 @@ exports[`Component Examples renders Link.Basic.Example.tsx correctly 1`] = `
         &:focus {
           color: #0078d4;
         }
-    disabled={undefined}
     onClick={[Function]}
   >
     the link is rendered as a button
@@ -135,13 +131,13 @@ exports[`Component Examples renders Link.Basic.Example.tsx correctly 1`] = `
         }
         .ms-Fabric--isFocusVisible &:focus:after {
           border: 1px solid #ffffff;
-          bottom: 1px;
+          bottom: -1px;
           content: "";
-          left: 1px;
+          left: -1px;
           outline: 1px solid #666666;
           position: absolute;
-          right: 1px;
-          top: 1px;
+          right: -1px;
+          top: -1px;
           z-index: 1;
         }
         &:link, &:visited {
@@ -149,7 +145,6 @@ exports[`Component Examples renders Link.Basic.Example.tsx correctly 1`] = `
         }
     href="http://dev.office.com/fabric/components/link"
     onClick={[Function]}
-    target={undefined}
   >
     disabled link
   </a>

@@ -64,6 +64,11 @@ export interface ICardFrameProps {
   href?: string;
 
   /**
+   * Target for Hyperlink URL for title
+   */
+  target?: string;
+
+  /**
    * Whether the card is draggable or not
    * @default false
    */
@@ -100,4 +105,9 @@ export interface ICardFrameStyles {
    * Style for card frame layout(children)
    */
   layout: IStyle;
+
+  /**
+   * Style for ellipsis button for the overflowmenu
+   */
+  ellipsisButtonStyle: IStyle;
 }

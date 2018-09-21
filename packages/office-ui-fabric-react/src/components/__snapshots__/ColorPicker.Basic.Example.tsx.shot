@@ -113,7 +113,6 @@ exports[`Component Examples renders ColorPicker.Basic.Example.tsx correctly 1`] 
               right: 0px;
               top: 0px;
             }
-        style={undefined}
       />
       <div
         className=
@@ -304,26 +303,14 @@ exports[`Component Examples renders ColorPicker.Basic.Example.tsx correctly 1`] 
                         padding-top: 0px;
                         position: relative;
                       }
-                      &:-ms-clear {
-                        display: none;
-                      }
                       &:hover {
                         border-color: #212121;
                       }
                       @media screen and (-ms-high-contrast: active){&:hover {
                         border-color: Highlight;
                       }
-                      &::placeholder {
-                        color: #666666;
-                        opacity: 1;
-                      }
-                      &:-ms-input-placeholder {
-                        color: #666666;
-                        opacity: 1;
-                      }
                 >
                   <input
-                    aria-describedby={undefined}
                     aria-invalid={false}
                     aria-label="Hex"
                     className=
@@ -353,15 +340,22 @@ exports[`Component Examples renders ColorPicker.Basic.Example.tsx correctly 1`] 
                         &:active, &:focus, &:hover {
                           outline: 0px;
                         }
+                        &::-ms-clear {
+                          display: none;
+                        }
                         &::placeholder {
                           color: #666666;
+                          opacity: 1;
+                        }
+                        &:-ms-input-placeholder {
+                          color: #666666;
+                          opacity: 1;
                         }
                     id="TextField0"
                     onBlur={[Function]}
                     onChange={[Function]}
                     onFocus={[Function]}
                     onInput={[Function]}
-                    readOnly={undefined}
                     spellCheck={false}
                     type="text"
                     value="ffffff"
@@ -439,26 +433,14 @@ exports[`Component Examples renders ColorPicker.Basic.Example.tsx correctly 1`] 
                         padding-top: 0px;
                         position: relative;
                       }
-                      &:-ms-clear {
-                        display: none;
-                      }
                       &:hover {
                         border-color: #212121;
                       }
                       @media screen and (-ms-high-contrast: active){&:hover {
                         border-color: Highlight;
                       }
-                      &::placeholder {
-                        color: #666666;
-                        opacity: 1;
-                      }
-                      &:-ms-input-placeholder {
-                        color: #666666;
-                        opacity: 1;
-                      }
                 >
                   <input
-                    aria-describedby={undefined}
                     aria-invalid={false}
                     aria-label="Red"
                     className=
@@ -488,15 +470,22 @@ exports[`Component Examples renders ColorPicker.Basic.Example.tsx correctly 1`] 
                         &:active, &:focus, &:hover {
                           outline: 0px;
                         }
+                        &::-ms-clear {
+                          display: none;
+                        }
                         &::placeholder {
                           color: #666666;
+                          opacity: 1;
+                        }
+                        &:-ms-input-placeholder {
+                          color: #666666;
+                          opacity: 1;
                         }
                     id="TextField2"
                     onBlur={[Function]}
                     onChange={[Function]}
                     onFocus={[Function]}
                     onInput={[Function]}
-                    readOnly={undefined}
                     spellCheck={false}
                     type="text"
                     value="255"
@@ -574,26 +563,14 @@ exports[`Component Examples renders ColorPicker.Basic.Example.tsx correctly 1`] 
                         padding-top: 0px;
                         position: relative;
                       }
-                      &:-ms-clear {
-                        display: none;
-                      }
                       &:hover {
                         border-color: #212121;
                       }
                       @media screen and (-ms-high-contrast: active){&:hover {
                         border-color: Highlight;
                       }
-                      &::placeholder {
-                        color: #666666;
-                        opacity: 1;
-                      }
-                      &:-ms-input-placeholder {
-                        color: #666666;
-                        opacity: 1;
-                      }
                 >
                   <input
-                    aria-describedby={undefined}
                     aria-invalid={false}
                     aria-label="Green"
                     className=
@@ -623,15 +600,22 @@ exports[`Component Examples renders ColorPicker.Basic.Example.tsx correctly 1`] 
                         &:active, &:focus, &:hover {
                           outline: 0px;
                         }
+                        &::-ms-clear {
+                          display: none;
+                        }
                         &::placeholder {
                           color: #666666;
+                          opacity: 1;
+                        }
+                        &:-ms-input-placeholder {
+                          color: #666666;
+                          opacity: 1;
                         }
                     id="TextField4"
                     onBlur={[Function]}
                     onChange={[Function]}
                     onFocus={[Function]}
                     onInput={[Function]}
-                    readOnly={undefined}
                     spellCheck={false}
                     type="text"
                     value="255"
@@ -709,26 +693,14 @@ exports[`Component Examples renders ColorPicker.Basic.Example.tsx correctly 1`] 
                         padding-top: 0px;
                         position: relative;
                       }
-                      &:-ms-clear {
-                        display: none;
-                      }
                       &:hover {
                         border-color: #212121;
                       }
                       @media screen and (-ms-high-contrast: active){&:hover {
                         border-color: Highlight;
                       }
-                      &::placeholder {
-                        color: #666666;
-                        opacity: 1;
-                      }
-                      &:-ms-input-placeholder {
-                        color: #666666;
-                        opacity: 1;
-                      }
                 >
                   <input
-                    aria-describedby={undefined}
                     aria-invalid={false}
                     aria-label="Blue"
                     className=
@@ -758,15 +730,22 @@ exports[`Component Examples renders ColorPicker.Basic.Example.tsx correctly 1`] 
                         &:active, &:focus, &:hover {
                           outline: 0px;
                         }
+                        &::-ms-clear {
+                          display: none;
+                        }
                         &::placeholder {
                           color: #666666;
+                          opacity: 1;
+                        }
+                        &:-ms-input-placeholder {
+                          color: #666666;
+                          opacity: 1;
                         }
                     id="TextField6"
                     onBlur={[Function]}
                     onChange={[Function]}
                     onFocus={[Function]}
                     onInput={[Function]}
-                    readOnly={undefined}
                     spellCheck={false}
                     type="text"
                     value="255"
@@ -844,26 +823,14 @@ exports[`Component Examples renders ColorPicker.Basic.Example.tsx correctly 1`] 
                         padding-top: 0px;
                         position: relative;
                       }
-                      &:-ms-clear {
-                        display: none;
-                      }
                       &:hover {
                         border-color: #212121;
                       }
                       @media screen and (-ms-high-contrast: active){&:hover {
                         border-color: Highlight;
                       }
-                      &::placeholder {
-                        color: #666666;
-                        opacity: 1;
-                      }
-                      &:-ms-input-placeholder {
-                        color: #666666;
-                        opacity: 1;
-                      }
                 >
                   <input
-                    aria-describedby={undefined}
                     aria-invalid={false}
                     aria-label="Alpha"
                     className=
@@ -893,15 +860,22 @@ exports[`Component Examples renders ColorPicker.Basic.Example.tsx correctly 1`] 
                         &:active, &:focus, &:hover {
                           outline: 0px;
                         }
+                        &::-ms-clear {
+                          display: none;
+                        }
                         &::placeholder {
                           color: #666666;
+                          opacity: 1;
+                        }
+                        &:-ms-input-placeholder {
+                          color: #666666;
+                          opacity: 1;
                         }
                     id="TextField8"
                     onBlur={[Function]}
                     onChange={[Function]}
                     onFocus={[Function]}
                     onInput={[Function]}
-                    readOnly={undefined}
                     spellCheck={false}
                     type="text"
                     value="100"

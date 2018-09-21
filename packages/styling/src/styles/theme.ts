@@ -1,19 +1,20 @@
-import { Customizations } from '@uifabric/utilities';
-import { IPalette, ISemanticColors, ITheme, IPartialTheme } from '../interfaces/index';
+import { Customizations, merge } from '@uifabric/utilities';
+import { IPalette, ISemanticColors, ITheme, IPartialTheme, ISemanticTextColors } from '../interfaces/index';
+import { ITypography, IPartialTypography, IFontVariant } from '../interfaces/ITypography';
 import { DefaultFontStyles } from './DefaultFontStyles';
 import { DefaultPalette } from './DefaultPalette';
+import { DefaultSpacing } from './DefaultSpacing';
 import { DefaultTypography } from './DefaultTypography';
 import { loadTheme as legacyLoadTheme } from '@microsoft/load-themed-styles';
-import { IFontType } from '../interfaces/ITypography';
 
-let _theme: ITheme = {
+let _theme: ITheme = createTheme({
   palette: DefaultPalette,
   semanticColors: _makeSemanticColorsFromPalette(DefaultPalette, false, false),
   fonts: DefaultFontStyles,
   isInverted: false,
   typography: DefaultTypography,
   disableGlobalClassNames: false
-};
+});
 let _onThemeChangeCallbacks: Array<(theme: ITheme) => void> = [];
 
 export const ThemeSettingName = 'theme';
@@ -108,22 +109,24 @@ export function createTheme(theme: IPartialTheme, depComments: boolean = false):
     ...theme.semanticColors
   };
 
-  const typography = { ...DefaultTypography, ...theme.typography };
+  const typography = merge<ITypography>({}, DefaultTypography, theme.typography as ITypography);
+  const { variants } = typography;
 
-  const { types } = typography;
-  for (const typeName in types) {
-    if (types.hasOwnProperty(typeName)) {
-      const type = types[typeName];
+  for (const variantName in variants) {
+    if (variants.hasOwnProperty(variantName)) {
+      const variant: IFontVariant = {
+        ...variants.default,
+        ...variants[variantName]
+      };
 
-      if (type.fontFamily && typography.families[type.fontFamily]) {
-        type.fontFamily = typography.families[type.fontFamily];
-      }
-      if (type.fontSize && typography.sizes[type.fontSize]) {
-        type.fontSize = typography.sizes[type.fontSize];
-      }
-      if (type.fontWeight && typography.families[type.fontWeight]) {
-        type.fontWeight = typography.families[type.fontWeight];
-      }
+      variant.family = _expandFrom(variant.family, typography.families);
+      variant.size = _expandFrom(variant.size, typography.sizes);
+      variant.weight = _expandFrom(variant.weight, typography.weights);
+      variant.color = _expandFrom(variant.color, newSemanticColors);
+      variant.hoverColor = _expandFrom(variant.hoverColor, newSemanticColors);
+      variant.disabledColor = _expandFrom(variant.disabledColor, newSemanticColors);
+
+      variants[variantName] = variant;
     }
   }
 
@@ -136,8 +139,27 @@ export function createTheme(theme: IPartialTheme, depComments: boolean = false):
     semanticColors: newSemanticColors,
     isInverted: !!theme.isInverted,
     disableGlobalClassNames: !!theme.disableGlobalClassNames,
-    typography: typography
+    typography: typography as ITypography,
+    spacing: {
+      ...DefaultSpacing,
+      ...theme.spacing
+    }
   };
+}
+
+/**
+ * Helper to pull a given property name from a given set of sources, in order, if available. Otherwise returns the property name.
+ */
+function _expandFrom<TRetVal, TMapType>(propertyName: string | TRetVal | undefined, ...maps: TMapType[]): TRetVal {
+  if (propertyName) {
+    for (const map of maps) {
+      if (map[propertyName as string]) {
+        return map[propertyName as string];
+      }
+    }
+  }
+
+  return propertyName as TRetVal;
 }
 
 // Generates all the semantic slot colors based on the Fabric palette.
@@ -145,12 +167,13 @@ export function createTheme(theme: IPartialTheme, depComments: boolean = false):
 function _makeSemanticColorsFromPalette(p: IPalette, isInverted: boolean, depComments: boolean): ISemanticColors {
   let toReturn: ISemanticColors = {
     bodyBackground: p.white,
+    bodyStandoutBackground: p.white,
     bodyFrameBackground: p.white,
     bodyFrameDivider: p.neutralLight,
     bodyText: p.neutralPrimary,
     bodyTextChecked: p.black,
     bodySubtext: p.neutralSecondary,
-    bodyDivider: p.neutralTertiaryAlt,
+    bodyDivider: p.neutralLight,
 
     disabledBackground: p.neutralLighter,
     disabledText: p.neutralTertiary,
@@ -158,6 +181,9 @@ function _makeSemanticColorsFromPalette(p: IPalette, isInverted: boolean, depCom
     disabledSubtext: p.neutralQuaternary,
 
     focusBorder: p.black,
+    variantBorder: p.neutralLight,
+    variantBorderHovered: p.neutralTertiary,
+    defaultStateBackground: p.neutralLight,
 
     errorText: !isInverted ? p.redDark : '#ff5f5f',
     warningText: !isInverted ? '#333333' : '#ffffff',
@@ -181,15 +207,32 @@ function _makeSemanticColorsFromPalette(p: IPalette, isInverted: boolean, depCom
     buttonBackgroundChecked: p.neutralTertiaryAlt,
     buttonBackgroundHovered: p.neutralLight,
     buttonBackgroundCheckedHovered: p.neutralLight,
+    buttonBackgroundPressed: p.neutralTertiaryAlt,
+    buttonBackgroundDisabled: p.neutralLighter,
     buttonBorder: 'transparent',
     buttonText: p.neutralPrimary,
-    buttonTextHovered: p.black,
+    buttonTextHovered: p.neutralDark,
     buttonTextChecked: p.neutralDark,
     buttonTextCheckedHovered: p.black,
+    buttonTextPressed: p.neutralDark,
+    buttonTextDisabled: p.neutralTertiary,
+    buttonBorderDisabled: 'transparent',
+    primaryButtonBackground: p.themePrimary,
+    primaryButtonBackgroundHovered: p.themeDarkAlt,
+    primaryButtonBackgroundPressed: p.themeDark,
+    primaryButtonBorder: 'transparent',
+    primaryButtonText: p.white,
+    primaryButtonTextHovered: p.white,
+    primaryButtonTextPressed: p.white,
 
-    menuItemBackgroundHovered: p.neutralLighter,
+    menuBackground: p.white,
+    menuDivider: p.neutralTertiaryAlt,
     menuIcon: p.themePrimary,
     menuHeader: p.themePrimary,
+    menuItemBackgroundHovered: p.neutralLighter,
+    menuItemBackgroundPressed: p.neutralLight,
+    menuItemText: p.neutralPrimary,
+    menuItemTextHovered: p.neutralDark,
 
     listBackground: p.white,
     listText: p.neutralPrimary,
@@ -200,6 +243,8 @@ function _makeSemanticColorsFromPalette(p: IPalette, isInverted: boolean, depCom
     listHeaderBackgroundHovered: p.neutralLighter,
     listHeaderBackgroundPressed: p.neutralLight,
 
+    actionLink: p.neutralPrimary,
+    actionLinkHovered: p.neutralDark,
     link: p.themePrimary,
     linkHovered: p.themeDarker,
 

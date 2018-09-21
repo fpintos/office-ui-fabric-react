@@ -48,9 +48,7 @@ exports[`Component Examples renders DetailsList.Documents.Example.tsx correctly 
           }
     >
       <button
-        aria-disabled={undefined}
-        aria-label="Enable Compact Mode"
-        aria-pressed={false}
+        aria-checked={false}
         checked={false}
         className=
             ms-Toggle-background
@@ -99,10 +97,10 @@ exports[`Component Examples renders DetailsList.Documents.Example.tsx correctly 
               border-color: Highlight;
             }
         data-is-focusable={true}
-        disabled={undefined}
         id="Toggle0"
         onChange={[Function]}
         onClick={[Function]}
+        role="switch"
         type="button"
       >
         <div
@@ -152,7 +150,6 @@ exports[`Component Examples renders DetailsList.Documents.Example.tsx correctly 
               padding-top: 0;
               user-select: none;
             }
-        htmlFor="Toggle0"
       >
         Normal
       </label>
@@ -204,9 +201,7 @@ exports[`Component Examples renders DetailsList.Documents.Example.tsx correctly 
           }
     >
       <button
-        aria-disabled={undefined}
-        aria-label="Enable Modal Selection"
-        aria-pressed={false}
+        aria-checked={false}
         checked={false}
         className=
             ms-Toggle-background
@@ -255,10 +250,10 @@ exports[`Component Examples renders DetailsList.Documents.Example.tsx correctly 
               border-color: Highlight;
             }
         data-is-focusable={true}
-        disabled={undefined}
         id="Toggle1"
         onChange={[Function]}
         onClick={[Function]}
+        role="switch"
         type="button"
       >
         <div
@@ -308,7 +303,6 @@ exports[`Component Examples renders DetailsList.Documents.Example.tsx correctly 
               padding-top: 0;
               user-select: none;
             }
-        htmlFor="Toggle1"
       >
         Normal
       </label>
@@ -362,7 +356,6 @@ exports[`Component Examples renders DetailsList.Documents.Example.tsx correctly 
               word-wrap: break-word;
             }
         htmlFor="TextField2"
-        required={undefined}
       >
         Filter by name:
       </label>
@@ -388,28 +381,15 @@ exports[`Component Examples renders DetailsList.Documents.Example.tsx correctly 
               padding-top: 0px;
               position: relative;
             }
-            &:-ms-clear {
-              display: none;
-            }
             &:hover {
               border-color: #212121;
             }
             @media screen and (-ms-high-contrast: active){&:hover {
               border-color: Highlight;
             }
-            &::placeholder {
-              color: #666666;
-              opacity: 1;
-            }
-            &:-ms-input-placeholder {
-              color: #666666;
-              opacity: 1;
-            }
       >
         <input
-          aria-describedby={undefined}
           aria-invalid={false}
-          aria-label={undefined}
           className=
               ms-TextField-field
               {
@@ -437,15 +417,22 @@ exports[`Component Examples renders DetailsList.Documents.Example.tsx correctly 
               &:active, &:focus, &:hover {
                 outline: 0px;
               }
+              &::-ms-clear {
+                display: none;
+              }
               &::placeholder {
                 color: #666666;
+                opacity: 1;
+              }
+              &:-ms-input-placeholder {
+                color: #666666;
+                opacity: 1;
               }
           id="TextField2"
           onBlur={[Function]}
           onChange={[Function]}
           onFocus={[Function]}
           onInput={[Function]}
-          readOnly={undefined}
           type="text"
           value=""
         />

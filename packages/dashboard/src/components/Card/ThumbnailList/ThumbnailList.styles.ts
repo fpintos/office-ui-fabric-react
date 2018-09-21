@@ -7,9 +7,13 @@ export const getCustomCommandBarStyles = memoizeFunction(
     return {
       root: {
         maxWidth: 'auto',
-        paddingLeft: '0px',
-        paddingTop: '2px',
-        paddingBottom: '10px'
+        padding: '0px',
+        height: '100%',
+        selectors: {
+          div: {
+            margin: 'auto'
+          }
+        }
       },
       label: {
         fontSize: '12px',
@@ -28,13 +32,14 @@ export const getThumbnailItemStyles = (): IThumbnailItemStyles => {
   return {
     root: {
       overflow: 'hidden',
-      paddingBottom: '16px',
+      marginBottom: '16px',
       minHeight: '52px',
       maxHeight: '52px'
     },
     image: {
       position: 'relative',
       overflow: 'hidden',
+      height: '52px',
       selectors: {
         img: {
           height: '52px',
@@ -49,7 +54,8 @@ export const getThumbnailItemStyles = (): IThumbnailItemStyles => {
           backgroundColor: 'transparent',
           marginLeft: '68px',
           maxHeight: '52px',
-          overflow: 'hidden'
+          overflow: 'hidden',
+          width: '100%'
         }
       }
     }

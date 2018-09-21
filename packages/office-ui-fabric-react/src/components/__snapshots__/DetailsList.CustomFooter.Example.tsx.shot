@@ -8,12 +8,6 @@ exports[`Component Examples renders DetailsList.CustomFooter.Example.tsx correct
   <div>
     <button
       aria-checked={false}
-      aria-describedby={undefined}
-      aria-disabled={undefined}
-      aria-label={undefined}
-      aria-labelledby={undefined}
-      aria-posinset={undefined}
-      aria-setsize={undefined}
       checked={false}
       className=
           ms-Checkbox
@@ -75,10 +69,7 @@ exports[`Component Examples renders DetailsList.CustomFooter.Example.tsx correct
           &:focus .ms-Checkbox-text {
             color: #333333;
           }
-      data-ktp-execute-target={undefined}
-      disabled={undefined}
       id="checkbox-0"
-      name={undefined}
       onBlur={[Function]}
       onClick={[Function]}
       onFocus={[Function]}
@@ -89,7 +80,7 @@ exports[`Component Examples renders DetailsList.CustomFooter.Example.tsx correct
         className=
             ms-Checkbox-label
             {
-              align-items: center;
+              align-items: flex-start;
               cursor: pointer;
               display: flex;
               margin-bottom: 0;
@@ -125,7 +116,6 @@ exports[`Component Examples renders DetailsList.CustomFooter.Example.tsx correct
                 transition-timing-function: cubic-bezier(.4, 0, .23, 1);
                 width: 20px;
               }
-          data-ktp-target={undefined}
         >
           <i
             aria-hidden={true}
@@ -158,6 +148,7 @@ exports[`Component Examples renders DetailsList.CustomFooter.Example.tsx correct
               {
                 color: #333333;
                 font-size: 14px;
+                line-height: 20px;
                 margin-bottom: 0;
                 margin-left: 4px;
                 margin-right: 4px;
@@ -214,7 +205,6 @@ exports[`Component Examples renders DetailsList.CustomFooter.Example.tsx correct
               word-wrap: break-word;
             }
         htmlFor="TextField1"
-        required={undefined}
       >
         Filter by name:
       </label>
@@ -240,28 +230,15 @@ exports[`Component Examples renders DetailsList.CustomFooter.Example.tsx correct
               padding-top: 0px;
               position: relative;
             }
-            &:-ms-clear {
-              display: none;
-            }
             &:hover {
               border-color: #212121;
             }
             @media screen and (-ms-high-contrast: active){&:hover {
               border-color: Highlight;
             }
-            &::placeholder {
-              color: #666666;
-              opacity: 1;
-            }
-            &:-ms-input-placeholder {
-              color: #666666;
-              opacity: 1;
-            }
       >
         <input
-          aria-describedby={undefined}
           aria-invalid={false}
-          aria-label={undefined}
           className=
               ms-TextField-field
               {
@@ -289,15 +266,22 @@ exports[`Component Examples renders DetailsList.CustomFooter.Example.tsx correct
               &:active, &:focus, &:hover {
                 outline: 0px;
               }
+              &::-ms-clear {
+                display: none;
+              }
               &::placeholder {
                 color: #666666;
+                opacity: 1;
+              }
+              &:-ms-input-placeholder {
+                color: #666666;
+                opacity: 1;
               }
           id="TextField1"
           onBlur={[Function]}
           onChange={[Function]}
           onFocus={[Function]}
           onInput={[Function]}
-          readOnly={undefined}
           type="text"
           value=""
         />

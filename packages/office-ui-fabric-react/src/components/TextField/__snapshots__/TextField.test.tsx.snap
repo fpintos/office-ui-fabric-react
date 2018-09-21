@@ -4,6 +4,7 @@ exports[`TextField renders TextField correctly 1`] = `
 <div
   className=
       ms-TextField
+      testClassName
       {
         box-shadow: none;
         box-sizing: border-box;
@@ -46,7 +47,6 @@ exports[`TextField renders TextField correctly 1`] = `
             word-wrap: break-word;
           }
       htmlFor="TextField0"
-      required={undefined}
     >
       Label
     </label>
@@ -72,30 +72,18 @@ exports[`TextField renders TextField correctly 1`] = `
             padding-top: 0px;
             position: relative;
           }
-          &:-ms-clear {
-            display: none;
-          }
           &:hover {
             border-color: #212121;
           }
           @media screen and (-ms-high-contrast: active){&:hover {
             border-color: Highlight;
           }
-          &::placeholder {
-            color: #666666;
-            opacity: 1;
-          }
-          &:-ms-input-placeholder {
-            color: #666666;
-            opacity: 1;
-          }
     >
       <input
-        aria-describedby={undefined}
         aria-invalid={false}
-        aria-label={undefined}
         className=
             ms-TextField-field
+            testInputClassName
             {
               background-color: transparent;
               background: none;
@@ -121,15 +109,22 @@ exports[`TextField renders TextField correctly 1`] = `
             &:active, &:focus, &:hover {
               outline: 0px;
             }
+            &::-ms-clear {
+              display: none;
+            }
             &::placeholder {
               color: #666666;
+              opacity: 1;
+            }
+            &:-ms-input-placeholder {
+              color: #666666;
+              opacity: 1;
             }
         id="TextField0"
         onBlur={[Function]}
         onChange={[Function]}
         onFocus={[Function]}
         onInput={[Function]}
-        readOnly={undefined}
         type="text"
         value=""
       />
@@ -185,7 +180,6 @@ exports[`TextField renders TextField multiline resizable correctly 1`] = `
             word-wrap: break-word;
           }
       htmlFor="TextField0"
-      required={undefined}
     >
       Label
     </label>
@@ -212,28 +206,15 @@ exports[`TextField renders TextField multiline resizable correctly 1`] = `
             padding-top: 0px;
             position: relative;
           }
-          &:-ms-clear {
-            display: none;
-          }
           &:hover {
             border-color: #212121;
           }
           @media screen and (-ms-high-contrast: active){&:hover {
             border-color: Highlight;
           }
-          &::placeholder {
-            color: #666666;
-            opacity: 1;
-          }
-          &:-ms-input-placeholder {
-            color: #666666;
-            opacity: 1;
-          }
     >
       <textarea
-        aria-describedby={undefined}
         aria-invalid={false}
-        aria-label={undefined}
         className=
             ms-TextField-field
             {
@@ -264,15 +245,22 @@ exports[`TextField renders TextField multiline resizable correctly 1`] = `
             &:active, &:focus, &:hover {
               outline: 0px;
             }
+            &::-ms-clear {
+              display: none;
+            }
             &::placeholder {
               color: #666666;
+              opacity: 1;
+            }
+            &:-ms-input-placeholder {
+              color: #666666;
+              opacity: 1;
             }
         id="TextField0"
         onBlur={[Function]}
         onChange={[Function]}
         onFocus={[Function]}
         onInput={[Function]}
-        readOnly={undefined}
         value=""
       />
     </div>
@@ -327,7 +315,6 @@ exports[`TextField renders TextField multiline unresizable correctly 1`] = `
             word-wrap: break-word;
           }
       htmlFor="TextField0"
-      required={undefined}
     >
       Label
     </label>
@@ -354,28 +341,15 @@ exports[`TextField renders TextField multiline unresizable correctly 1`] = `
             padding-top: 0px;
             position: relative;
           }
-          &:-ms-clear {
-            display: none;
-          }
           &:hover {
             border-color: #212121;
           }
           @media screen and (-ms-high-contrast: active){&:hover {
             border-color: Highlight;
           }
-          &::placeholder {
-            color: #666666;
-            opacity: 1;
-          }
-          &:-ms-input-placeholder {
-            color: #666666;
-            opacity: 1;
-          }
     >
       <textarea
-        aria-describedby={undefined}
         aria-invalid={false}
-        aria-label={undefined}
         className=
             ms-TextField-field
             ms-TextField--unresizable
@@ -408,15 +382,22 @@ exports[`TextField renders TextField multiline unresizable correctly 1`] = `
             &:active, &:focus, &:hover {
               outline: 0px;
             }
+            &::-ms-clear {
+              display: none;
+            }
             &::placeholder {
               color: #666666;
+              opacity: 1;
+            }
+            &:-ms-input-placeholder {
+              color: #666666;
+              opacity: 1;
             }
         id="TextField0"
         onBlur={[Function]}
         onChange={[Function]}
         onFocus={[Function]}
         onInput={[Function]}
-        readOnly={undefined}
         value=""
       />
     </div>
@@ -498,7 +479,6 @@ exports[`TextField renders multiline TextField correctly with errorMessage 1`] =
             word-wrap: break-word;
           }
       htmlFor="TextField0"
-      required={undefined}
     >
       Label
     </label>
@@ -528,22 +508,11 @@ exports[`TextField renders multiline TextField correctly with errorMessage 1`] =
             position: relative;
             text-align: left;
           }
-          &:-ms-clear {
-            display: none;
-          }
           &:hover {
             border-color: #212121;
           }
           @media screen and (-ms-high-contrast: active){&:hover {
             border-color: Highlight;
-          }
-          &::placeholder {
-            color: #666666;
-            opacity: 1;
-          }
-          &:-ms-input-placeholder {
-            color: #666666;
-            opacity: 1;
           }
           &:focus, &:hover {
             border-color: #a80000;
@@ -578,7 +547,6 @@ exports[`TextField renders multiline TextField correctly with errorMessage 1`] =
       <input
         aria-describedby="TextFieldDescription1"
         aria-invalid={false}
-        aria-label={undefined}
         className=
             ms-TextField-field
             {
@@ -607,15 +575,22 @@ exports[`TextField renders multiline TextField correctly with errorMessage 1`] =
             &:active, &:focus, &:hover {
               outline: 0px;
             }
+            &::-ms-clear {
+              display: none;
+            }
             &::placeholder {
               color: #666666;
+              opacity: 1;
+            }
+            &:-ms-input-placeholder {
+              color: #666666;
+              opacity: 1;
             }
         id="TextField0"
         onBlur={[Function]}
         onChange={[Function]}
         onFocus={[Function]}
         onInput={[Function]}
-        readOnly={undefined}
         type="text"
         value=""
       />
@@ -651,7 +626,7 @@ exports[`TextField renders multiline TextField correctly with errorMessage 1`] =
     id="TextFieldDescription1"
   >
     <div
-      aria-live="assertive"
+      role="alert"
     />
   </span>
 </div>
@@ -731,7 +706,6 @@ exports[`TextField renders multiline TextField correctly with props affecting st
             word-wrap: break-word;
           }
       htmlFor="TextField0"
-      required={undefined}
     >
       Label
     </label>
@@ -761,22 +735,11 @@ exports[`TextField renders multiline TextField correctly with props affecting st
             position: relative;
             text-align: left;
           }
-          &:-ms-clear {
-            display: none;
-          }
           &:hover {
             border-color: #212121;
           }
           @media screen and (-ms-high-contrast: active){&:hover {
             border-color: Highlight;
-          }
-          &::placeholder {
-            color: #666666;
-            opacity: 1;
-          }
-          &:-ms-input-placeholder {
-            color: #666666;
-            opacity: 1;
           }
           &:focus, &:hover {
             border-color: #a80000;
@@ -811,7 +774,6 @@ exports[`TextField renders multiline TextField correctly with props affecting st
       <input
         aria-describedby="TextFieldDescription1"
         aria-invalid={false}
-        aria-label={undefined}
         className=
             ms-TextField-field
             {
@@ -840,15 +802,22 @@ exports[`TextField renders multiline TextField correctly with props affecting st
             &:active, &:focus, &:hover {
               outline: 0px;
             }
+            &::-ms-clear {
+              display: none;
+            }
             &::placeholder {
               color: #666666;
+              opacity: 1;
+            }
+            &:-ms-input-placeholder {
+              color: #666666;
+              opacity: 1;
             }
         id="TextField0"
         onBlur={[Function]}
         onChange={[Function]}
         onFocus={[Function]}
         onInput={[Function]}
-        readOnly={undefined}
         type="text"
         value=""
       />
@@ -884,7 +853,7 @@ exports[`TextField renders multiline TextField correctly with props affecting st
     id="TextFieldDescription1"
   >
     <div
-      aria-live="assertive"
+      role="alert"
     />
   </span>
 </div>
@@ -966,7 +935,6 @@ exports[`TextField should resepect user component and subcomponent styling 1`] =
             word-wrap: break-word;
           }
       htmlFor="TextField0"
-      required={undefined}
     >
       Label
     </label>
@@ -996,22 +964,11 @@ exports[`TextField should resepect user component and subcomponent styling 1`] =
             position: relative;
             text-align: left;
           }
-          &:-ms-clear {
-            display: none;
-          }
           &:hover {
             border-color: #212121;
           }
           @media screen and (-ms-high-contrast: active){&:hover {
             border-color: Highlight;
-          }
-          &::placeholder {
-            color: #666666;
-            opacity: 1;
-          }
-          &:-ms-input-placeholder {
-            color: #666666;
-            opacity: 1;
           }
           &:focus, &:hover {
             border-color: #a80000;
@@ -1046,7 +1003,6 @@ exports[`TextField should resepect user component and subcomponent styling 1`] =
       <input
         aria-describedby="TextFieldDescription1"
         aria-invalid={false}
-        aria-label={undefined}
         className=
             ms-TextField-field
             {
@@ -1075,15 +1031,22 @@ exports[`TextField should resepect user component and subcomponent styling 1`] =
             &:active, &:focus, &:hover {
               outline: 0px;
             }
+            &::-ms-clear {
+              display: none;
+            }
             &::placeholder {
               color: #666666;
+              opacity: 1;
+            }
+            &:-ms-input-placeholder {
+              color: #666666;
+              opacity: 1;
             }
         id="TextField0"
         onBlur={[Function]}
         onChange={[Function]}
         onFocus={[Function]}
         onInput={[Function]}
-        readOnly={undefined}
         type="text"
         value=""
       />
@@ -1119,7 +1082,7 @@ exports[`TextField should resepect user component and subcomponent styling 1`] =
     id="TextFieldDescription1"
   >
     <div
-      aria-live="assertive"
+      role="alert"
     />
   </span>
 </div>

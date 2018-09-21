@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { IComponentDemoPageProps, ComponentPage, ExampleCard } from '@uifabric/example-app-base';
-import { Toggle } from 'office-ui-fabric-react/lib/components/Toggle';
+import { Toggle } from 'office-ui-fabric-react/lib/Toggle';
 import { Customizer } from 'office-ui-fabric-react/lib/Utilities';
 import { FluentCustomizations } from '../FluentCustomizations';
 
@@ -55,7 +55,7 @@ export class FluentStylesPage extends React.Component<IComponentDemoPageProps, I
         overview={
           <div>
             <p>Press this Fluent button to make stuff fluenty :)</p>
-            <Toggle label="Fluent" checked={isFluent} onChanged={this._onChangeToggle} />
+            <Toggle label="Fluent" checked={isFluent} onChange={this._onChangeToggle} />
           </div>
         }
         isHeaderVisible={this.props.isHeaderVisible}
@@ -111,7 +111,7 @@ export class FluentStylesPage extends React.Component<IComponentDemoPageProps, I
     );
   }
 
-  private _onChangeToggle = (checked: boolean): void => {
+  private _onChangeToggle = (event: React.MouseEvent<HTMLElement>, checked: boolean): void => {
     this.setState({ isFluent: checked });
   };
 }

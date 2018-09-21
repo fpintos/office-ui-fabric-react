@@ -11,22 +11,27 @@ export enum CardSize {
   /**
    * Option for selecting small card
    */
-  small,
+  small = 'small',
 
   /**
    * Option for selecting Medium Tall card
    */
-  mediumTall,
+  mediumTall = 'mediumTall',
 
   /**
    * Option for selecting Medium Wide card
    */
-  mediumWide,
+  mediumWide = 'mediumWide',
 
   /**
    * Option for selecting Large card
    */
-  large
+  large = 'large',
+
+  /**
+   * Option for selecting section title
+   */
+  section = 'section'
 }
 
 /**
@@ -94,6 +99,11 @@ export interface ICardFrameContent {
    * Hyperlink URL for title
    */
   href?: string;
+
+  /**
+   * Target for Hyperlink URL for title
+   */
+  target?: string;
 }
 
 export interface ICardProps {
@@ -133,6 +143,13 @@ export interface ICardProps {
    * @default false
    */
   disableDrag?: boolean;
+}
+
+export interface ICard extends ICardProps {
+  /**
+   * The card id, which must be unique within the dashboard
+   */
+  id: string;
 }
 
 export interface ICardState {

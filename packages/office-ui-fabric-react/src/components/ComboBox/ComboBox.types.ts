@@ -51,10 +51,15 @@ export interface IComboBoxProps extends ISelectableDroppableTextProps<IComboBox>
   options: IComboBoxOption[];
 
   /**
-   * Callback issues when either:
+   * Callback issued when either:
    * 1) the selected option changes
    * 2) a manually edited value is submitted. In this case there may not be a matched option if allowFreeform is also true
    *    (and hence only value would be true, the other parameter would be null in this case)
+   */
+  onChange?: (event: React.FormEvent<IComboBox>, option?: IComboBoxOption, index?: number, value?: string) => void;
+
+  /**
+   * @deprecated Use onChange instead.
    */
   onChanged?: (option?: IComboBoxOption, index?: number, value?: string, submitPendingValueEvent?: any) => void;
 
@@ -144,7 +149,8 @@ export interface IComboBoxProps extends ISelectableDroppableTextProps<IComboBox>
   comboBoxOptionStyles?: Partial<IComboBoxOptionStyles>;
 
   /**
-   * When options are scrollable the selected option is positioned at the top of the callout when it is opened (unless it has reached the end of the scrollbar).
+   * When options are scrollable the selected option is positioned at the top of the callout when it is opened
+   * (unless it has reached the end of the scrollbar).
    * @default false;
    */
   scrollSelectedToTop?: boolean;
@@ -175,7 +181,9 @@ export interface IComboBoxProps extends ISelectableDroppableTextProps<IComboBox>
   multiSelect?: boolean;
 
   /**
-   * Sets the 'aria-hidden' attribute on the ComboBox's button element instructing screen readers how to handle the element. This element is hidden by default because all functionality is handled by the input element and the arrow button is only meant to be decorative.
+   * Sets the 'aria-hidden' attribute on the ComboBox's button element instructing screen readers how to handle the element.
+   * This element is hidden by default because all functionality is handled by the input element and the arrow button is
+   * only meant to be decorative.
    * @default true
    */
   isButtonAriaHidden?: boolean;

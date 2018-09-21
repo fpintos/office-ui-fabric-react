@@ -66,7 +66,6 @@ exports[`Component Examples renders TextField.Underlined.Example.tsx correctly 1
               word-wrap: break-word;
             }
         htmlFor="TextField0"
-        required={undefined}
       >
         Standard:
       </label>
@@ -95,28 +94,15 @@ exports[`Component Examples renders TextField.Underlined.Example.tsx correctly 1
               position: relative;
               text-align: left;
             }
-            &:-ms-clear {
-              display: none;
-            }
             &:hover {
               border-color: #212121;
             }
             @media screen and (-ms-high-contrast: active){&:hover {
               border-color: Highlight;
             }
-            &::placeholder {
-              color: #666666;
-              opacity: 1;
-            }
-            &:-ms-input-placeholder {
-              color: #666666;
-              opacity: 1;
-            }
       >
         <input
-          aria-describedby={undefined}
           aria-invalid={false}
-          aria-label={undefined}
           className=
               ms-TextField-field
               {
@@ -145,15 +131,22 @@ exports[`Component Examples renders TextField.Underlined.Example.tsx correctly 1
               &:active, &:focus, &:hover {
                 outline: 0px;
               }
+              &::-ms-clear {
+                display: none;
+              }
               &::placeholder {
                 color: #666666;
+                opacity: 1;
+              }
+              &:-ms-input-placeholder {
+                color: #666666;
+                opacity: 1;
               }
           id="TextField0"
           onBlur={[Function]}
           onChange={[Function]}
           onFocus={[Function]}
           onInput={[Function]}
-          readOnly={undefined}
           type="text"
           value=""
         />
@@ -217,7 +210,6 @@ exports[`Component Examples renders TextField.Underlined.Example.tsx correctly 1
               word-wrap: break-word;
             }
         htmlFor="TextField2"
-        required={undefined}
       >
         Disabled:
       </label>
@@ -248,25 +240,12 @@ exports[`Component Examples renders TextField.Underlined.Example.tsx correctly 1
               position: relative;
               text-align: left;
             }
-            &:-ms-clear {
-              display: none;
-            }
             @media screen and (-ms-high-contrast: active){&:hover {
               border-color: Highlight;
             }
-            &::placeholder {
-              color: #666666;
-              opacity: 1;
-            }
-            &:-ms-input-placeholder {
-              color: #666666;
-              opacity: 1;
-            }
       >
         <input
-          aria-describedby={undefined}
           aria-invalid={false}
-          aria-label={undefined}
           className=
               ms-TextField-field
               {
@@ -296,8 +275,16 @@ exports[`Component Examples renders TextField.Underlined.Example.tsx correctly 1
               &:active, &:focus, &:hover {
                 outline: 0px;
               }
+              &::-ms-clear {
+                display: none;
+              }
               &::placeholder {
                 color: #666666;
+                opacity: 1;
+              }
+              &:-ms-input-placeholder {
+                color: #666666;
+                opacity: 1;
               }
           disabled={true}
           id="TextField2"
@@ -305,7 +292,6 @@ exports[`Component Examples renders TextField.Underlined.Example.tsx correctly 1
           onChange={[Function]}
           onFocus={[Function]}
           onInput={[Function]}
-          readOnly={undefined}
           type="text"
           value=""
         />
@@ -409,28 +395,15 @@ exports[`Component Examples renders TextField.Underlined.Example.tsx correctly 1
               position: relative;
               text-align: left;
             }
-            &:-ms-clear {
-              display: none;
-            }
             &:hover {
               border-color: #212121;
             }
             @media screen and (-ms-high-contrast: active){&:hover {
               border-color: Highlight;
             }
-            &::placeholder {
-              color: #666666;
-              opacity: 1;
-            }
-            &:-ms-input-placeholder {
-              color: #666666;
-              opacity: 1;
-            }
       >
         <input
-          aria-describedby={undefined}
           aria-invalid={false}
-          aria-label={undefined}
           className=
               ms-TextField-field
               {
@@ -459,15 +432,22 @@ exports[`Component Examples renders TextField.Underlined.Example.tsx correctly 1
               &:active, &:focus, &:hover {
                 outline: 0px;
               }
+              &::-ms-clear {
+                display: none;
+              }
               &::placeholder {
                 color: #666666;
+                opacity: 1;
+              }
+              &:-ms-input-placeholder {
+                color: #666666;
+                opacity: 1;
               }
           id="TextField4"
           onBlur={[Function]}
           onChange={[Function]}
           onFocus={[Function]}
           onInput={[Function]}
-          readOnly={undefined}
           required={true}
           type="text"
           value=""
@@ -548,7 +528,6 @@ exports[`Component Examples renders TextField.Underlined.Example.tsx correctly 1
               word-wrap: break-word;
             }
         htmlFor="TextField6"
-        required={undefined}
       >
         With error message:
       </label>
@@ -578,22 +557,11 @@ exports[`Component Examples renders TextField.Underlined.Example.tsx correctly 1
               position: relative;
               text-align: left;
             }
-            &:-ms-clear {
-              display: none;
-            }
             &:hover {
               border-color: #212121;
             }
             @media screen and (-ms-high-contrast: active){&:hover {
               border-color: Highlight;
-            }
-            &::placeholder {
-              color: #666666;
-              opacity: 1;
-            }
-            &:-ms-input-placeholder {
-              color: #666666;
-              opacity: 1;
             }
             &:focus, &:hover {
               border-color: #a80000;
@@ -602,7 +570,6 @@ exports[`Component Examples renders TextField.Underlined.Example.tsx correctly 1
         <input
           aria-describedby="TextFieldDescription7"
           aria-invalid={false}
-          aria-label={undefined}
           className=
               ms-TextField-field
               {
@@ -631,15 +598,22 @@ exports[`Component Examples renders TextField.Underlined.Example.tsx correctly 1
               &:active, &:focus, &:hover {
                 outline: 0px;
               }
+              &::-ms-clear {
+                display: none;
+              }
               &::placeholder {
                 color: #666666;
+                opacity: 1;
+              }
+              &:-ms-input-placeholder {
+                color: #666666;
+                opacity: 1;
               }
           id="TextField6"
           onBlur={[Function]}
           onChange={[Function]}
           onFocus={[Function]}
           onInput={[Function]}
-          readOnly={undefined}
           type="text"
           value=""
         />
@@ -649,7 +623,7 @@ exports[`Component Examples renders TextField.Underlined.Example.tsx correctly 1
       id="TextFieldDescription7"
     >
       <div
-        aria-live="assertive"
+        role="alert"
       />
     </span>
   </div>

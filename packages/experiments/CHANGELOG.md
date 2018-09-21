@@ -1,6 +1,216 @@
 # Change Log - @uifabric/experiments
 
-This log was last generated on Wed, 01 Aug 2018 10:25:51 GMT and should not be manually modified.
+This log was last generated on Fri, 21 Sep 2018 14:25:46 GMT and should not be manually modified.
+
+## 6.32.1
+Fri, 21 Sep 2018 14:25:46 GMT
+
+### Patches
+
+- Adding a version stamp file
+- Example modification to highlight scheming capability.
+
+## 6.32.0
+Wed, 19 Sep 2018 12:27:48 GMT
+
+### Minor changes
+
+- Stack: add wrapping for HorizontalStack, support themed gap and padding, support native HTML properties, refactor StackItem so that its child does not require a class
+- StackItem: add fillHorizontal and fillVertical props
+
+## 6.31.0
+Tue, 18 Sep 2018 12:26:03 GMT
+
+### Minor changes
+
+- Stack: add wrapping for HorizontalStack, support themed gap and padding, support native HTML properties, refactor StackItem so that its child does not require a class
+
+## 6.30.2
+Mon, 17 Sep 2018 12:27:05 GMT
+
+### Patches
+
+- Changes to support Foundation refactoring.
+- nav fix
+- improve nav per designer feedback
+
+## 6.30.1
+Fri, 14 Sep 2018 01:55:02 GMT
+
+### Patches
+
+- Fluent: Fix issue with background color on primary buttons using the wrong values
+
+## 6.30.0
+Wed, 12 Sep 2018 12:26:41 GMT
+
+### Minor changes
+
+- Add motion to the Fluent experiment
+
+## 6.29.1
+Tue, 11 Sep 2018 02:54:40 GMT
+
+### Patches
+
+- update missing metadata signal icon
+- Tiles: Fix on hover underline issue for signal icon in Tiles view
+
+## 6.29.0
+Fri, 07 Sep 2018 22:04:50 GMT
+
+### Minor changes
+
+- Adjusting foundation usage, using new React 16 context.
+
+## 6.28.3
+Fri, 07 Sep 2018 16:29:48 GMT
+
+*Version update only*
+
+## 6.28.2
+Wed, 05 Sep 2018 10:29:25 GMT
+
+### Patches
+
+- nav fix
+- improve nav per designer feedback
+
+## 6.28.1
+Thu, 30 Aug 2018 19:26:04 GMT
+
+*Version update only*
+
+## 6.28.0
+Thu, 30 Aug 2018 10:32:49 GMT
+
+### Minor changes
+
+- TagPicker added as a Form input component.
+- Update Shared palette colors
+
+### Patches
+
+- Corrected some Checkbox implementations - should use 'aria-labelledby' instead of 'aria-describedby'
+
+## 6.27.1
+Tue, 28 Aug 2018 10:23:58 GMT
+
+### Patches
+
+- Experiments: Add theming examples page for documentation and to prep for testing schemes.
+
+## 6.27.0
+Fri, 24 Aug 2018 17:02:14 GMT
+
+### Minor changes
+
+- Reverting Customizer React 16 context change.
+
+## 6.26.0
+Fri, 24 Aug 2018 10:26:08 GMT
+
+### Minor changes
+
+- Text: now defaults to the default variant, added support for more styling options, adjusted how color is pulled, updated example.
+
+### Patches
+
+- Replace usage of deprecated onChanged prop with onChange
+
+## 6.25.0
+Thu, 23 Aug 2018 10:28:17 GMT
+
+### Minor changes
+
+- Adjusting foundation usage, using new React 16 context.
+
+## 6.24.3
+Tue, 21 Aug 2018 20:36:27 GMT
+
+### Patches
+
+- Adding required validator support for the FormDropdown in multi-select mode.
+
+## 6.24.2
+Tue, 21 Aug 2018 10:28:16 GMT
+
+### Patches
+
+- Experiments: fix TextPage require path after a file extension change.
+
+## 6.24.1
+Mon, 20 Aug 2018 10:26:10 GMT
+
+*Version update only*
+
+## 6.24.0
+Thu, 16 Aug 2018 10:26:16 GMT
+
+### Minor changes
+
+- Adding support for drop-downs with multiple selection to the FormDropdown component.
+
+## 6.23.3
+Tue, 14 Aug 2018 10:27:33 GMT
+
+### Patches
+
+- disabling codepen task
+
+## 6.23.2
+Tue, 14 Aug 2018 00:01:11 GMT
+
+*Version update only*
+
+## 6.23.1
+Mon, 13 Aug 2018 03:43:25 GMT
+
+### Patches
+
+- Remove utilities index file.
+
+## 6.23.0
+Fri, 10 Aug 2018 10:26:08 GMT
+
+### Minor changes
+
+- Stack: render vertically by default, add horizontalAlignment, verticalAlignment, fillHorizontal, fillVertical properties
+- Updating `Text` component with fixes to make it usable.
+
+### Patches
+
+- Inject customizations into Foundation. Add contextual theming and styling examples.
+
+## 6.22.6
+Wed, 08 Aug 2018 10:25:07 GMT
+
+### Patches
+
+- Fix bad imports that break AMD.
+- Implement base state class and controlled vs. uncontrolled behavior.
+- Stack: merge the className of a StackItem with the className of its first child
+
+## 6.22.5
+Mon, 06 Aug 2018 10:27:53 GMT
+
+### Patches
+
+- Fixing Stack to allow for classNames through Stack.Item
+
+## 6.22.4
+Fri, 03 Aug 2018 10:25:59 GMT
+
+### Patches
+
+- Added export to index
+
+## 6.22.3
+Thu, 02 Aug 2018 10:23:19 GMT
+
+### Patches
+
+- Updated border color on rest state of button, added borders to other states and reverted change to radio button selection dot.
 
 ## 6.22.2
 Wed, 01 Aug 2018 10:25:51 GMT

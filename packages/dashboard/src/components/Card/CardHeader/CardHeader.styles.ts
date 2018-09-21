@@ -9,28 +9,26 @@ export const getStyles = (props: ICardHeaderProps): ICardHeaderStyles => {
       overflow: 'hidden',
       display: 'flex',
       flexWrap: 'wrap',
-      marginTop: '21px',
-      marginBottom: '21px'
+      marginTop: '22px',
+      alignItems: 'baseline'
     },
     headerText: {
       fontSize: fontSize === FontSize.medium ? '16px' : '28px',
-      lineHeight: fontSize === FontSize.medium ? '21px' : '36px',
-      fontFamily: 'Segoe UI Semibold',
-      whiteSpace: 'noWrap',
-      textOverflow: 'ellipsis',
-      overflow: 'hidden',
+      lineHeight: '38px',
+      fontFamily: 'Segoe UI',
       marginRight: '16px',
-      color: '#000000'
+      color: '#000000',
+      fontWeight: 'bold'
     },
     annotationText: {
       whiteSpace: 'noWrap',
       fontFamily: 'Segoe UI',
       textOverflow: 'ellipsis',
       overflow: 'hidden',
-      alignSelf: 'flex-end',
       fontSize: '12px',
       lineHeight: '16px',
-      color: '#000000'
+      color: '#000000',
+      paddingTop: '7px'
     }
   };
 };

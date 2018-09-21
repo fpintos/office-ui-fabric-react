@@ -38,12 +38,17 @@ export interface IToggleProps extends React.HTMLAttributes<HTMLElement> {
   offText?: string;
 
   /**
-   * Text for screen-reader to announce when toggle is ON.
+   * Text for screen-reader to announce as the name of the toggle.
+   */
+  ariaLabel?: string;
+
+  /**
+   * @deprecated Use ariaLabel for name, and let the metadata convey state
    */
   onAriaLabel?: string;
 
   /**
-   * Text for screen-reader to announce when toggle is OFF.
+   * @deprecated Use ariaLabel for name, and let the metadata convey state
    */
   offAriaLabel?: string;
 
@@ -63,7 +68,12 @@ export interface IToggleProps extends React.HTMLAttributes<HTMLElement> {
   disabled?: boolean;
 
   /**
-   * onchange callback.
+   * Callback issued when the value changes.
+   */
+  onChange?: (event: React.MouseEvent<HTMLElement>, checked?: boolean) => void;
+
+  /**
+   * @deprecated Use onChange instead.
    */
   onChanged?: (checked: boolean) => void;
 

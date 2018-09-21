@@ -1,9 +1,7 @@
 import { FontWeights } from 'office-ui-fabric-react/lib/Styling';
 import { NeutralColors } from './FluentColors';
-import {
-  IChoiceGroupOptionStyleProps,
-  IChoiceGroupOptionStyles
-} from 'office-ui-fabric-react/lib/components/ChoiceGroup/ChoiceGroupOption';
+import { IChoiceGroupOptionStyleProps, IChoiceGroupOptionStyles } from 'office-ui-fabric-react/lib/ChoiceGroup';
+import { IButtonProps } from 'office-ui-fabric-react/lib/Button';
 import { FontSizes } from './FluentType';
 import { Depths } from './FluentDepths';
 
@@ -25,26 +23,31 @@ const BreadcrumbStyles = {
 const PrimaryButtonStyles = {
   root: {
     borderRadius: fluentBorderRadius
-    // boxShadow: Depths.depth4
   }
 };
 
 const CompoundButtonStyles = {
   root: {
     borderRadius: fluentBorderRadius
-    // boxShadow: Depths.depth4
   }
 };
 
-const DefaultButtonStyles = {
-  root: {
-    borderRadius: fluentBorderRadius,
-    backgroundColor: '#fff',
-    border: `1px solid ${NeutralColors.gray20}`
-  },
-  rootHovered: {
-    backgroundColor: '#f3f2f1'
-  }
+const DefaultButtonStyles = (props: IButtonProps) => {
+  const { primary, theme } = props;
+  const { palette, semanticColors } = theme!;
+
+  return {
+    root: {
+      borderRadius: fluentBorderRadius,
+      backgroundColor: primary ? semanticColors.primaryButtonBackground : palette.white,
+      border: primary ? '' : `1px solid ${NeutralColors.gray110}`,
+      color: primary ? semanticColors.buttonText : palette.white
+    },
+    rootHovered: {
+      backgroundColor: primary ? palette.themeDarkAlt : NeutralColors.gray20,
+      border: primary ? '' : `1px solid ${NeutralColors.gray110}`
+    }
+  };
 };
 
 const CheckboxStyles = {
@@ -67,13 +70,6 @@ const ChoiceGroupOptionStyles = (props: IChoiceGroupOptionStyleProps): IChoiceGr
           }
         ],
         ':after': [
-          {
-            top: 4,
-            left: 4,
-            width: 12,
-            height: 12,
-            borderWidth: 6
-          },
           checked &&
             (hasIcon || hasImage) && {
               top: radioButtonSpacing + radioButtonInnerSize,

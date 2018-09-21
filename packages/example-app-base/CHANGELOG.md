@@ -1,6 +1,27 @@
 # Change Log - @uifabric/example-app-base
 
-This log was last generated on Tue, 24 Jul 2018 10:24:36 GMT and should not be manually modified.
+This log was last generated on Fri, 21 Sep 2018 14:25:46 GMT and should not be manually modified.
+
+## 6.7.3
+Fri, 21 Sep 2018 14:25:46 GMT
+
+### Patches
+
+- Adding a version stamp file
+
+## 6.7.2
+Fri, 10 Aug 2018 10:26:08 GMT
+
+### Patches
+
+- Added optional feedback section for component pages
+
+## 6.7.1
+Wed, 08 Aug 2018 10:25:07 GMT
+
+### Patches
+
+- Autodoc: improve regex to handle certain edge cases of declaring interfaces.
 
 ## 6.7.0
 Tue, 24 Jul 2018 10:24:36 GMT

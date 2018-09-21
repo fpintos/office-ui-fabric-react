@@ -7,7 +7,8 @@ const commonFontFamily = 'Segoe UI';
 const commonFontWeight = 'bold';
 const largeFontSize = 28;
 const regularFontSize = 12;
-const containerSpaceMargin = 24;
+const regularLineHeight = 18;
+const containerSpaceMargin = 22;
 const flexDisplayStyle: IStyle = {
   display: 'flex',
   flex: 1
@@ -15,29 +16,74 @@ const flexDisplayStyle: IStyle = {
 
 export const getStyles = (): IRecommendationStyles => ({
   recommendationContainer: mergeStyles(flexDisplayStyle, {
-    paddingTop: 20,
+    paddingTop: 19,
     flexDirection: 'row',
     flexWrap: 'wrap'
   }),
   recommendationTextContainer: mergeStyles(flexDisplayStyle, {
     flexDirection: 'column',
+    justifyContent: 'space-between',
     marginRight: containerSpaceMargin
   }),
-  recommendationVisualizationContainer: mergeStyles(flexDisplayStyle, {}),
+  recommendationVisualizationContainer: mergeStyles(flexDisplayStyle, {
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    alignItems: 'center'
+  }),
   recommendationHeader: {
     fontSize: largeFontSize,
     fontFamily: commonFontFamily,
     fontWeight: commonFontWeight,
     color: recommendationBaseColor,
-    marginBottom: 24
+    selectors: {
+      p: {
+        margin: '0px'
+      }
+    }
   },
   recommendationContent: {
     fontSize: regularFontSize,
+    lineHeight: regularLineHeight,
     fontFamily: commonFontFamily,
     color: recommendationBaseColor,
-    marginBottom: 16,
-    flex: 1,
+    display: 'flex',
+    justifyContent: 'flex-start',
+    flexWrap: 'wrap',
+    textOverflow: 'ellipsis',
+    overflow: 'hidden',
     wordWrap: 'break-word'
+  },
+  recommendationRowContainer: mergeStyles(flexDisplayStyle, {
+    paddingTop: 19,
+    flexDirection: 'column',
+    flexWrap: 'nowrap',
+    justifyContent: 'space-between'
+  }),
+  recommendationHeaderRow: {
+    flexDirection: 'row',
+    width: '48.5%',
+    justifyContent: 'space-between',
+    flexGrow: 0
+  },
+  recommendationContentRow: {
+    flexDirection: 'row',
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    marginTop: '6px',
+    flexGrow: 1
+  },
+  recommendationContentRowText: {
+    width: '48.5%',
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between'
+  },
+  recommendationContentRowVisualization: {
+    width: '48.5%'
+  },
+  recommendationCommandRow: {
+    alignSelf: 'flex-end'
   }
 });
 

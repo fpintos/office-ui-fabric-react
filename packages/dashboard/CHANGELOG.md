@@ -1,6 +1,360 @@
 # Change Log - @uifabric/dashboard
 
-This log was last generated on Wed, 01 Aug 2018 10:25:51 GMT and should not be manually modified.
+This log was last generated on Fri, 21 Sep 2018 14:25:46 GMT and should not be manually modified.
+
+## 0.25.4
+Fri, 21 Sep 2018 14:25:46 GMT
+
+### Patches
+
+- Adding a version stamp file
+- Remove drag on menu button on card frame and link button 
+
+## 0.25.3
+Thu, 20 Sep 2018 12:25:33 GMT
+
+### Patches
+
+- Add target for cardHeader title in dashboard package
+
+## 0.25.2
+Mon, 17 Sep 2018 12:27:05 GMT
+
+### Patches
+
+- fix leftNav styles per PM feedback
+- revert the change for expand behavior
+- fix the issue where user click on show more link in floating nav
+
+## 0.25.1
+Fri, 14 Sep 2018 19:19:00 GMT
+
+### Patches
+
+- Update recommendation centerDataVisualization flex layout css
+- Update section title font color
+
+## 0.25.0
+Fri, 14 Sep 2018 17:03:00 GMT
+
+### Minor changes
+
+- Changing css for card header. Added tooltip to card header. Disabling icon in hovercard in Multicount component upon passing prop
+- Update recommendation component to support data visualization component center align layout
+
+## 0.24.1
+Fri, 14 Sep 2018 01:55:02 GMT
+
+### Patches
+
+- Changing styling of wrapper component in card. This wrapper component covers all the charts inside the card content layout.
+
+## 0.24.0
+Thu, 13 Sep 2018 17:38:04 GMT
+
+### Minor changes
+
+- expose the card size mapping prop
+
+### Patches
+
+- Changing overflow behaviour of multicount component
+- add tslib as a dependency in dashboard
+- Enable auto adjust dashboard card header textdashboard card header text
+
+## 0.23.0
+Wed, 12 Sep 2018 12:26:41 GMT
+
+### Minor changes
+
+- Adding prop that disables the icon in each row of Multicount. Changing styles if iconHide prop is set to true.
+
+### Patches
+
+- Add fixed size for donut chart in dashboard package
+- bug fixes for card components
+
+## 0.22.2
+Tue, 11 Sep 2018 02:54:40 GMT
+
+### Patches
+
+- handled the css issues for line chart
+
+## 0.22.1
+Mon, 10 Sep 2018 10:24:57 GMT
+
+### Patches
+
+- Update Recommendation card header text font size/line height settings
+
+## 0.22.0
+Fri, 07 Sep 2018 22:04:50 GMT
+
+### Minor changes
+
+- create base class for dashboard layout 
+- Adding necessary override styles to scale hovercard size as per content. Introducing time delay without which override is not possible.  This is temporary solution suggested by Fabric folks until they fix the bug in hovercard component.
+
+### Patches
+
+- updating card title line height
+- Changing color of card title upon hover and active state
+- ContentArea is croped in Edge browser
+
+## 0.21.0
+Fri, 07 Sep 2018 16:29:48 GMT
+
+### Minor changes
+
+- allow dashboard section control to take JSX elements as child member
+- add save prop to edit sections control
+
+### Patches
+
+- fix example for horizontalBarChart
+
+## 0.20.0
+Thu, 06 Sep 2018 10:28:35 GMT
+
+### Minor changes
+
+- add export
+- changing fabric icons to SVG's.
+
+### Patches
+
+- gird list text overflow css issue 
+- patch
+- Fix content area clipping in card because of overflow set to hidden
+- merge donut and piechart and added in dashboard package
+
+## 0.19.0
+Wed, 05 Sep 2018 10:29:25 GMT
+
+### Minor changes
+
+- Adding hover behaviour for Multicount component and onClick listener on each row of the Multicount component
+
+### Patches
+
+- css issues for card
+- Added 19px lineHeight to card header text
+- fix leftNav styles per PM feedback
+- revert the change for expand behavior
+- Update Recommendation Header text resize mechanism and description text line height
+
+## 0.18.0
+Tue, 04 Sep 2018 10:27:15 GMT
+
+### Minor changes
+
+- Add edit section common control and examples
+
+## 0.17.6
+Fri, 31 Aug 2018 20:48:42 GMT
+
+### Patches
+
+- Removed hover effect from dashboard card title when dragging is disabled
+
+## 0.17.5
+Fri, 31 Aug 2018 17:27:00 GMT
+
+### Patches
+
+- css issues for card
+- change datapoints for line chart
+
+## 0.17.4
+Fri, 31 Aug 2018 10:27:35 GMT
+
+### Patches
+
+- Fixes the usage of renamed variable
+- change datapoint for horizontal bar chart 
+
+## 0.17.3
+Thu, 30 Aug 2018 19:26:04 GMT
+
+### Patches
+
+- fix leftNav styles per PM feedback
+- revert the change for expand behavior
+
+## 0.17.2
+Thu, 30 Aug 2018 10:32:49 GMT
+
+### Patches
+
+- Add Donut chart with legends
+
+## 0.17.1
+Tue, 28 Aug 2018 10:23:58 GMT
+
+### Patches
+
+- css fixes for card component in dashboard package
+
+## 0.17.0
+Fri, 24 Aug 2018 10:26:08 GMT
+
+### Minor changes
+
+- Making changes to dashboard card component to consume stacked bar chart with new data point.
+
+## 0.16.0
+Thu, 23 Aug 2018 18:39:08 GMT
+
+### Minor changes
+
+- Add an example dashboard with collasable sections.
+
+### Patches
+
+- Rolling back primary action funtionality of action bar
+
+## 0.15.8
+Thu, 23 Aug 2018 10:28:17 GMT
+
+### Patches
+
+- font changes for card components
+- header css fix
+- fix leftNav styles per PM feedback
+- revert the change for expand behavior
+
+## 0.15.7
+Wed, 22 Aug 2018 05:10:19 GMT
+
+### Patches
+
+- css fixes for card
+
+## 0.15.6
+Tue, 21 Aug 2018 20:36:27 GMT
+
+### Patches
+
+- fix leftNav styles per PM feedback
+
+## 0.15.5
+Mon, 20 Aug 2018 10:26:10 GMT
+
+### Patches
+
+- Replaced the OverflowSet with IconButton and removed the paddingBottom css in ThumbnailList added the  marign Bottom css.
+- minor css changes to body text and recommendation styles
+
+## 0.15.4
+Fri, 17 Aug 2018 10:26:39 GMT
+
+### Patches
+
+- ThumbnailList click target size issue fix
+
+## 0.15.3
+Thu, 16 Aug 2018 10:26:16 GMT
+
+### Patches
+
+- Various styling fixes for Dashboard cards
+- update leftNav style change
+- fix leftNav styling bugs
+- patch leftNav styling per PM feedback
+
+## 0.15.2
+Wed, 15 Aug 2018 10:26:31 GMT
+
+### Patches
+
+- Changing font for components in card
+
+## 0.15.1
+Tue, 14 Aug 2018 10:27:33 GMT
+
+### Patches
+
+- disabling codepen task
+
+## 0.15.0
+Tue, 14 Aug 2018 00:01:11 GMT
+
+### Minor changes
+
+- Implement new design for StackedBarChart, New components MultiStackedBarChart and Legend. Update Card component to render new components
+
+## 0.14.1
+Mon, 13 Aug 2018 03:43:25 GMT
+
+### Patches
+
+- update leftNav style change
+- fix leftNav styling bugs
+
+## 0.14.0
+Fri, 10 Aug 2018 10:26:08 GMT
+
+### Minor changes
+
+- Fix dashboard card height to match red lines
+
+### Patches
+
+- update leftNav style change
+
+## 0.13.0
+Wed, 08 Aug 2018 10:25:07 GMT
+
+### Minor changes
+
+- Adding multiple line chart to charting package. Consuming the multiple line chart in the dashboard Card.
+
+### Patches
+
+- Fix bad imports that break AMD.
+- Update Auto-FontSize package to 1.0.9
+
+## 0.12.0
+Tue, 07 Aug 2018 10:22:32 GMT
+
+### Minor changes
+
+- Adding props that take colors for icon and content in each cell of gridlist
+
+## 0.11.0
+Mon, 06 Aug 2018 10:27:53 GMT
+
+### Minor changes
+
+- passing down card width and height down to charts
+
+### Patches
+
+- Fixing the type of onLayoutChange to fix build
+
+## 0.10.0
+Fri, 03 Aug 2018 10:25:59 GMT
+
+### Minor changes
+
+- Adding custom font size and color props to Multicount. Changes to the precision logic
+
+### Patches
+
+- Integrate Auto-FontSize to Recommendation Card header text
+- Updated package.json to use react and react-dom in peer dependencies
+
+## 0.9.0
+Thu, 02 Aug 2018 10:23:19 GMT
+
+### Minor changes
+
+- Consuming donut,pie,stacked bar chart and mulicount into card.
+
+### Patches
+
+- Adding auto-fontsize dependency.
 
 ## 0.8.0
 Wed, 01 Aug 2018 10:25:51 GMT

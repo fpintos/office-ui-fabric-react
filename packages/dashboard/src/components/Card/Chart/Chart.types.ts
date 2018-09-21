@@ -1,4 +1,5 @@
-import { IDataPoint } from '@uifabric/charting/lib/VerticalBarChart';
+import { IChartProps as IChartingProps, IDataPoint, ILegendDataItem } from '@uifabric/charting/lib/StackedBarChart';
+import { IStyle } from 'office-ui-fabric-react/lib/Styling';
 
 export enum ChartType {
   DonutChart,
@@ -37,12 +38,12 @@ export interface IChartProps {
   /**
    * Label to apply to the whole chart.
    */
-  chartLabel?: string;
+  chartLabels?: string[];
 
   /**
    * Colors from which to select the color of each bar.
    */
-  colors?: string[];
+  legendColors?: ILegendDataItem[];
 
   /**
    * Width of each bar in the chart (only for vertical bar chart)
@@ -55,14 +56,42 @@ export interface IChartProps {
   barHeight?: number;
 
   /**
-   * Data to render in the chart.
+   * Data to render for single charts.
    */
-  data?: IDataPoint[];
+  dataPoints?: IDataPoint[];
+
+  /**
+   * Data to render for multiple charts.
+   */
+  data?: IDataPoint[][];
+
+  /**
+   * Data for the dataviz
+   */
+  chartData?: IChartingProps[];
+
+  /**
+   * This property tells whether to show ratio on top of stacked bar chart or not.
+   */
+  hideRatio?: boolean[];
 
   /**
    * Type of chart to render
    */
   chartType: ChartType;
+
+  /**
+   * custom width for a compact chart
+   *
+   * @default 250
+   */
+  compactChartWidth?: number;
+
+  /**
+   * text to display when the chart
+   * was last updated
+   */
+  chartUpdatedOn?: string;
 
   /**
    * Width of each stroke in the line chart
@@ -73,4 +102,11 @@ export interface IChartProps {
 export interface IChartInternalProps extends IChartProps {
   width: ChartWidth;
   height: ChartHeight;
+}
+
+export interface IChartStyles {
+  /**
+   * wrapper component that sits on top of each chart
+   */
+  chartWrapper: IStyle;
 }

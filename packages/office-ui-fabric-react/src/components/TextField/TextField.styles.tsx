@@ -6,10 +6,9 @@ import {
   IStyle,
   normalize
 } from '../../Styling';
-import { ILabelStyles } from '../../Label';
+import { ILabelStyles, ILabelStyleProps } from '../../Label';
 import { ITextFieldStyleProps, ITextFieldStyles } from './TextField.types';
 import { IStyleFunctionOrObject } from '@uifabric/utilities';
-import { ILabelStyleProps } from 'office-ui-fabric-react/lib/components/Label';
 
 const globalClassNames = {
   root: 'ms-TextField',
@@ -65,7 +64,8 @@ export function getStyles(props: ITextFieldStyleProps): ITextFieldStyles {
     hasIcon,
     resizable,
     hasErrorMessage,
-    iconClass
+    iconClass,
+    inputClassName
   } = props;
 
   const { semanticColors, palette } = theme;
@@ -185,23 +185,12 @@ export function getStyles(props: ITextFieldStyleProps): ITextFieldStyles {
         alignItems: 'stretch',
         position: 'relative',
         selectors: {
-          ':-ms-clear': {
-            display: 'none'
-          },
           ':hover': {
             selectors: {
               [HighContrastSelector]: {
                 borderColor: 'Highlight'
               }
             }
-          },
-          '::placeholder': {
-            color: semanticColors.inputPlaceholderText,
-            opacity: 1
-          },
-          ':-ms-input-placeholder': {
-            color: semanticColors.inputPlaceholderText,
-            opacity: 1
           }
         }
       },
@@ -286,8 +275,16 @@ export function getStyles(props: ITextFieldStyleProps): ITextFieldStyles {
         outline: 0,
         selectors: {
           '&:active, &:focus, &:hover': { outline: 0 },
+          '::-ms-clear': {
+            display: 'none'
+          },
           '::placeholder': {
-            color: semanticColors.bodySubtext
+            color: semanticColors.inputPlaceholderText,
+            opacity: 1
+          },
+          ':-ms-input-placeholder': {
+            color: semanticColors.inputPlaceholderText,
+            opacity: 1
           }
         }
       },
@@ -330,7 +327,8 @@ export function getStyles(props: ITextFieldStyleProps): ITextFieldStyles {
             padding: '0 11px 0 11px'
           }
         }
-      }
+      },
+      inputClassName
     ],
     icon: [
       multiline && {
